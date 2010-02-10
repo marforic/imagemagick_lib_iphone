@@ -24,7 +24,7 @@ JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
 PNG_DIR=$IM_DIR/IMDelegates/libpng-1.4.0
 TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
 #ARCH_SIM="i386"
-ARCH_SIM="x86_64"
+ARCH_SIM="i386"
 GCC_VERSION="4.0.1"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
@@ -54,6 +54,7 @@ mkdir -p $TIFF_LIB_DIR #libtiff manages to create subdirectories by itself with 
 export DEVROOT=/Developer/Platforms/iPhoneOS.platform/Developer
 # Change this to match for which version of the SDK you want to compile -- you can change the number for the version
 export SDKROOT=$DEVROOT/SDKs/iPhoneOS3.1.sdk
+export MACOSXROOT=/Developer/SDKs/MacOSX10.5.sdk
 
 ############	HACK	#################################
 # ImageMagick requires this header, that doesn't exist for the iPhone
@@ -109,7 +110,7 @@ make distclean
 export CC=$U_CC
 export CFLAGS="-arch $ARCH_SIM -O3"
 export LD=$U_LD
-export LDFLAGS=$U_LDFLAGS
+export LDFLAGS="-L/usr/lib/ $U_LDFLAGS"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -175,7 +176,7 @@ make distclean
 export CC=$U_CC
 export CFLAGS="-arch $ARCH_SIM -O3"
 export LD=$U_LD
-export LDFLAGS="-arch $ARCH_SIM -03"
+export LDFLAGS="-L/usr/lib/ -arch $ARCH_SIM -03" # just needed if at some point simulator will be x86_64
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -241,7 +242,7 @@ elif [ "$1" == "$ARCH_SIM" ]; then
 export CC=$U_CC
 export CFLAGS="-arch $ARCH_SIM"
 export LD=$U_LD
-export LDFLAGS=$U_LDFLAGS
+export LDFLAGS="-L/usr/lib/ $U_LDFLAGS"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -313,9 +314,9 @@ make distclean
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM -O3"
+export CFLAGS="-arch $ARCH_SIM -O3 -isysroot $MACOSXROOT -mmacosx-version-min=10.5"
 export LD=$U_LD
-export LDFLAGS=$U_LDFLAGS
+export LDFLAGS="$U_LDFLAGS -isysroot $MACOSXROOT -mmacosx-version-min=10.5"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
