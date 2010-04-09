@@ -1,6 +1,6 @@
 # Author: Claudio Marforio
 # e-mail: marforio@gmail.com
-# date: 9.06.2009
+# date: 9.04.2010
 
 # Script to make static libraries (jpeg + png) and ImageMagick
 # the libraries will be conbined into i386+arm.a static libraries
@@ -10,9 +10,9 @@
 # ~/Desktop/cross_compile/i_m/	 <- ImageMagick top directory
 #	 |-IMDelegataes/	 <- Some delegates, in particular jpeg + png
 #	 |-jpeg-6b/	 <- Patched jpeg6b
-#	 |-libpng-1.2.37 <- png lib -- no need to patch it
-#	 |-tiff-3.8.2	<- tiff lib -- no need to patch it
-#	 |-…	 <- we don't care what's here! :)
+#	 |-libpng-1.4.0 <- png lib -- no need to patch it
+#	 |-tiff-3.9.2	<- tiff lib -- no need to patch it
+#	 |-...	 <- we don't care what's here! :)
 
 # If you don't have this Directory structure you can either create it or try change around the script
 
@@ -23,7 +23,6 @@ IM_DIR=$(pwd)/cross_compile/i_m
 JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
 PNG_DIR=$IM_DIR/IMDelegates/libpng-1.4.0
 TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
-#ARCH_SIM="i386"
 ARCH_SIM="i386"
 GCC_VERSION="4.0.1"
 
@@ -287,15 +286,15 @@ U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin9/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include -O3"
+export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include -O3 -DHAVE_J1=0"
 export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
-export CXXFLAGS="-O3 -Wall -W -D_THREAD_SAFE"
+export CXXFLAGS="-O3 -Wall -W -D_THREAD_SAFE -DHAVE_J1=0"
 
 # configure to have the static libraries and make
 ./configure prefix=$IM_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin9-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin \
 --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
---disable-shared
+--disable-shared --disable-openmp
 
 # compile ImageMagick
 make
@@ -321,7 +320,7 @@ export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
 # configure with standard parameters
-./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin9 --without-magick-plus-plus --without-perl --without-x --without-freetype --disable-shared
+./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin9 --without-magick-plus-plus --without-perl --without-x --without-freetype --disable-shared --disable-openmp
 
 # compile ImageMagick
 make
