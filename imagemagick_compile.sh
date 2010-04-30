@@ -19,7 +19,7 @@
 #!/bin/bash
 
 # Set this to the top directory of ImageMagick source:
-IM_DIR=$(pwd)/cross_compile/i_m
+IM_DIR=$(pwd)/cross_compile/i_m_6.6.1-5
 JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
 PNG_DIR=$IM_DIR/IMDelegates/libpng-1.4.0
 TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
@@ -52,7 +52,7 @@ mkdir -p $TIFF_LIB_DIR #libtiff manages to create subdirectories by itself with 
 # General folders where you have the iPhone compiler + tools
 export DEVROOT=/Developer/Platforms/iPhoneOS.platform/Developer
 # Change this to match for which version of the SDK you want to compile -- you can change the number for the version
-export SDKROOT=$DEVROOT/SDKs/iPhoneOS3.1.sdk
+export SDKROOT=$DEVROOT/SDKs/iPhoneOS3.1.3.sdk
 export MACOSXROOT=/Developer/SDKs/MacOSX10.5.sdk
 
 ############	HACK	#################################
@@ -84,13 +84,13 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin9/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
 export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
 ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static \
-CC=$DEVROOT/usr/bin/arm-apple-darwin9-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin
+CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin
 
 make
 make install
@@ -113,7 +113,7 @@ export LDFLAGS="-L/usr/lib/ $U_LDFLAGS"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
-./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=i686-apple-darwin9
+./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=i686-apple-darwin10
 
 make
 make install
@@ -150,13 +150,13 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin9/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
 export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
 ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static \
-CC=$DEVROOT/usr/bin/arm-apple-darwin9-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin
+CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin
 
 make
 make install-lib
@@ -179,7 +179,7 @@ export LDFLAGS="-L/usr/lib/ -arch $ARCH_SIM -03" # just needed if at some point 
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
-./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=i686-apple-darwin9
+./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=i686-apple-darwin10
 
 make
 make install-lib
@@ -217,12 +217,12 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin9/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
 export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
-./configure prefix=$TIFF_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin9-gcc-$GCC_VERSION \
+./configure prefix=$TIFF_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION \
 LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin --disable-cxx \
 && make \
 && make install
@@ -245,7 +245,7 @@ export LDFLAGS="-L/usr/lib/ $U_LDFLAGS"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
-./configure prefix=$TIFF_LIB_DIR --host=i686-apple-darwin9 --disable-cxx \
+./configure prefix=$TIFF_LIB_DIR --host=i686-apple-darwin10 --disable-cxx \
 && make \
 && make install
 
@@ -277,35 +277,35 @@ LIBNAME_static2=`basename $LIBPATH_static2`
 ############	ARM	 ###########################
 #######################################################
 
-# Save relevant environment
-U_CC=$CC
-U_CFLAGS=$CFLAGS
-U_LD=$LD
-U_LDFLAGS=$LDFLAGS
-U_CPP=$CPP
-U_CPPFLAGS=$CPPFLAGS
-
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin9/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include -O3 -DHAVE_J1=0"
-export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
-export CPP="/usr/bin/cpp $CPPFLAGS"
-export CXXFLAGS="-O3 -Wall -W -D_THREAD_SAFE -DHAVE_J1=0"
-
-# configure to have the static libraries and make
-./configure prefix=$IM_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin9-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin \
---disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
---disable-shared --disable-openmp
-
-# compile ImageMagick
-make
-make install
-
-# copy the CORE + WAND libraries -- ARM version
-cp $LIBPATH_static $LIB_DIR/$LIBNAME_static.arm
-cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.arm
-
-# clean the ImageMagick build
-make distclean
+# # Save relevant environment
+# U_CC=$CC
+# U_CFLAGS=$CFLAGS
+# U_LD=$LD
+# U_LDFLAGS=$LDFLAGS
+# U_CPP=$CPP
+# U_CPPFLAGS=$CPPFLAGS
+# 
+# export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
+# export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include -O3 -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+# export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
+# export CPP="/usr/bin/cpp $CPPFLAGS"
+# export CXXFLAGS="-O3 -Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+# 
+# # configure to have the static libraries and make
+# ./configure prefix=$IM_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin \
+# --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
+# --disable-shared --disable-openmp --without-bzlib
+# 
+# # compile ImageMagick
+# make
+# make install
+# 
+# # copy the CORE + WAND libraries -- ARM version
+# cp $LIBPATH_static $LIB_DIR/$LIBNAME_static.arm
+# cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.arm
+# 
+# # clean the ImageMagick build
+# make distclean
 
 #######################################################
 ############	INTEL	 ###########################
@@ -313,14 +313,14 @@ make distclean
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM -O3 -isysroot $MACOSXROOT -mmacosx-version-min=10.5"
+export CFLAGS="-arch $ARCH_SIM -O3 -isysroot $MACOSXROOT -mmacosx-version-min=10.5 -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 export LD=$U_LD
 export LDFLAGS="$U_LDFLAGS -isysroot $MACOSXROOT -mmacosx-version-min=10.5"
 export CPP=$U_CPP
-export CPPFLAGS=$U_CPPFLAGS
+export CPPFLAGS="$U_CPPFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 
 # configure with standard parameters
-./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin9 --without-magick-plus-plus --without-perl --without-x --without-freetype --disable-shared --disable-openmp
+./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin10 --without-magick-plus-plus --without-perl --without-x --without-freetype --disable-shared --disable-openmp --without-bzlib
 
 # compile ImageMagick
 make
