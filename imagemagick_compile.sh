@@ -277,35 +277,35 @@ LIBNAME_static2=`basename $LIBPATH_static2`
 ############	ARM	 ###########################
 #######################################################
 
-# # Save relevant environment
-# U_CC=$CC
-# U_CFLAGS=$CFLAGS
-# U_LD=$LD
-# U_LDFLAGS=$LDFLAGS
-# U_CPP=$CPP
-# U_CPPFLAGS=$CPPFLAGS
-# 
-# export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-# export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include -O3 -DHAVE_J1=0 -DTARGET_OS_IPHONE"
-# export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
-# export CPP="/usr/bin/cpp $CPPFLAGS"
-# export CXXFLAGS="-O3 -Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE"
-# 
-# # configure to have the static libraries and make
-# ./configure prefix=$IM_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin \
-# --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
-# --disable-shared --disable-openmp --without-bzlib
-# 
-# # compile ImageMagick
-# make
-# make install
-# 
-# # copy the CORE + WAND libraries -- ARM version
-# cp $LIBPATH_static $LIB_DIR/$LIBNAME_static.arm
-# cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.arm
-# 
-# # clean the ImageMagick build
-# make distclean
+# Save relevant environment
+U_CC=$CC
+U_CFLAGS=$CFLAGS
+U_LD=$LD
+U_LDFLAGS=$LDFLAGS
+U_CPP=$CPP
+U_CPPFLAGS=$CPPFLAGS
+
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
+export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include -O3 -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
+export CPP="/usr/bin/cpp $CPPFLAGS"
+export CXXFLAGS="-O3 -Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+
+# configure to have the static libraries and make
+./configure prefix=$IM_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin \
+--disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
+--disable-shared --disable-openmp --without-bzlib
+
+# compile ImageMagick
+make
+make install
+
+# copy the CORE + WAND libraries -- ARM version
+cp $LIBPATH_static $LIB_DIR/$LIBNAME_static.arm
+cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.arm
+
+# clean the ImageMagick build
+make distclean
 
 #######################################################
 ############	INTEL	 ###########################
