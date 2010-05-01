@@ -1,29 +1,39 @@
 # Author: Claudio Marforio
 # e-mail: marforio@gmail.com
-# date: 9.04.2010
+# date: 1.05.2010
 
 # Script to make static libraries (jpeg + png) and ImageMagick
 # the libraries will be conbined into i386+arm.a static libraries
 #	to be used inside an XCODE project for iPhone development
 
+# If everything works correctly you will end up with a folder
+# on your ~/Desktop ready to be imported into XCode
+# change this line if you want for everything to be
+# exported somewhere else
+
+FINAL_DIR=~/Desktop/IMPORT_ME/
+
 # The directory structure has to be:
 # ~/Desktop/cross_compile/i_m/	 <- ImageMagick top directory
 #	 |-IMDelegataes/	 <- Some delegates, in particular jpeg + png
-#	 |-jpeg-6b/	 <- Patched jpeg6b
-#	 |-libpng-1.4.0 <- png lib -- no need to patch it
-#	 |-tiff-3.9.2	<- tiff lib -- no need to patch it
+#	 |-jpeg-6b/          <- Patched jpeg6b
+#	 |-libpng-1.4.0      <- png lib -- no need to patch it
+#	 |-tiff-3.9.2        <- tiff lib -- no need to patch it
 #	 |-...	 <- we don't care what's here! :)
 
-# If you don't have this Directory structure you can either create it or try change around the script
+# If you don't have this directory structure you can either create it or try change around the script
 
 #!/bin/bash
 
 # Set this to the top directory of ImageMagick source:
-IM_DIR=$(pwd)/cross_compile/i_m_6.6.1-5
+IM_DIR=$(pwd)/cross_compile/i_m_6.6.1-6
 JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
 PNG_DIR=$IM_DIR/IMDelegates/libpng-1.4.0
 TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
+
+# Architectures and versions
 ARCH_SIM="i386"
+ARCH_IPHONE="armv6"
 GCC_VERSION="4.0.1"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
@@ -36,6 +46,7 @@ IM_LIB_DIR=$TARGET_LIB_DIR/imagemagick
 
 # Set the build directories
 mkdir -p $TARGET_LIB_DIR
+mkdir -p $LIB_DIR/include/im_config
 mkdir -p $LIB_DIR/include/jpeg
 mkdir -p $LIB_DIR/include/magick
 mkdir -p $LIB_DIR/include/png
@@ -44,10 +55,10 @@ mkdir -p $LIB_DIR/include/wand
 mkdir -p $LIB_DIR/jpeg_arm_dylib
 mkdir -p $LIB_DIR/png_arm_dylib
 mkdir -p $LIB_DIR/tiff_arm_dylib
-mkdir -p $JPEG_LIB_DIR/lib #we don't need bin/ and share/
+mkdir -p $JPEG_LIB_DIR/lib # we don't need bin/ and share/
 mkdir -p $JPEG_LIB_DIR/include
-mkdir -p $PNG_LIB_DIR #libpng manages to create subdirectories by itself with make install
-mkdir -p $TIFF_LIB_DIR #libtiff manages to create subdirectories by itself with make install
+mkdir -p $PNG_LIB_DIR # libpng manages to create subdirectories by itself with make install
+mkdir -p $TIFF_LIB_DIR # libtiff manages to create subdirectories by itself with make install
 
 # General folders where you have the iPhone compiler + tools
 export DEVROOT=/Developer/Platforms/iPhoneOS.platform/Developer
@@ -55,27 +66,30 @@ export DEVROOT=/Developer/Platforms/iPhoneOS.platform/Developer
 export SDKROOT=$DEVROOT/SDKs/iPhoneOS3.1.3.sdk
 export MACOSXROOT=/Developer/SDKs/MacOSX10.5.sdk
 
-############	HACK	#################################
+############    HACK    ############
 # ImageMagick requires this header, that doesn't exist for the iPhone
-# Just copying it make things compile/work (more testing needed)
-#sudo cp /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.3.sdk/usr/include/crt_externs.h \
-#	$SDKROOT/usr/include/crt_externs.h
-############	END -- HACK	#############################
+# Just copying it make things compile/work
+if [ -e $SDKROOT/usr/include/crt_externs.h ]; then
+	echo "crt_externals.h already copied! Good to go!";
+else
+	echo "need to copy crt_externals.h for compilation, please enter sudo password"
+	sudo cp /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.3.sdk/usr/include/crt_externs.h \
+		$SDKROOT/usr/include/crt_externs.h
+fi
+############    END     ############
 
-function png()
-{
-#######################################################
-############	PNG	 ###########################
-#######################################################
+###################################
+############    PNG    ############
+###################################
+
+function png() {
 
 cd $PNG_DIR
 
 LIBPATH_png=libpng14.a
 LIBPATH_png_dylib=libpng14.14.dylib
 
-#######################################################
-############	ARM	 ###########################
-#######################################################
+if [ "$1" == "$ARCH_IPHONE" ]; then ##  ARM	 ##
 
 U_CC=$CC
 U_CFLAGS=$CFLAGS
@@ -85,7 +99,7 @@ U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -101,9 +115,7 @@ cp $PNG_LIB_DIR/lib/$LIBPATH_png_dylib $LIB_DIR/png_arm_dylib/libpng.dylib
 
 make distclean
 
-#######################################################
-############	INTEL	 ###########################
-#######################################################
+elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
@@ -127,21 +139,23 @@ make distclean
 
 # combine the static libraries for i386 and arm
 $DEVROOT/usr/bin/lipo -arch arm $LIB_DIR/libpng.a.arm -arch $ARCH_SIM $LIB_DIR/libpng.a.i386 -create -output $LIB_DIR/libpng.a
-}
-function jpeg()
-{
-#######################################################
-############	JPEG	 ###########################
-#######################################################
+
+fi
+
+} ## END PNG LIBRARY ##
+
+############################################
+################    JPEG    ################
+############################################
+
+function jpeg() {
 
 cd $JPEG_DIR
 
 LIBPATH_jpeg=libjpeg.a
 LIBNAME_jpeg=`basename $LIBPATH_jpeg`
 
-#######################################################
-############	ARM	 ###########################
-#######################################################
+if [ "$1" == "$ARCH_IPHONE" ]; then ##  ARM	 ##
 
 U_CC=$CC
 U_CFLAGS=$CFLAGS
@@ -151,7 +165,7 @@ U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -167,9 +181,7 @@ cp $JPEG_LIB_DIR/lib/libjpeg.62.0.0.dylib $LIB_DIR/jpeg_arm_dylib/libjpeg.dylib
 
 make distclean
 
-#######################################################
-############	INTEL	 ###########################
-#######################################################
+elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
@@ -193,22 +205,23 @@ make distclean
 
 # combine the static libraries for i386 and arm
 $DEVROOT/usr/bin/lipo -arch arm $LIB_DIR/$LIBNAME_jpeg.arm -arch $ARCH_SIM $LIB_DIR/$LIBNAME_jpeg.i386 -create -output $LIB_DIR/$LIBNAME_jpeg
-}
-function tiff()
-{
-########################################################
-#############	TIFF	 ############################
-########################################################
+
+fi
+
+} ## END JPEG LIBRARY ##
+
+######################################
+#############    TIFF    #############
+######################################
+
+function tiff() {
 
 cd $TIFF_DIR
 
 LIBPATH_tiff=libtiff.a
 LIBNAME_tiff=`basename $LIBPATH_tiff`
 
-if [ "$1" == "arm" ]; then
-#######################################################
-############	ARM	 ###########################
-#######################################################
+if [ "$1" == "$ARCH_IPHONE" ]; then ##  ARM	 ##
 
 U_CC=$CC
 U_CFLAGS=$CFLAGS
@@ -218,7 +231,7 @@ U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -232,10 +245,8 @@ cp $TIFF_LIB_DIR/lib/$LIBPATH_tiff $LIB_DIR/$LIBNAME_tiff.arm
 cp $TIFF_LIB_DIR/lib/libtiff.3.dylib $LIB_DIR/tiff_arm_dylib/libtiff.dylib
 
 make distclean
-elif [ "$1" == "$ARCH_SIM" ]; then
-#######################################################
-############	INTEL	 ###########################
-#######################################################
+
+elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
@@ -258,13 +269,17 @@ make distclean
 
 # combine the static libraries for i386 and arm
 $DEVROOT/usr/bin/lipo -arch arm $LIB_DIR/$LIBNAME_tiff.arm -arch $ARCH_SIM $LIB_DIR/$LIBNAME_tiff.i386 -create -output $LIB_DIR/$LIBNAME_tiff
+
 fi
-}
-function im()
-{
-#######################################################
-############	IMAGEMAGICK	 #######################
-#######################################################
+
+} ## END TIFF LIBRARY ##
+
+###########################################
+############    IMAGEMAGICK    ############
+###########################################
+
+function im() {
+
 cd $IM_DIR
 
 # static library that will be generated
@@ -273,9 +288,7 @@ LIBNAME_static=`basename $LIBPATH_static`
 LIBPATH_static2=$IM_LIB_DIR/lib/libMagickWand.a
 LIBNAME_static2=`basename $LIBPATH_static2`
 
-#######################################################
-############	ARM	 ###########################
-#######################################################
+if [ "$1" == "$ARCH_IPHONE" ]; then ##  ARM	 ##
 
 # Save relevant environment
 U_CC=$CC
@@ -307,9 +320,7 @@ cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.arm
 # clean the ImageMagick build
 make distclean
 
-#######################################################
-############	INTEL	 ###########################
-#######################################################
+elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
@@ -320,7 +331,9 @@ export CPP=$U_CPP
 export CPPFLAGS="$U_CPPFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 
 # configure with standard parameters
-./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin10 --without-magick-plus-plus --without-perl --without-x --without-freetype --disable-shared --disable-openmp --without-bzlib
+./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin10 \
+--disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
+--disable-shared --disable-openmp --without-bzlib
 
 # compile ImageMagick
 make
@@ -334,16 +347,44 @@ cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.i386
 cp $IM_LIB_DIR/include/ImageMagick/magick/* $LIB_DIR/include/magick/
 cp $IM_LIB_DIR/include/ImageMagick/wand/* $LIB_DIR/include/wand/
 
+# copy configuration files needed for certain functions
+cp $IM_LIB_DIR/lib/ImageMagick-*/config/*.xml $LIB_DIR/include/im_config/
+cp $IM_LIB_DIR/share/ImageMagick-*/config/*.xml $LIB_DIR/include/im_config/
+cp $IM_LIB_DIR/share/ImageMagick-*/config/*.icm $LIB_DIR/include/im_config/
+
 # clean the ImageMagick build
 make distclean
 
 # combine the two generated libraries to be used both in the simulator and in the device
 $DEVROOT/usr/bin/lipo -arch arm $LIB_DIR/$LIBNAME_static.arm -arch $ARCH_SIM $LIB_DIR/$LIBNAME_static.i386 -create -output $LIB_DIR/$LIBNAME_static
 $DEVROOT/usr/bin/lipo -arch arm $LIB_DIR/$LIBNAME_static2.arm -arch $ARCH_SIM $LIB_DIR/$LIBNAME_static2.i386 -create -output $LIB_DIR/$LIBNAME_static2
+
+fi
+
+} ## END IMAGEMAGICK LIBRARY ##
+
+function structure_for_xcode() {
+	echo "-------------- Making everything ready to import! --------------"
+	if [ -e $FINAL_DIR ]; then
+		echo "Directory $FINAL_DIR is already present"
+		rm -rf "$FINAL_DIR"*
+	else
+		echo "Creating directory for importing into XCode: $FINAL_DIR"
+		mkdir -p "$FINAL_DIR"
+	fi
+	cp -r $LIB_DIR/include/ "$FINAL_DIR"include/
+	cp $LIB_DIR/*.a "$FINAL_DIR"
+	# echo "-------------- Removing tmp_target dir --------------"
+	# 	rm -rf $TARGET_LIB_DIR
+	echo "-------------- All Done! --------------"
 }
 
-png
-jpeg
-tiff "arm"
+png "$ARCH_IPHONE"
+png "$ARCH_SIM"
+jpeg "$ARCH_IPHONE"
+jpeg "$ARCH_SIM"
+tiff "$ARCH_IPHONE"
 tiff "$ARCH_SIM"
-im
+im "$ARCH_IPHONE"
+im "$ARCH_SIM"
+structure_for_xcode
