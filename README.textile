@@ -1,3 +1,7 @@
+<h1>Compiled downloads</h1>
+
+You can grab the latest compiled ImageMagick directly from their <a href="ftp://magick.imagemagick.org/pub/ImageMagick/iPhone/">ftp</a> or any mirror.
+
 <h1>ImageMagick compiling script for iPhone OS and iPhone Simulator</h1>
 
 This script will compile ImageMagick as a static library to be included in iPhone projects

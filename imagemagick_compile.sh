@@ -26,7 +26,7 @@ FINAL_DIR=~/Desktop/IMPORT_ME/
 #!/bin/bash
 
 # Set this to the top directory of ImageMagick source:
-IM_DIR=$(pwd)/cross_compile/i_m_6.6.1-6
+IM_DIR=$(pwd)/cross_compile/i_m_6.6.1-10
 JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
 PNG_DIR=$IM_DIR/IMDelegates/libpng-1.4.0
 TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
