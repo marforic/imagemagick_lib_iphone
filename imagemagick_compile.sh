@@ -26,7 +26,8 @@ FINAL_DIR=~/Desktop/IMPORT_ME/
 #!/bin/bash
 
 # Set this to the top directory of ImageMagick source:
-IM_DIR=$(pwd)/cross_compile/i_m_6.6.1-10
+IM_VERSION=6.6.2-3
+IM_DIR="$(pwd)/cross_compile/i_m_$IM_VERSION"
 JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
 PNG_DIR=$IM_DIR/IMDelegates/libpng-1.4.0
 TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
@@ -379,6 +380,22 @@ function structure_for_xcode() {
 	echo "-------------- All Done! --------------"
 }
 
+function zip_for_ftp() {
+	echo "-------------- Preparing .zips for ftp.imagemagick.org! --------------"
+	if [ -e $FINAL_DIR ]; then
+		tmp_dir="/Users/$USER/Desktop/TMP_IM"
+		cp -R $FINAL_DIR $tmp_dir
+		ditto -c -k -rsrc "$tmp_dir" "iPhoneMagick-$IM_VERSION-libs.zip" && echo "-libs zip created" # creates -libs zip
+		rm $tmp_dir/libjpeg.a $tmp_dir/libpng.a $tmp_dir/libtiff.a
+		rm -rf $tmp_dir/include/jpeg/ $tmp_dir/include/png/ $tmp_dir/include/tiff/
+		ditto -c -k -rsrc "$tmp_dir" "iPhoneMagick-$IM_VERSION.zip" && echo "im_only zip created" # creates im_only zip
+		rm -rf $tmp_dir
+	else
+		echo "ERROR, $FINAL_DIR not present..."
+	fi
+	echo "-------------- All Done! --------------"
+}
+
 png "$ARCH_IPHONE"
 png "$ARCH_SIM"
 jpeg "$ARCH_IPHONE"
@@ -388,3 +405,4 @@ tiff "$ARCH_SIM"
 im "$ARCH_IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
+zip_for_ftp
