@@ -1,8 +1,8 @@
 # Author: Claudio Marforio
 # e-mail: marforio@gmail.com
-# date: 1.05.2010
+# date: 21.06.2010
 
-# Script to make static libraries (jpeg + png) and ImageMagick
+# Script to make static libraries (jpeg + png + tiff) and ImageMagick
 # the libraries will be conbined into i386+arm.a static libraries
 #	to be used inside an XCODE project for iPhone development
 
@@ -14,8 +14,8 @@
 FINAL_DIR=~/Desktop/IMPORT_ME/
 
 # The directory structure has to be:
-# ~/Desktop/cross_compile/i_m/	 <- ImageMagick top directory
-#	 |-IMDelegataes/	 <- Some delegates, in particular jpeg + png
+# ~/Desktop/cross_compile/i_m-VERSION/	 <- ImageMagick top directory
+#	 |-IMDelegataes/	 <- Some delegates, in particular jpeg + png + tiff + ?
 #	 |-jpeg-6b/          <- Patched jpeg6b
 #	 |-libpng-1.4.0      <- png lib -- no need to patch it
 #	 |-tiff-3.9.2        <- tiff lib -- no need to patch it
@@ -25,11 +25,10 @@ FINAL_DIR=~/Desktop/IMPORT_ME/
 
 #!/bin/bash
 
-# Set this to the top directory of ImageMagick source:
-IM_VERSION=6.6.2-3
-IM_DIR="$(pwd)/cross_compile/i_m_$IM_VERSION"
+IM_VERSION=$1
+IM_DIR="$(pwd)/cross_compile/i_m-$IM_VERSION"
 JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
-PNG_DIR=$IM_DIR/IMDelegates/libpng-1.4.0
+PNG_DIR=$IM_DIR/IMDelegates/libpng-1.2.43
 TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
 
 # Architectures and versions
@@ -55,6 +54,7 @@ mkdir -p $LIB_DIR/include/tiff
 mkdir -p $LIB_DIR/include/wand
 mkdir -p $LIB_DIR/jpeg_arm_dylib
 mkdir -p $LIB_DIR/png_arm_dylib
+mkdir -p $LIB_DIR/png_i386_dylib
 mkdir -p $LIB_DIR/tiff_arm_dylib
 mkdir -p $JPEG_LIB_DIR/lib # we don't need bin/ and share/
 mkdir -p $JPEG_LIB_DIR/include
@@ -79,6 +79,10 @@ else
 fi
 ############    END     ############
 
+#freetype config
+#./configure --prefix=/Users/cloud/Desktop/freetype_compiled --host=arm-apple-darwin --enable-static=yes --enable-shared=yes CC=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/arm-apple-darwin10-gcc-4.0.1 CFLAGS="-arch armv6 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -fmessage-length=0 -fvisibility=hidden -gdwarf-2 -mthumb -I/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS2.0.sdk/usr/include/libxml2 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.3.sdk" CPP=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/cpp AR=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/ar LDFLAGS="-arch armv6 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.1.3.sdk -Wl,-dead_strip"
+
+
 ###################################
 ############    PNG    ############
 ###################################
@@ -87,8 +91,8 @@ function png() {
 
 cd $PNG_DIR
 
-LIBPATH_png=libpng14.a
-LIBPATH_png_dylib=libpng14.14.dylib
+LIBPATH_png=libpng12.a
+LIBPATH_png_dylib=libpng12.12.dylib
 
 if [ "$1" == "$ARCH_IPHONE" ]; then ##  ARM	 ##
 
@@ -100,7 +104,7 @@ U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -120,7 +124,7 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM -O3"
+export CFLAGS="-arch $ARCH_SIM"
 export LD=$U_LD
 export LDFLAGS="-L/usr/lib/ $U_LDFLAGS"
 export CPP=$U_CPP
@@ -133,8 +137,9 @@ make install
 
 # cp the static library
 cp $PNG_LIB_DIR/lib/$LIBPATH_png $LIB_DIR/libpng.a.i386
+cp $PNG_LIB_DIR/lib/$LIBPATH_png_dylib $LIB_DIR/png_i386_dylib/libpng.dylib
 # cp the include/* files
-cp $PNG_LIB_DIR/include/libpng14/* $LIB_DIR/include/png/
+cp $PNG_LIB_DIR/include/libpng12/* $LIB_DIR/include/png/
 
 make distclean
 
@@ -166,7 +171,7 @@ U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -186,9 +191,9 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM -O3"
+export CFLAGS="-arch $ARCH_SIM"
 export LD=$U_LD
-export LDFLAGS="-L/usr/lib/ -arch $ARCH_SIM -03" # just needed if at some point simulator will be x86_64
+export LDFLAGS="-L/usr/lib/ -arch $ARCH_SIM" # just needed if at some point simulator will be x86_64
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -232,7 +237,7 @@ U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
 export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/ -O3"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -299,16 +304,16 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include -O3 -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -L$LIB_DIR"
+export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
-export CXXFLAGS="-O3 -Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export CXXFLAGS="-Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 
 # configure to have the static libraries and make
 ./configure prefix=$IM_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin \
---disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
---disable-shared --disable-openmp --without-bzlib
+--disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
+--disable-shared --disable-openmp --without-bzlib --without-freetype
 
 # compile ImageMagick
 make
@@ -325,16 +330,16 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM -O3 -isysroot $MACOSXROOT -mmacosx-version-min=10.5 -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export CFLAGS="-arch $ARCH_SIM -isysroot $MACOSXROOT -mmacosx-version-min=10.5 -DHAVE_J1=0 -DTARGET_OS_IPHONE -L$LIB_DIR"
 export LD=$U_LD
-export LDFLAGS="$U_LDFLAGS -isysroot $MACOSXROOT -mmacosx-version-min=10.5"
+export LDFLAGS="-isysroot $MACOSXROOT -mmacosx-version-min=10.5"
 export CPP=$U_CPP
-export CPPFLAGS="$U_CPPFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export CPPFLAGS="$U_CPPFLAGS -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -L$LIB_DIR $U_LDFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 
 # configure with standard parameters
 ./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin10 \
---disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x --without-freetype \
---disable-shared --disable-openmp --without-bzlib
+--disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
+--disable-shared --disable-openmp --without-bzlib --without-freetype
 
 # compile ImageMagick
 make
@@ -380,6 +385,7 @@ function structure_for_xcode() {
 	echo "-------------- All Done! --------------"
 }
 
+# function used to produce .zips for the ImageMagick ftp site maintained by me (Claudio Marforio)
 function zip_for_ftp() {
 	echo "-------------- Preparing .zips for ftp.imagemagick.org! --------------"
 	if [ -e $FINAL_DIR ]; then
@@ -405,4 +411,4 @@ tiff "$ARCH_SIM"
 im "$ARCH_IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
-zip_for_ftp
+# zip_for_ftp
