@@ -4,6 +4,12 @@ You can grab the latest compiled ImageMagick directly from their <a href="ftp://
 
 <h1>ImageMagick compiling script for iPhone OS and iPhone Simulator</h1>
 
+To run the script:
+<pre>
+	./imagemagick_compile.sh VERSION
+</pre>
+where VERSION is the version of ImageMagick you want to compile (i.e.: 6.6.2-6, svn, ...)
+
 This script will compile ImageMagick as a static library to be included in iPhone projects
 Support for:
 * png
