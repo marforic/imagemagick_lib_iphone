@@ -35,6 +35,7 @@ TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
 ARCH_SIM="i386"
 ARCH_IPHONE="armv6"
 GCC_VERSION="4.0.1"
+MIN_IPHONE_VERSION="3.1"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
 TARGET_LIB_DIR=$(pwd)/tmp_target
@@ -64,7 +65,7 @@ mkdir -p $TIFF_LIB_DIR # libtiff manages to create subdirectories by itself with
 # General folders where you have the iPhone compiler + tools
 export DEVROOT=/Developer/Platforms/iPhoneOS.platform/Developer
 # Change this to match for which version of the SDK you want to compile -- you can change the number for the version
-export SDKROOT=$DEVROOT/SDKs/iPhoneOS3.1.3.sdk
+export SDKROOT=$DEVROOT/SDKs/iPhoneOS4.0.sdk
 export MACOSXROOT=/Developer/SDKs/MacOSX10.5.sdk
 
 ############    HACK    ############
@@ -103,8 +104,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/ -miphoneos-version-min=$MIN_IPHONE_VERSION"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot -miphoneos-version-min=$MIN_IPHONE_VERSION $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -170,8 +171,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/ -miphoneos-version-min=$MIN_IPHONE_VERSION"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -miphoneos-version-min=$MIN_IPHONE_VERSION -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -236,8 +237,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/ -miphoneos-version-min=$MIN_IPHONE_VERSION"
+export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -miphoneos-version-min=$MIN_IPHONE_VERSION -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export LDFLAGS="-L$SDKROOT/usr/lib/"
 
@@ -304,8 +305,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -L$LIB_DIR"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -L$LIB_DIR -miphoneos-version-min=$MIN_IPHONE_VERSION"
+export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE -miphoneos-version-min=$MIN_IPHONE_VERSION"
 export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
 export CPP="/usr/bin/cpp $CPPFLAGS"
 export CXXFLAGS="-Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE"
