@@ -8,13 +8,6 @@
 # the libraries will be conbined into i386+arm.a static libraries
 #	to be used inside an XCODE project for iPhone development
 
-# If everything works correctly you will end up with a folder
-# on your ~/Desktop ready to be imported into XCode
-# change this line if you want for everything to be
-# exported somewhere else
-
-FINAL_DIR=~/Desktop/IMPORT_ME/
-
 # The directory structure has to be:
 # ~/Desktop/cross_compile/ImageMagick-VERSION/	 <- ImageMagick top directory
 #	            |        /IMDelegataes/	 <- Some delegates, in particular jpeg + png + tiff
@@ -24,6 +17,19 @@ FINAL_DIR=~/Desktop/IMPORT_ME/
 #	            |- ...	 <- we don't care what's here! :)
 
 # If you don't have this directory structure you can either create it or try change around the script
+
+# If everything works correctly you will end up with a folder
+# on your ~/Desktop ready to be imported into XCode
+# change this line if you want for everything to be
+# exported somewhere else
+
+FINAL_DIR=~/Desktop/IMPORT_ME/
+
+if [[ $# != 1 ]]; then
+	echo "imagemagick_compile.sh takes 1 argument: the version of ImageMagick that you want to compile!"
+	echo "USAGE: imagemagick_compile.sh 6.6.1-7"
+	exit
+fi
 
 IM_VERSION="$1"
 IM_DIR="/Users/$USER/Desktop/cross_compile/ImageMagick-$IM_VERSION"
