@@ -12,7 +12,7 @@
 # ~/Desktop/cross_compile/ImageMagick-VERSION/	 <- ImageMagick top directory
 #	            |        /IMDelegataes/	 <- Some delegates, in particular jpeg + png + tiff
 #	            |           |-jpeg-6b/          <- Patched jpeg6b
-#	            |           |-libpng-1.2.43     <- png lib -- no need to patch it
+#	            |           |-libpng-1.4.2     <- png lib -- no need to patch it
 #	            |           |-tiff-3.9.2        <- tiff lib -- no need to patch it
 #	            |- ...	 <- we don't care what's here! :)
 
@@ -43,7 +43,7 @@ else
 fi
 
 JPEG_DIR="$IM_DIR/IMDelegates/jpeg-6b"
-PNG_DIR="$IM_DIR/IMDelegates/libpng-1.2.43"
+PNG_DIR="$IM_DIR/IMDelegates/libpng-1.4.2"
 TIFF_DIR="$IM_DIR/IMDelegates/tiff-3.9.2"
 
 # Architectures and versions
@@ -116,8 +116,8 @@ function png() {
 
 cd $PNG_DIR
 
-LIBPATH_png=libpng12.a
-LIBPATH_png_dylib=libpng12.12.dylib
+LIBPATH_png=libpng14.a
+LIBPATH_png_dylib=libpng14.dylib
 
 if [ "$1" == "$ARCH_IPHONE" ]; then ##  ARM	 ##
 
@@ -162,7 +162,7 @@ make install
 cp $PNG_LIB_DIR/lib/$LIBPATH_png $LIB_DIR/libpng.a.i386
 cp $PNG_LIB_DIR/lib/$LIBPATH_png_dylib $LIB_DIR/png_i386_dylib/libpng.dylib
 # cp the include/* files
-cp $PNG_LIB_DIR/include/libpng12/* $LIB_DIR/include/png/
+cp $PNG_LIB_DIR/include/libpng14/* $LIB_DIR/include/png/
 
 make distclean
 
