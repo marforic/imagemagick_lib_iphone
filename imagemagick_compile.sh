@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Author: Claudio Marforio
 # e-mail: marforio@gmail.com
 # date: 21.06.2010
@@ -14,28 +16,36 @@
 FINAL_DIR=~/Desktop/IMPORT_ME/
 
 # The directory structure has to be:
-# ~/Desktop/cross_compile/i_m-VERSION/	 <- ImageMagick top directory
-#	 |-IMDelegataes/	 <- Some delegates, in particular jpeg + png + tiff + ?
-#	 |-jpeg-6b/          <- Patched jpeg6b
-#	 |-libpng-1.4.0      <- png lib -- no need to patch it
-#	 |-tiff-3.9.2        <- tiff lib -- no need to patch it
-#	 |-...	 <- we don't care what's here! :)
+# ~/Desktop/cross_compile/ImageMagick-VERSION/	 <- ImageMagick top directory
+#	            |        /IMDelegataes/	 <- Some delegates, in particular jpeg + png + tiff
+#	            |           |-jpeg-6b/          <- Patched jpeg6b
+#	            |           |-libpng-1.2.43     <- png lib -- no need to patch it
+#	            |           |-tiff-3.9.2        <- tiff lib -- no need to patch it
+#	            |- ...	 <- we don't care what's here! :)
 
 # If you don't have this directory structure you can either create it or try change around the script
 
-#!/bin/bash
+IM_VERSION="$1"
+IM_DIR="/Users/$USER/Desktop/cross_compile/ImageMagick-$IM_VERSION"
+IM_DELEGATES_DIR="$IM_DIR/IMDelegates/"
 
-IM_VERSION=$1
-IM_DIR="$(pwd)/cross_compile/i_m-$IM_VERSION"
-JPEG_DIR=$IM_DIR/IMDelegates/jpeg-6b
-PNG_DIR=$IM_DIR/IMDelegates/libpng-1.2.43
-TIFF_DIR=$IM_DIR/IMDelegates/tiff-3.9.2
+if [ -d $IM_DELEGATES_DIR ]; then
+	echo "IMDelegates folder present in: $IM_DELEGATES_DIR"
+else
+	echo "IMDelegates folder not found, copying over"
+	cp -r "/Users/$USER/Desktop/cross_compile/IMDelegates" "$IM_DIR/IMDelegates"
+fi
+
+JPEG_DIR="$IM_DIR/IMDelegates/jpeg-6b"
+PNG_DIR="$IM_DIR/IMDelegates/libpng-1.2.43"
+TIFF_DIR="$IM_DIR/IMDelegates/tiff-3.9.2"
 
 # Architectures and versions
 ARCH_SIM="i386"
 ARCH_IPHONE="armv6"
 GCC_VERSION="4.0.1"
 MIN_IPHONE_VERSION="3.1"
+IPHONE_SDK_VERSION="4.0"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
 TARGET_LIB_DIR=$(pwd)/tmp_target
@@ -68,6 +78,14 @@ export DEVROOT=/Developer/Platforms/iPhoneOS.platform/Developer
 export SDKROOT=$DEVROOT/SDKs/iPhoneOS4.0.sdk
 export MACOSXROOT=/Developer/SDKs/MacOSX10.5.sdk
 
+# Compiler flags and config arguments - IPHONE
+COMMON_IPHONE_LDFLAGS="-L$SDKROOT/usr/lib/"
+COMMON_IPHONE_CFLAGS="-arch $ARCH_IPHONE -miphoneos-version-min=$MIN_IPHONE_VERSION -pipe -no-cpp-precomp -isysroot $SDKROOT \
+-I$SDKROOT/usr/include -I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -L$SDKROOT/usr/lib/"
+
+IM_LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$LIB_DIR"
+IM_IFLAGS="-I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff"
+
 ############    HACK    ############
 # ImageMagick requires this header, that doesn't exist for the iPhone
 # Just copying it make things compile/work
@@ -75,8 +93,8 @@ if [ -e $SDKROOT/usr/include/crt_externs.h ]; then
 	echo "crt_externals.h already copied! Good to go!";
 else
 	echo "need to copy crt_externals.h for compilation, please enter sudo password"
-	sudo cp /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator3.1.3.sdk/usr/include/crt_externs.h \
-		$SDKROOT/usr/include/crt_externs.h
+	sudo cp "/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator$IPHONE_SDK_VERSION.sdk/usr/include/crt_externs.h" \
+		"$SDKROOT/usr/include/crt_externs.h"
 fi
 ############    END     ############
 
@@ -104,10 +122,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/ -miphoneos-version-min=$MIN_IPHONE_VERSION"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot -miphoneos-version-min=$MIN_IPHONE_VERSION $SDKROOT -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
-export CPP="/usr/bin/cpp $CPPFLAGS"
-export LDFLAGS="-L$SDKROOT/usr/lib/"
+export LDFLAGS="$COMMON_IPHONE_LDFLAGS"
+export CFLAGS="$COMMON_IPHONE_CFLAGS"
 
 ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static \
 CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin
@@ -171,10 +187,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/ -miphoneos-version-min=$MIN_IPHONE_VERSION"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -miphoneos-version-min=$MIN_IPHONE_VERSION -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
-export CPP="/usr/bin/cpp $CPPFLAGS"
-export LDFLAGS="-L$SDKROOT/usr/lib/"
+export LDFLAGS="$COMMON_IPHONE_LDFLAGS"
+export CFLAGS="$COMMON_IPHONE_CFLAGS"
 
 ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static \
 CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin
@@ -194,7 +208,7 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 export CC=$U_CC
 export CFLAGS="-arch $ARCH_SIM"
 export LD=$U_LD
-export LDFLAGS="-L/usr/lib/ -arch $ARCH_SIM" # just needed if at some point simulator will be x86_64
+export LDFLAGS="-L/usr/lib/ -arch $ARCH_SIM"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -237,10 +251,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include/ -miphoneos-version-min=$MIN_IPHONE_VERSION"
-export CFLAGS="$CPPFLAGS -arch $ARCH_IPHONE -pipe -no-cpp-precomp -isysroot $SDKROOT -miphoneos-version-min=$MIN_IPHONE_VERSION -I$SDKROOT/usr/include -L$SDKROOT/usr/lib/"
-export CPP="/usr/bin/cpp $CPPFLAGS"
-export LDFLAGS="-L$SDKROOT/usr/lib/"
+export LDFLAGS="$COMMON_IPHONE_LDFLAGS"
+export CFLAGS="$COMMON_IPHONE_CFLAGS"
 
 ./configure prefix=$TIFF_LIB_DIR CC=$DEVROOT/usr/bin/arm-apple-darwin10-gcc-$GCC_VERSION \
 LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin --disable-cxx \
@@ -305,10 +317,8 @@ U_LDFLAGS=$LDFLAGS
 U_CPP=$CPP
 U_CPPFLAGS=$CPPFLAGS
 
-export CPPFLAGS="-I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/ -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -L$LIB_DIR -miphoneos-version-min=$MIN_IPHONE_VERSION"
-export CFLAGS="$CPPFLAGS -arch armv6 -pipe -no-cpp-precomp -isysroot $SDKROOT -I$SDKROOT/usr/include -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE -miphoneos-version-min=$MIN_IPHONE_VERSION"
-export LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$SDKROOT/usr/lib/"
-export CPP="/usr/bin/cpp $CPPFLAGS"
+export LDFLAGS="$IM_LDFLAGS $COMMON_IPHONE_LDFLAGS"
+export CFLAGS="$COMMON_IPHONE_CFLAGS $IM_IFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 export CXXFLAGS="-Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 
 # configure to have the static libraries and make
@@ -331,11 +341,11 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM -isysroot $MACOSXROOT -mmacosx-version-min=10.5 -DHAVE_J1=0 -DTARGET_OS_IPHONE -L$LIB_DIR"
-export LD=$U_LD
 export LDFLAGS="-isysroot $MACOSXROOT -mmacosx-version-min=10.5"
+export CFLAGS="-arch $ARCH_SIM -isysroot $MACOSXROOT -mmacosx-version-min=10.5 -L$LIB_DIR -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export LD=$U_LD
 export CPP=$U_CPP
-export CPPFLAGS="$U_CPPFLAGS -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -L$LIB_DIR $U_LDFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE"
+export CPPFLAGS="$U_CPPFLAGS $U_LDFLAGS $IM_IFLAGS -L$LIB_DIR -DHAVE_J1=0 -DTARGET_OS_IPHONE"
 
 # configure with standard parameters
 ./configure prefix=$IM_LIB_DIR --host=i686-apple-darwin10 \
