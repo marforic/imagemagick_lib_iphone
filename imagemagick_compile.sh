@@ -43,8 +43,8 @@ else
 fi
 
 JPEG_DIR="$IM_DIR/IMDelegates/jpeg-6b"
-PNG_DIR="$IM_DIR/IMDelegates/libpng-1.4.2"
-TIFF_DIR="$IM_DIR/IMDelegates/tiff-3.9.2"
+PNG_DIR="$IM_DIR/IMDelegates/libpng-1.4.3"
+TIFF_DIR="$IM_DIR/IMDelegates/tiff-3.8.2"
 
 # Architectures and versions
 ARCH_SIM="i386"
