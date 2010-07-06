@@ -2,6 +2,12 @@
 
 You can grab the latest compiled ImageMagick directly from their <a href="ftp://magick.imagemagick.org/pub/ImageMagick/iPhone/">ftp</a> or any mirror.
 
+There is always 2 packages for the compiled ImageMagick:
+* iPhoneMagick-VERSION-libs.zip
+* iPhoneMagick-VERSION.zip
+
+The first one includes headers and compiled libraries that have been used to compile ImageMagick. Most users would need this one.
+
 <h1>ImageMagick compiling script for iPhone OS and iPhone Simulator</h1>
 
 To run the script:
