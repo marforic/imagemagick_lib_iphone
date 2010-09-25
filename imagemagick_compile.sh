@@ -27,7 +27,7 @@ FINAL_DIR=~/Desktop/IMPORT_ME/
 
 if [[ $# != 1 ]]; then
 	echo "imagemagick_compile.sh takes 1 argument: the version of ImageMagick that you want to compile!"
-	echo "USAGE: imagemagick_compile.sh 6.6.1-7"
+	echo "USAGE: imagemagick_compile.sh 6.6.4-5"
 	exit
 fi
 
@@ -51,7 +51,8 @@ ARCH_SIM="i386"
 ARCH_IPHONE="armv6"
 GCC_VERSION="4.0.1"
 MIN_IPHONE_VERSION="3.1"
-IPHONE_SDK_VERSION="4.0"
+IPHONE_SDK_VERSION="4.1"
+MACOSX_SDK_VERSION="1.5"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
 TARGET_LIB_DIR=$(pwd)/tmp_target
@@ -79,10 +80,10 @@ mkdir -p $PNG_LIB_DIR # libpng manages to create subdirectories by itself with m
 mkdir -p $TIFF_LIB_DIR # libtiff manages to create subdirectories by itself with make install
 
 # General folders where you have the iPhone compiler + tools
-export DEVROOT=/Developer/Platforms/iPhoneOS.platform/Developer
+export DEVROOT="/Developer/Platforms/iPhoneOS.platform/Developer"
 # Change this to match for which version of the SDK you want to compile -- you can change the number for the version
-export SDKROOT=$DEVROOT/SDKs/iPhoneOS4.0.sdk
-export MACOSXROOT=/Developer/SDKs/MacOSX10.5.sdk
+export SDKROOT="${DEVROOT}/SDKs/iPhoneOS${IPHONE_SDK_VERSION}.sdk"
+export MACOSXROOT="/Developer/SDKs/MacOSX${MACOSX_SDK_VERSION}.sdk"
 
 # Compiler flags and config arguments - IPHONE
 COMMON_IPHONE_LDFLAGS="-L$SDKROOT/usr/lib/"
