@@ -52,7 +52,7 @@ ARCH_IPHONE="armv6"
 GCC_VERSION="4.0.1"
 MIN_IPHONE_VERSION="3.1"
 IPHONE_SDK_VERSION="4.1"
-MACOSX_SDK_VERSION="1.5"
+MACOSX_SDK_VERSION="10.5"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
 TARGET_LIB_DIR=$(pwd)/tmp_target
