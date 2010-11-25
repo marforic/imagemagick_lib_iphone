@@ -29,12 +29,12 @@ Upon successful compilation a folder called "IMPORT_ME" will be created on your 
 After including everything into XCode please also make sure to have these settings (Build tab of the project information):
 
 * Other Linker Flags: -lMagickCore -lMagickWand -lz -lbz2 -ljpeg -lpng
-* Header Search Paths: $(SRCROOT) – make it Recursive
-* Library Search Paths: $(SRCROOT) – make it Recursive
+* Header Search Paths: $(SRCROOT) - make it Recursive
+* Library Search Paths: $(SRCROOT) - make it Recursive
 
 On the lower left click on the small-wheel and select: Add User-Defined Setting
 * Key: OTHER_CFLAGS
-* Value: -Dmacinsoth=1
+* Value: -Dmacintosh=1
 
 <h2>Sample project</h2>
 
