@@ -2,7 +2,7 @@
 
 # Author: Claudio Marforio
 # e-mail: marforio@gmail.com
-# date: 21.06.2010
+# date: 12.12.2010
 
 # Script to make static libraries (jpeg + png + tiff) and ImageMagick
 # the libraries will be conbined into i386+arm.a static libraries
@@ -27,7 +27,7 @@ FINAL_DIR=~/Desktop/IMPORT_ME/
 
 if [[ $# != 1 ]]; then
 	echo "imagemagick_compile.sh takes 1 argument: the version of ImageMagick that you want to compile!"
-	echo "USAGE: imagemagick_compile.sh 6.6.4-5"
+	echo "USAGE: imagemagick_compile.sh 6.6.6-4"
 	exit
 fi
 
@@ -49,9 +49,9 @@ TIFF_DIR="$IM_DIR/IMDelegates/tiff-3.8.2"
 # Architectures and versions
 ARCH_SIM="i386"
 ARCH_IPHONE="armv6"
-GCC_VERSION="4.0.1"
+GCC_VERSION="4.2.1"
 MIN_IPHONE_VERSION="3.1"
-IPHONE_SDK_VERSION="4.1"
+IPHONE_SDK_VERSION="4.2"
 MACOSX_SDK_VERSION="10.5"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
@@ -85,16 +85,19 @@ mkdir -p $TIFF_LIB_DIR # libtiff manages to create subdirectories by itself with
 export DEVROOT="/Developer/Platforms/iPhoneOS.platform/Developer"
 # Change this to match for which version of the SDK you want to compile -- you can change the number for the version
 export SDKROOT="${DEVROOT}/SDKs/iPhoneOS${IPHONE_SDK_VERSION}.sdk"
-export MACOSXROOT="/Developer/SDKs/MacOSX${MACOSX_SDK_VERSION}.sdk"
+export MACOSXROOT="/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${IPHONE_SDK_VERSION}.sdk"
 
 # Compiler flags and config arguments - IPHONE
 COMMON_IPHONE_LDFLAGS="-L$SDKROOT/usr/lib/"
 COMMON_IPHONE_CFLAGS="-arch $ARCH_IPHONE -miphoneos-version-min=$MIN_IPHONE_VERSION -pipe -Os -isysroot $SDKROOT \
 -I$SDKROOT/usr/include -I$SDKROOT/usr/lib/gcc/arm-apple-darwin10/$GCC_VERSION/include/"
 
+COMMON_SIM_LDFLAGS="-L$MACOSXROOT/usr/lib"
+COMMON_SIM_CFLAGS="-I$MACOSXROOT/usr/include -I$MACOSXROOT/usr/lib/gcc/i686-apple-darwin10/$GCC_VERSION/include/"
+
 IM_LDFLAGS="-L$LIB_DIR/jpeg_arm_dylib/ -L$LIB_DIR/png_arm_dylib/ -L$LIB_DIR/tiff_arm_dylib/ -L$LIB_DIR"
 IM_LDFLAGS_SIM="-L$LIB_DIR/jpeg_i386_dylib/ -L$LIB_DIR/png_i386_dylib/ -L$LIB_DIR/tiff_i386_dylib/ -L$LIB_DIR"
-IM_IFLAGS="-I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff"
+IM_IFLAGS="$COMMON_SIM_CFLAGS -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff"
 
 ############    HACK    ############
 # ImageMagick requires this header, that doesn't exist for the iPhone
@@ -147,9 +150,9 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM"
+export CFLAGS="$COMMON_SIM_CFLAGS -arch $ARCH_SIM"
 export LD=$U_LD
-export LDFLAGS="-L/usr/lib/ $U_LDFLAGS"
+export LDFLAGS="$COMMON_SIM_LDFLAGS $U_LDFLAGS"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -212,9 +215,9 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM"
+export CFLAGS="$COMMON_SIM_CFLAGS -arch $ARCH_SIM"
 export LD=$U_LD
-export LDFLAGS="-L/usr/lib/ -arch $ARCH_SIM"
+export LDFLAGS="$COMMON_SIM_LDFLAGS -arch $ARCH_SIM"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -276,9 +279,9 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export CFLAGS="-arch $ARCH_SIM"
+export CFLAGS="$COMMON_SIM_CFLAGS -arch $ARCH_SIM"
 export LD=$U_LD
-export LDFLAGS="-L/usr/lib/ $U_LDFLAGS"
+export LDFLAGS="$COMMON_SIM_LDFLAGS $U_LDFLAGS"
 export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
@@ -359,7 +362,7 @@ export CPPFLAGS="$U_CPPFLAGS $U_LDFLAGS $IM_IFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHON
 # configure with standard parameters
 ./configure prefix=$IM_LIB_DIR CC=$DEVROOT/usr/bin/clang --host=i686-apple-darwin10 \
 --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
---disable-shared --disable-openmp --without-bzlib --without-freetype
+--disable-shared --disable-openmp --without-bzlib --without-freetype --without-threads
 
 # compile ImageMagick
 make -j2
@@ -431,4 +434,4 @@ tiff "$ARCH_SIM"
 im "$ARCH_IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
-# zip_for_ftp
+#zip_for_ftp
