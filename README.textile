@@ -14,7 +14,7 @@ To run the script:
 <pre>
 	./imagemagick_compile.sh VERSION
 </pre>
-where VERSION is the version of ImageMagick you want to compile (i.e.: 6.6.2-6, svn, ...)
+where VERSION is the version of ImageMagick you want to compile (i.e.: 6.6.8-5, svn, ...)
 
 This script will compile ImageMagick as a static library to be included in iPhone projects
 Support for:
@@ -22,7 +22,7 @@ Support for:
 * jpeg
 * tiff
 
-Upon successful compilation a folder called "IMPORT_ME" will be created on your "~/Desktop": you can import it into your XCode project
+Upon successful compilation a folder called "IMPORT_ME" will be created from where you start the script: you can import it into your XCode project
 
 <h2>XCode project settings</h2>
 
@@ -38,4 +38,4 @@ On the lower left click on the small-wheel and select: Add User-Defined Setting
 
 <h2>Sample project</h2>
 
-A more or less updated project can also be downloaded. I don't update the library in it too often, but it does give an idea of all the settings and some ways to play around with IM in an iPhone application. <a href="http://www.cloudgoessocial.net/im_iphone/IM_Test.zip">Get it here!</a>
+A more or less updated project is found in the IM_Test subfolder
