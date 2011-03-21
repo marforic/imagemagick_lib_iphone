@@ -1,0 +1,11 @@
+.svn
+*.pdf
+.DS_Store
+*.zip
+.com.apple.*
+build/*
+*.xcodeproj/*.pbxuser
+*.xcodeproj/*.mode1v3
+*.xcodeproj/*.perspectivev3
+*.xcodeproj/*.xcworkspace
+*.xcodeproj/xcuserdata

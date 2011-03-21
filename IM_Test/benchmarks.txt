@@ -1,0 +1,20 @@
+-- Simulator
+-- JPEG compression
+Total time for 10 rounds with JPEG compression: 1.428853
+min time: 0.123710, max time: 0.146690
+Mean time: 0.142885
+-- NO compression
+Total time for 10 rounds without compression: 0.386569
+min time: 0.037030, max time: 0.049601
+Mean time: 0.038657
+
+-- Device
+-- JPEG compression
+Total time for 10 rounds with JPEG compression: 25.885873
+min time: 2.535424, max time: 2.785139
+Mean time: 2.588587
+-- NO compression
+Total time for 10 rounds without compression: 8.477441
+min time: 0.827880, max time: 1.007106
+Mean time: 0.847744
+Benchmarks finished

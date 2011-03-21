@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuremap [
+<!ELEMENT configuremap (configure)+>
+<!ELEMENT configure (#PCDATA)>
+<!ATTLIST configure name CDATA #REQUIRED>
+<!ATTLIST configure value CDATA #REQUIRED>
+]>
+<configuremap>
+  <configure name="NAME" value="ImageMagick"/>
+  <configure name="LIB_VERSION" value="0x668"/>
+  <configure name="LIB_VERSION_NUMBER" value="6,6,8,5"/>
+  <configure name="RELEASE_DATE" value="2011-03-20"/>
+  <configure name="CONFIGURE" value="./configure  'prefix=/Users/cloud/Desktop/tmp_target/imagemagick' 'CC=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/clang' '--host=i686-apple-darwin10' '--disable-largefile' '--with-quantum-depth=8' '--without-magick-plus-plus' '--without-perl' '--without-x' '--disable-shared' '--disable-openmp' '--without-bzlib' '--without-freetype' '--without-threads' 'host_alias=i686-apple-darwin10' 'CFLAGS=-arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -mmacosx-version-min=10.6 -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/include -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I/Users/cloud/Desktop/tmp_target/im_libs/include/jpeg -I/Users/cloud/Desktop/tmp_target/im_libs/include/png -I/Users/cloud/Desktop/tmp_target/im_libs/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN' 'LDFLAGS=-isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -mmacosx-version-min=10.6 -L/Users/cloud/Desktop/tmp_target/im_libs/jpeg_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs/png_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs/tiff_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs' 'CPPFLAGS=  -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/include -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I/Users/cloud/Desktop/tmp_target/im_libs/include/jpeg -I/Users/cloud/Desktop/tmp_target/im_libs/include/png -I/Users/cloud/Desktop/tmp_target/im_libs/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN' 'CPP=' 'CXXFLAGS=-Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN'"/>
+  <configure name="PREFIX" value="/Users/cloud/Desktop/tmp_target/imagemagick"/>
+  <configure name="EXEC-PREFIX" value="/Users/cloud/Desktop/tmp_target/imagemagick"/>
+  <configure name="VERSION" value="6.6.8"/>
+  <configure name="CC" value="/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/clang"/>
+  <configure name="CFLAGS" value="-arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -mmacosx-version-min=10.6 -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/include -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I/Users/cloud/Desktop/tmp_target/im_libs/include/jpeg -I/Users/cloud/Desktop/tmp_target/im_libs/include/png -I/Users/cloud/Desktop/tmp_target/im_libs/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN -Wall"/>
+  <configure name="CPPFLAGS" value="-I/Users/cloud/Desktop/tmp_target/imagemagick/include/ImageMagick"/>
+  <configure name="PCFLAGS" value=""/>
+  <configure name="DEFS" value="-DHAVE_CONFIG_H"/>
+  <configure name="LDFLAGS" value="-L/Users/cloud/Desktop/tmp_target/imagemagick/lib -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -mmacosx-version-min=10.6 -L/Users/cloud/Desktop/tmp_target/im_libs/jpeg_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs/png_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs/tiff_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs"/>
+  <configure name="LIBS" value="-lMagickCore -ltiff -ljpeg -lpng -lz -lm "/>
+  <configure name="CXX" value="g++"/>
+  <configure name="CXXFLAGS" value="-Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN"/>
+  <configure name="DISTCHECK_CONFIG_FLAGS" value="'CC=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/clang' 'CFLAGS=-arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -mmacosx-version-min=10.6 -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/include -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I/Users/cloud/Desktop/tmp_target/im_libs/include/jpeg -I/Users/cloud/Desktop/tmp_target/im_libs/include/png -I/Users/cloud/Desktop/tmp_target/im_libs/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN' 'CPPFLAGS= -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/include -I/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/ -I/Users/cloud/Desktop/tmp_target/im_libs/include/jpeg -I/Users/cloud/Desktop/tmp_target/im_libs/include/png -I/Users/cloud/Desktop/tmp_target/im_libs/include/tiff -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN' 'LDFLAGS=-isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.3.sdk -mmacosx-version-min=10.6 -L/Users/cloud/Desktop/tmp_target/im_libs/jpeg_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs/png_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs/tiff_i386_dylib/ -L/Users/cloud/Desktop/tmp_target/im_libs' --disable-deprecated --with-umem=no --with-bzlib=no --with-autotrace=no --with-fontconfig=no --with-freetype=no --with-gslib=no --with-fontpath= --with-rsvg=no --with-xml=no --with-perl=no"/>
+  <configure name="HOST" value="i686-apple-darwin10"/>
+  <configure name="FEATURES" value=""/>
+  <configure name="DELEGATES" value="jpeg jng png tiff zlib"/>
+  <configure name="COPYRIGHT" value="Copyright (C) 1999-2011 ImageMagick Studio LLC"/>
+  <configure name="WEBSITE" value="http://www.imagemagick.org"/>
+  <configure name="QuantumDepth" value="8"/>
+</configuremap>
