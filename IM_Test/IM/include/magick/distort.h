@@ -49,6 +49,7 @@ typedef enum
   BarrelDistortion,
   BarrelInverseDistortion,
   ShepardsDistortion,
+  ResizeDistortion,
   SentinelDistortion
 } DistortImageMethod;
 
@@ -62,12 +63,14 @@ typedef enum
   /*
     Methods unique to SparseColor().
   */
-  VoronoiColorInterpolate = SentinelDistortion
+  VoronoiColorInterpolate = SentinelDistortion,
+  InverseColorInterpolate
 } SparseColorMethod;
 
 extern MagickExport Image
   *DistortImage(const Image *,const DistortImageMethod,const size_t,
     const double *,MagickBooleanType,ExceptionInfo *exception),
+  *DistortResizeImage(const Image *,const size_t,const size_t,ExceptionInfo *),
   *SparseColorImage(const Image *,const ChannelType,const SparseColorMethod,
     const size_t,const double *,ExceptionInfo *);
 

@@ -16,18 +16,17 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* IM_TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* IM_TestViewController.m */; };
 		6188D5C410066BB300BA109F /* iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 6188D5C310066BB300BA109F /* iphone.png */; };
+		61A39749136FDA4000507B58 /* configure.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61A39745136FDA4000507B58 /* configure.xml */; };
+		61A3974A136FDA4000507B58 /* english.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61A39746136FDA4000507B58 /* english.xml */; };
+		61A3974B136FDA4000507B58 /* francais.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61A39747136FDA4000507B58 /* francais.xml */; };
+		61A3974C136FDA4000507B58 /* locale.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61A39748136FDA4000507B58 /* locale.xml */; };
 		61EBC2401336A82F00F1E6D1 /* coder.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1AC1336A82F00F1E6D1 /* coder.xml */; };
 		61EBC2411336A82F00F1E6D1 /* colors.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1AD1336A82F00F1E6D1 /* colors.xml */; };
-		61EBC2421336A82F00F1E6D1 /* configure.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1AE1336A82F00F1E6D1 /* configure.xml */; };
 		61EBC2431336A82F00F1E6D1 /* delegates.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1AF1336A82F00F1E6D1 /* delegates.xml */; };
-		61EBC2441336A82F00F1E6D1 /* english.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B01336A82F00F1E6D1 /* english.xml */; };
-		61EBC2451336A82F00F1E6D1 /* francais.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B11336A82F00F1E6D1 /* francais.xml */; };
-		61EBC2461336A82F00F1E6D1 /* locale.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B21336A82F00F1E6D1 /* locale.xml */; };
 		61EBC2471336A82F00F1E6D1 /* log.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B31336A82F00F1E6D1 /* log.xml */; };
 		61EBC2481336A82F00F1E6D1 /* magic.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B41336A82F00F1E6D1 /* magic.xml */; };
 		61EBC2491336A82F00F1E6D1 /* mime.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B51336A82F00F1E6D1 /* mime.xml */; };
 		61EBC24A1336A82F00F1E6D1 /* policy.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B61336A82F00F1E6D1 /* policy.xml */; };
-		61EBC24B1336A82F00F1E6D1 /* sRGB.icm in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B71336A82F00F1E6D1 /* sRGB.icm */; };
 		61EBC24C1336A82F00F1E6D1 /* thresholds.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B81336A82F00F1E6D1 /* thresholds.xml */; };
 		61EBC24D1336A82F00F1E6D1 /* type-dejavu.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1B91336A82F00F1E6D1 /* type-dejavu.xml */; };
 		61EBC24E1336A82F00F1E6D1 /* type-ghostscript.xml in Resources */ = {isa = PBXBuildFile; fileRef = 61EBC1BA1336A82F00F1E6D1 /* type-ghostscript.xml */; };
@@ -55,18 +54,17 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IM_Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IM_Test_Prefix.pch; sourceTree = "<group>"; };
 		6188D5C310066BB300BA109F /* iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone.png; sourceTree = "<group>"; };
+		61A39745136FDA4000507B58 /* configure.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = configure.xml; sourceTree = "<group>"; };
+		61A39746136FDA4000507B58 /* english.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = english.xml; sourceTree = "<group>"; };
+		61A39747136FDA4000507B58 /* francais.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = francais.xml; sourceTree = "<group>"; };
+		61A39748136FDA4000507B58 /* locale.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = locale.xml; sourceTree = "<group>"; };
 		61EBC1AC1336A82F00F1E6D1 /* coder.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = coder.xml; sourceTree = "<group>"; };
 		61EBC1AD1336A82F00F1E6D1 /* colors.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = colors.xml; sourceTree = "<group>"; };
-		61EBC1AE1336A82F00F1E6D1 /* configure.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = configure.xml; sourceTree = "<group>"; };
 		61EBC1AF1336A82F00F1E6D1 /* delegates.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = delegates.xml; sourceTree = "<group>"; };
-		61EBC1B01336A82F00F1E6D1 /* english.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = english.xml; sourceTree = "<group>"; };
-		61EBC1B11336A82F00F1E6D1 /* francais.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = francais.xml; sourceTree = "<group>"; };
-		61EBC1B21336A82F00F1E6D1 /* locale.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = locale.xml; sourceTree = "<group>"; };
 		61EBC1B31336A82F00F1E6D1 /* log.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = log.xml; sourceTree = "<group>"; };
 		61EBC1B41336A82F00F1E6D1 /* magic.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = magic.xml; sourceTree = "<group>"; };
 		61EBC1B51336A82F00F1E6D1 /* mime.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = mime.xml; sourceTree = "<group>"; };
 		61EBC1B61336A82F00F1E6D1 /* policy.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = policy.xml; sourceTree = "<group>"; };
-		61EBC1B71336A82F00F1E6D1 /* sRGB.icm */ = {isa = PBXFileReference; lastKnownFileType = file; path = sRGB.icm; sourceTree = "<group>"; };
 		61EBC1B81336A82F00F1E6D1 /* thresholds.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = thresholds.xml; sourceTree = "<group>"; };
 		61EBC1B91336A82F00F1E6D1 /* type-dejavu.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "type-dejavu.xml"; sourceTree = "<group>"; };
 		61EBC1BA1336A82F00F1E6D1 /* type-ghostscript.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "type-ghostscript.xml"; sourceTree = "<group>"; };
@@ -302,18 +300,17 @@
 		61EBC1AB1336A82F00F1E6D1 /* im_config */ = {
 			isa = PBXGroup;
 			children = (
+				61A39745136FDA4000507B58 /* configure.xml */,
+				61A39746136FDA4000507B58 /* english.xml */,
+				61A39747136FDA4000507B58 /* francais.xml */,
+				61A39748136FDA4000507B58 /* locale.xml */,
 				61EBC1AC1336A82F00F1E6D1 /* coder.xml */,
 				61EBC1AD1336A82F00F1E6D1 /* colors.xml */,
-				61EBC1AE1336A82F00F1E6D1 /* configure.xml */,
 				61EBC1AF1336A82F00F1E6D1 /* delegates.xml */,
-				61EBC1B01336A82F00F1E6D1 /* english.xml */,
-				61EBC1B11336A82F00F1E6D1 /* francais.xml */,
-				61EBC1B21336A82F00F1E6D1 /* locale.xml */,
 				61EBC1B31336A82F00F1E6D1 /* log.xml */,
 				61EBC1B41336A82F00F1E6D1 /* magic.xml */,
 				61EBC1B51336A82F00F1E6D1 /* mime.xml */,
 				61EBC1B61336A82F00F1E6D1 /* policy.xml */,
-				61EBC1B71336A82F00F1E6D1 /* sRGB.icm */,
 				61EBC1B81336A82F00F1E6D1 /* thresholds.xml */,
 				61EBC1B91336A82F00F1E6D1 /* type-dejavu.xml */,
 				61EBC1BA1336A82F00F1E6D1 /* type-ghostscript.xml */,
@@ -547,21 +544,20 @@
 				61EC622D101EF99F00AE41D8 /* iphone.tif in Resources */,
 				61EBC2401336A82F00F1E6D1 /* coder.xml in Resources */,
 				61EBC2411336A82F00F1E6D1 /* colors.xml in Resources */,
-				61EBC2421336A82F00F1E6D1 /* configure.xml in Resources */,
 				61EBC2431336A82F00F1E6D1 /* delegates.xml in Resources */,
-				61EBC2441336A82F00F1E6D1 /* english.xml in Resources */,
-				61EBC2451336A82F00F1E6D1 /* francais.xml in Resources */,
-				61EBC2461336A82F00F1E6D1 /* locale.xml in Resources */,
 				61EBC2471336A82F00F1E6D1 /* log.xml in Resources */,
 				61EBC2481336A82F00F1E6D1 /* magic.xml in Resources */,
 				61EBC2491336A82F00F1E6D1 /* mime.xml in Resources */,
 				61EBC24A1336A82F00F1E6D1 /* policy.xml in Resources */,
-				61EBC24B1336A82F00F1E6D1 /* sRGB.icm in Resources */,
 				61EBC24C1336A82F00F1E6D1 /* thresholds.xml in Resources */,
 				61EBC24D1336A82F00F1E6D1 /* type-dejavu.xml in Resources */,
 				61EBC24E1336A82F00F1E6D1 /* type-ghostscript.xml in Resources */,
 				61EBC24F1336A82F00F1E6D1 /* type-windows.xml in Resources */,
 				61EBC2501336A82F00F1E6D1 /* type.xml in Resources */,
+				61A39749136FDA4000507B58 /* configure.xml in Resources */,
+				61A3974A136FDA4000507B58 /* english.xml in Resources */,
+				61A3974B136FDA4000507B58 /* francais.xml in Resources */,
+				61A3974C136FDA4000507B58 /* locale.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

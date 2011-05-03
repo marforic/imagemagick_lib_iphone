@@ -26,27 +26,29 @@
 #endif
 
 /* Define to 1 if the `closedir' function returns void instead of `int'. */
-/* #undef CLOSEDIR_VOID */
+#ifndef MAGICKCORE_CLOSEDIR_VOID
+#define MAGICKCORE_CLOSEDIR_VOID 1
+#endif
 
 /* Location of coder modules */
 #ifndef MAGICKCORE_CODER_PATH
-#define MAGICKCORE_CODER_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/lib/ImageMagick-6.6.8/modules-Q8/coders/"
+#define MAGICKCORE_CODER_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/lib/ImageMagick-6.6.9/modules-Q8/coders/"
 #endif
 
 /* Subdirectory of lib where coder modules are installed */
 #ifndef MAGICKCORE_CODER_RELATIVE_PATH
-#define MAGICKCORE_CODER_RELATIVE_PATH "ImageMagick-6.6.8/modules-Q8/coders"
+#define MAGICKCORE_CODER_RELATIVE_PATH "ImageMagick-6.6.9/modules-Q8/coders"
 #endif
 
 /* Directory where architecture-dependent configuration files live. */
 #ifndef MAGICKCORE_CONFIGURE_PATH
-#define MAGICKCORE_CONFIGURE_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/lib/ImageMagick-6.6.8/config/"
+#define MAGICKCORE_CONFIGURE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/etc/ImageMagick/"
 #endif
 
 /* Subdirectory of lib where architecture-dependent configuration files live.
    */
 #ifndef MAGICKCORE_CONFIGURE_RELATIVE_PATH
-#define MAGICKCORE_CONFIGURE_RELATIVE_PATH "ImageMagick-6.6.8/config"
+#define MAGICKCORE_CONFIGURE_RELATIVE_PATH "ImageMagick"
 #endif
 
 /* Define if you have DJVU library */
@@ -54,7 +56,7 @@
 
 /* Directory where ImageMagick documents live. */
 #ifndef MAGICKCORE_DOCUMENTATION_PATH
-#define MAGICKCORE_DOCUMENTATION_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/share/doc/ImageMagick-6.6.8/"
+#define MAGICKCORE_DOCUMENTATION_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/doc/ImageMagick-6.6.9//"
 #endif
 
 /* Define if you have Display Postscript */
@@ -68,7 +70,7 @@
 
 /* Directory where executables are installed. */
 #ifndef MAGICKCORE_EXECUTABLE_PATH
-#define MAGICKCORE_EXECUTABLE_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/bin/"
+#define MAGICKCORE_EXECUTABLE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/bin/"
 #endif
 
 /* Define if you have FFTW library */
@@ -76,12 +78,12 @@
 
 /* Location of filter modules */
 #ifndef MAGICKCORE_FILTER_PATH
-#define MAGICKCORE_FILTER_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/lib/ImageMagick-6.6.8/modules-Q8/filters/"
+#define MAGICKCORE_FILTER_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/lib/ImageMagick-6.6.9/modules-Q8/filters/"
 #endif
 
 /* Subdirectory of lib where filter modules are installed */
 #ifndef MAGICKCORE_FILTER_RELATIVE_PATH
-#define MAGICKCORE_FILTER_RELATIVE_PATH "ImageMagick-6.6.8/modules-Q8/filters"
+#define MAGICKCORE_FILTER_RELATIVE_PATH "ImageMagick-6.6.9/modules-Q8/filters"
 #endif
 
 /* Define if you have FONTCONFIG library */
@@ -124,7 +126,9 @@
 /* #undef HAVE_ARGZ_STRINGIFY */
 
 /* Define to 1 if you have the <arm/limits.h> header file. */
-/* #undef HAVE_ARM_LIMITS_H */
+#ifndef MAGICKCORE_HAVE_ARM_LIMITS_H
+#define MAGICKCORE_HAVE_ARM_LIMITS_H 1
+#endif
 
 /* Define to 1 if you have the `atexit' function. */
 #ifndef MAGICKCORE_HAVE_ATEXIT
@@ -416,9 +420,7 @@
 
 /* Define to 1 if the type `long double' works and has more range or precision
    than `double'. */
-#ifndef MAGICKCORE_HAVE_LONG_DOUBLE_WIDER
-#define MAGICKCORE_HAVE_LONG_DOUBLE_WIDER 1
-#endif
+/* #undef HAVE_LONG_DOUBLE_WIDER */
 
 /* Define to 1 if you have the `lstat' function. */
 #ifndef MAGICKCORE_HAVE_LSTAT
@@ -459,14 +461,10 @@
 #endif
 
 /* Define to 1 if you have a working `mmap' system call. */
-#ifndef MAGICKCORE_HAVE_MMAP
-#define MAGICKCORE_HAVE_MMAP 1
-#endif
+/* #undef HAVE_MMAP */
 
 /* Define to 1 if you have a working `mmap' system call. */
-#ifndef MAGICKCORE_HAVE_MMAP_FILEIO
-#define MAGICKCORE_HAVE_MMAP_FILEIO 1
-#endif
+/* #undef HAVE_MMAP_FILEIO */
 
 /* Define to 1 if you have the `munmap' function. */
 #ifndef MAGICKCORE_HAVE_MUNMAP
@@ -1039,13 +1037,13 @@
 
 /* Directory where architecture-dependent files live. */
 #ifndef MAGICKCORE_LIBRARY_PATH
-#define MAGICKCORE_LIBRARY_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/lib/ImageMagick-6.6.8/"
+#define MAGICKCORE_LIBRARY_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/lib/ImageMagick-6.6.9/"
 #endif
 
 /* Subdirectory of lib where ImageMagick architecture dependent files are
    installed */
 #ifndef MAGICKCORE_LIBRARY_RELATIVE_PATH
-#define MAGICKCORE_LIBRARY_RELATIVE_PATH "ImageMagick-6.6.8"
+#define MAGICKCORE_LIBRARY_RELATIVE_PATH "ImageMagick-6.6.9"
 #endif
 
 /* Define if you have LQR library */
@@ -1122,12 +1120,12 @@
 
 /* Define to the full name and version of this package. */
 #ifndef MAGICKCORE_PACKAGE_STRING
-#define MAGICKCORE_PACKAGE_STRING "ImageMagick 6.6.8"
+#define MAGICKCORE_PACKAGE_STRING "ImageMagick 6.6.9"
 #endif
 
 /* Define to the one symbol short name of this package. */
 #ifndef MAGICKCORE_PACKAGE_TARNAME
-#define MAGICKCORE_PACKAGE_TARNAME "ImageMagick"
+#define MAGICKCORE_PACKAGE_TARNAME "ImageMagick-6.6.9"
 #endif
 
 /* Define to the home page for this package. */
@@ -1137,7 +1135,7 @@
 
 /* Define to the version of this package. */
 #ifndef MAGICKCORE_PACKAGE_VERSION
-#define MAGICKCORE_PACKAGE_VERSION "6.6.8"
+#define MAGICKCORE_PACKAGE_VERSION "6.6.9"
 #endif
 
 /* Define if you have PNG library */
@@ -1181,19 +1179,14 @@
 #endif
 
 /* Directory where architecture-independent configuration files live. */
-#ifndef MAGICKCORE_SHARE_CONFIGURE_PATH
-#define MAGICKCORE_SHARE_CONFIGURE_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/share/ImageMagick-6.6.8/config/"
+#ifndef MAGICKCORE_SHARE_PATH
+#define MAGICKCORE_SHARE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/ImageMagick-6.6.9/"
 #endif
 
 /* Subdirectory of lib where architecture-independent configuration files
    live. */
-#ifndef MAGICKCORE_SHARE_CONFIGURE_RELATIVE_PATH
-#define MAGICKCORE_SHARE_CONFIGURE_RELATIVE_PATH "ImageMagick-6.6.8/config"
-#endif
-
-/* Directory where architecture-independent files live. */
-#ifndef MAGICKCORE_SHARE_PATH
-#define MAGICKCORE_SHARE_PATH "/Users/cloud/Desktop/tmp_target/imagemagick/share/ImageMagick-6.6.8/"
+#ifndef MAGICKCORE_SHARE_RELATIVE_PATH
+#define MAGICKCORE_SHARE_RELATIVE_PATH "ImageMagick-6.6.9"
 #endif
 
 /* The size of `off_t', as computed by sizeof. */
@@ -1265,7 +1258,9 @@
 #endif
 
 /* Define if you have POSIX threads libraries and header files. */
-/* #undef THREAD_SUPPORT */
+#ifndef MAGICKCORE_THREAD_SUPPORT
+#define MAGICKCORE_THREAD_SUPPORT 1
+#endif
 
 /* Define if you have TIFF library */
 #ifndef MAGICKCORE_TIFF_DELEGATE

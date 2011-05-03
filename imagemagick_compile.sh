@@ -33,14 +33,14 @@ if [[ $# != 1 ]]; then
 fi
 
 IM_VERSION="$1"
-IM_DIR="$(pwd)/cross_compile/ImageMagick-$IM_VERSION"
-IM_DELEGATES_DIR="$IM_DIR/IMDelegates/"
+IM_DIR="$(pwd)/ImageMagick-$IM_VERSION"
+IM_DELEGATES_DIR="${IM_DIR}/IMDelegates/"
 
 if [ -d $IM_DELEGATES_DIR ]; then
 	:;
 else
 	echo "[INFO] IMDelegates folder not found, copying over"
-	cp -r "$(pwd)/cross_compile/IMDelegates" "$IM_DIR/IMDelegates"
+	cp -r "$(pwd)/IMDelegates" "$IM_DIR/IMDelegates"
 fi
 
 JPEG_DIR="$IM_DIR/IMDelegates/jpeg-8c"
@@ -477,9 +477,17 @@ make install &>$OUTPUT_FILE
 cp $LIBPATH_static $LIB_DIR/$LIBNAME_static.$ARCH_IPHONE6
 cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.$ARCH_IPHONE6
 
+# copy the wand/ + core/ headers
+cp $IM_LIB_DIR/include/ImageMagick/magick/* $LIB_DIR/include/magick/
+cp $IM_LIB_DIR/include/ImageMagick/wand/* $LIB_DIR/include/wand/
+
+# copy configuration files needed for certain functions
+cp $IM_LIB_DIR/etc/ImageMagick/*.xml $LIB_DIR/include/im_config/
+cp $IM_LIB_DIR/share/ImageMagick-*/*.xml $LIB_DIR/include/im_config/
+
 # clean the ImageMagick build
 echo "[|- CLEAN $ARCH_IPHONE6]"
-make distclean &>$OUTPUT_FILE
+#make distclean &>$OUTPUT_FILE
 
 elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
@@ -505,15 +513,6 @@ make install &>$OUTPUT_FILE
 # copy the CORE + WAND libraries -- INTEL version
 cp $LIBPATH_static $LIB_DIR/$LIBNAME_static.$ARCH_SIM
 cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.$ARCH_SIM
-
-# copy the wand/ + core/ headers
-cp $IM_LIB_DIR/include/ImageMagick/magick/* $LIB_DIR/include/magick/
-cp $IM_LIB_DIR/include/ImageMagick/wand/* $LIB_DIR/include/wand/
-
-# copy configuration files needed for certain functions
-cp $IM_LIB_DIR/lib/ImageMagick-*/config/*.xml $LIB_DIR/include/im_config/
-cp $IM_LIB_DIR/share/ImageMagick-*/config/*.xml $LIB_DIR/include/im_config/
-cp $IM_LIB_DIR/share/ImageMagick-*/config/*.icm $LIB_DIR/include/im_config/
 
 # clean the ImageMagick build
 echo "[|- CLEAN $ARCH_SIM]"
@@ -570,13 +569,13 @@ function zip_for_ftp() {
 	echo "[+ DONE: ZIP]"
 }
 
-png "$IPHONE"
-png "$ARCH_SIM" 
-jpeg "$IPHONE"
-jpeg "$ARCH_SIM"
-tiff "$IPHONE"
-tiff "$ARCH_SIM"
+#png "$IPHONE"
+#png "$ARCH_SIM" 
+#jpeg "$IPHONE"
+#jpeg "$ARCH_SIM"
+#tiff "$IPHONE"
+#tiff "$ARCH_SIM"
 im "$IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
-# zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
+#zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)

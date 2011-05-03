@@ -26,7 +26,7 @@ extern "C" {
 
 typedef enum
 {
-  UndefinedKernel,    /* equivelent to UnityKernel */
+  UndefinedKernel,    /* equivalent to UnityKernel */
   UnityKernel,        /* The no-op or 'original image' kernel */
   GaussianKernel,     /* Convolution Kernels, Gaussian Based */
   DoGKernel,
@@ -43,6 +43,7 @@ typedef enum
   DiamondKernel,      /* Shape Kernels */
   SquareKernel,
   RectangleKernel,
+  OctagonKernel,
   DiskKernel,
   PlusKernel,
   CrossKernel,
@@ -50,14 +51,16 @@ typedef enum
   PeaksKernel,         /* Hit And Miss Kernels */
   EdgesKernel,
   CornersKernel,
-  ThinDiagonalsKernel,
+  DiagonalsKernel,
   LineEndsKernel,
   LineJunctionsKernel,
   RidgesKernel,
   ConvexHullKernel,
+  ThinSEKernel,
   SkeletonKernel,
   ChebyshevKernel,    /* Distance Measuring Kernels */
   ManhattanKernel,
+  OctagonalKernel,
   EuclideanKernel,
   UserDefinedKernel   /* User Specified Kernel Array */
 } KernelInfoType;
@@ -89,7 +92,9 @@ typedef enum
 /* Recursive Morphology methods */
   HitAndMissMorphology,        /* Foreground/Background pattern matching */
   ThinningMorphology,          /* Remove matching pixels from image */
-  ThickenMorphology            /* Add matching pixels from image */
+  ThickenMorphology,           /* Add matching pixels from image */
+/* Experimental Morphology methods */
+  VoronoiMorphology
 } MorphologyMethod;
 
 typedef struct KernelInfo

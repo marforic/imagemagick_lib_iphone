@@ -55,7 +55,6 @@ typedef enum
   MagickFormatOptions,
   MagickFunctionOptions,
   MagickGravityOptions,
-  MagickImageListOptions,
   MagickIntentOptions,
   MagickInterlaceOptions,
   MagickInterpolateOptions,
@@ -85,6 +84,7 @@ typedef enum
   MagickResolutionOptions,
   MagickResourceOptions,
   MagickSparseColorOptions,
+  MagickStatisticOptions,
   MagickStorageOptions,
   MagickStretchOptions,
   MagickStyleOptions,
@@ -92,7 +92,7 @@ typedef enum
   MagickTypeOptions,
   MagickValidateOptions,
   MagickVirtualPixelOptions
-} MagickOption;
+} CommandOption;
 
 typedef enum
 {
@@ -116,32 +116,50 @@ typedef struct _OptionInfo
     *mnemonic;
 
   ssize_t
-    type;
+    type,
+    flags;
 
   MagickBooleanType
     stealth;
 } OptionInfo;
 
+/*
+  Flags to describe classes of image processing options.
+*/
+typedef enum
+{
+  UndefinedOptionFlag = 0x0000,
+  FireOptionFlag      = 0x0001,  /* Option sequence firing point */
+#if 0
+  ImageInfoOptionFlag = 0x0002,  /* Sets ImageInfo only, no image needed */
+  SimpleOptionFlag    = 0x0004,  /* Simple image processing option */
+  ImageListOptionFlag = 0x0010,  /* Multi-Image list processing option */
+#endif
+  DeprecateOptionFlag = 0x1000   /* Deprecate option, give warning */
+} CommandOptionFlags;
+
 extern MagickExport char
-  **GetMagickOptions(const MagickOption),
+  **GetCommandOptions(const CommandOption),
   *GetNextImageOption(const ImageInfo *),
   *RemoveImageOption(ImageInfo *,const char *);
 
 extern MagickExport const char
-  *GetImageOption(const ImageInfo *,const char *),
-  *MagickOptionToMnemonic(const MagickOption,const ssize_t);
+  *CommandOptionToMnemonic(const CommandOption,const ssize_t),
+  *GetImageOption(const ImageInfo *,const char *);
 
 extern MagickExport MagickBooleanType
   CloneImageOptions(ImageInfo *,const ImageInfo *),
   DefineImageOption(ImageInfo *,const char *),
   DeleteImageOption(ImageInfo *,const char *),
-  IsMagickOption(const char *),
-  ListMagickOptions(FILE *,const MagickOption,ExceptionInfo *),
+  IsCommandOption(const char *),
+  ListCommandOptions(FILE *,const CommandOption,ExceptionInfo *),
   SetImageOption(ImageInfo *,const char *,const char *);
 
 extern MagickExport ssize_t
+  GetCommandOptionFlags(const CommandOption,const MagickBooleanType,
+    const char *),
   ParseChannelOption(const char *),
-  ParseMagickOption(const MagickOption,const MagickBooleanType,const char *);
+  ParseCommandOption(const CommandOption,const MagickBooleanType,const char *);
 
 extern MagickExport void
   DestroyImageOptions(ImageInfo *),
