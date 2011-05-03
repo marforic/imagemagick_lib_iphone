@@ -569,12 +569,12 @@ function zip_for_ftp() {
 	echo "[+ DONE: ZIP]"
 }
 
-#png "$IPHONE"
-#png "$ARCH_SIM" 
-#jpeg "$IPHONE"
-#jpeg "$ARCH_SIM"
-#tiff "$IPHONE"
-#tiff "$ARCH_SIM"
+png "$IPHONE"
+png "$ARCH_SIM" 
+jpeg "$IPHONE"
+jpeg "$ARCH_SIM"
+tiff "$IPHONE"
+tiff "$ARCH_SIM"
 im "$IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
