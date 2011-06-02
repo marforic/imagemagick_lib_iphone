@@ -487,7 +487,7 @@ cp $IM_LIB_DIR/share/ImageMagick-*/*.xml $LIB_DIR/include/im_config/
 
 # clean the ImageMagick build
 echo "[|- CLEAN $ARCH_IPHONE6]"
-#make distclean >> $OUTPUT_FILE
+make distclean >> $OUTPUT_FILE 2>&1
 
 elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
@@ -578,4 +578,4 @@ tiff "$ARCH_SIM"
 im "$IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
-#zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
+# zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
