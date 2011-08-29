@@ -558,10 +558,10 @@ function zip_for_ftp() {
 	if [ -e $FINAL_DIR ]; then
 		tmp_dir="$(pwd)/TMP_IM"
 		cp -R $FINAL_DIR $tmp_dir
-		ditto -c -k -rsrc "$tmp_dir" "iPhoneMagick-${IM_VERSION}-libs.zip" && echo "[|- CREATED W/ libs]"
+		ditto -c -k -rsrc "$tmp_dir" "iOSMagick-${IM_VERSION}-libs.zip" && echo "[|- CREATED W/ libs]"
 		rm $tmp_dir/libjpeg.a $tmp_dir/libpng.a $tmp_dir/libtiff.a
 		rm -rf $tmp_dir/include/jpeg/ $tmp_dir/include/png/ $tmp_dir/include/tiff/
-		ditto -c -k -rsrc "$tmp_dir" "iPhoneMagick-${IM_VERSION}.zip" && echo "[|- CREATED W/O libs]"
+		ditto -c -k -rsrc "$tmp_dir" "iOSMagick-${IM_VERSION}.zip" && echo "[|- CREATED W/O libs]"
 		rm -rf $tmp_dir
 	else
 		echo "[* ERROR, $FINAL_DIR not present..."
