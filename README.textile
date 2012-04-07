@@ -1,6 +1,6 @@
 <h1>Compiled downloads</h1>
 
-You can grab the latest compiled ImageMagick directly from their <a href="ftp://magick.imagemagick.org/pub/ImageMagick/iPhone/">ftp</a> or any mirror.
+You can grab the latest compiled ImageMagick directly from their <a href="ftp://magick.imagemagick.org/pub/ImageMagick/iOS/">ftp</a> or any mirror.
 
 There is always 2 packages for the compiled ImageMagick:
 * iPhoneMagick-VERSION-libs.zip
