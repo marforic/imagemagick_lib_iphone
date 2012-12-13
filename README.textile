@@ -12,12 +12,12 @@ The first one includes headers and compiled libraries that have been used to com
 
 The directory structure has to be:
 
-<pre>./cross_compile/ImageMagick-VERSION/ &lt;- ImageMagick top directory
+<pre>./cross_compile/ImageMagick-VERSION/     <- ImageMagick top directory
 
-./cross_compile/IMDelegataes/	       &lt;- Some delegates: jpeg + png + tiff
-./cross_compile/IMDelegataes/jpeg-8c/         &lt;- jpeg-8c -- no need to patch it
-./cross_compile/IMDelegataes/libpng-1.5.13    &lt;- png lib -- no need to patch it
-./cross_compile/IMDelegataes/tiff-4.0.3       &lt;- tiff lib -- no need to patch it
+./cross_compile/IMDelegataes/	                <- Some delegates: jpeg + png + tiff
+./cross_compile/IMDelegataes/jpeg-8c/         <- jpeg-8c -- no need to patch it
+./cross_compile/IMDelegataes/libpng-1.5.13    <- png lib -- no need to patch it
+./cross_compile/IMDelegataes/tiff-4.0.3       <- tiff lib -- no need to patch it
 
 ./cross_compile/magick-config.h</pre>
 
