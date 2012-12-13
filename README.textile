@@ -1,20 +1,30 @@
 <h1>Compiled downloads</h1>
 
-You can grab the latest compiled ImageMagick directly from their <a href="ftp://magick.imagemagick.org/pub/ImageMagick/iPhone/">ftp</a> or any mirror.
+You can grab the latest compiled ImageMagick directly from their <a href="ftp://ftp.imagemagick.org/pub/ImageMagick/iOS/">ftp</a> or any mirror.
 
 There is always 2 packages for the compiled ImageMagick:
-* iPhoneMagick-VERSION-libs.zip
-* iPhoneMagick-VERSION.zip
+* iOSMagick-VERSION-libs.zip
+* iOSMagick-VERSION.zip
 
 The first one includes headers and compiled libraries that have been used to compile ImageMagick. Most users would need this one.
 
 <h1>ImageMagick compiling script for iPhone OS and iPhone Simulator</h1>
 
+The directory structure has to be:
+./cross_compile/ImageMagick-VERSION/ &lt;- ImageMagick top directory
+      |        /IMDelegataes/	       &lt;- Some delegates: jpeg + png + tiff
+      |           |-jpeg-8c/         &lt;- jpeg-8c -- no need to patch it
+      |           |-libpng-1.5.13    &lt;- png lib -- no need to patch it
+      |           |-tiff-4.0.3       &lt;- tiff lib -- no need to patch it
+      |        /magick-config.h
+
+If you don't have this directory structure you can either create it or try change around the script. For some reason, magick-config.h does not show up correctly for me when I build the project, so the script looks for a valid copy of this file to use when building the project. You'll need to grab a valid copy of this file for the version of ImageMagick that you are compiling. You can find the delegate libraries on the <a href="ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/">ImageMagick ftp</a>
+
 To run the script:
 <pre>
 	./imagemagick_compile.sh VERSION
 </pre>
-where VERSION is the version of ImageMagick you want to compile (i.e.: 6.6.8-5, svn, ...)
+where VERSION is the version of ImageMagick you want to compile (i.e.: 6.8.0-8, svn, ...)
 
 This script will compile ImageMagick as a static library to be included in iPhone projects
 Support for:
@@ -35,6 +45,9 @@ After including everything into XCode please also make sure to have these settin
 On the lower left click on the small-wheel and select: Add User-Defined Setting
 * Key: OTHER_CFLAGS
 * Value: -Dmacintosh=1
+
+In Link Binary with Libraries under Build Phases, you may also need to add:
+* libxml2.dylib
 
 <h2>Sample project</h2>
 
