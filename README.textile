@@ -11,19 +11,20 @@ The first one includes headers and compiled libraries that have been used to com
 <h1>ImageMagick compiling script for iPhone OS and iPhone Simulator</h1>
 
 The directory structure has to be:
-./cross_compile/ImageMagick-VERSION/ &lt;- ImageMagick top directory
-      |        /IMDelegataes/	       &lt;- Some delegates: jpeg + png + tiff
-      |           |-jpeg-8c/         &lt;- jpeg-8c -- no need to patch it
-      |           |-libpng-1.5.13    &lt;- png lib -- no need to patch it
-      |           |-tiff-4.0.3       &lt;- tiff lib -- no need to patch it
-      |        /magick-config.h
+
+<pre>./cross_compile/ImageMagick-VERSION/ &lt;- ImageMagick top directory
+
+./cross_compile/IMDelegataes/	       &lt;- Some delegates: jpeg + png + tiff
+./cross_compile/IMDelegataes/jpeg-8c/         &lt;- jpeg-8c -- no need to patch it
+./cross_compile/IMDelegataes/libpng-1.5.13    &lt;- png lib -- no need to patch it
+./cross_compile/IMDelegataes/tiff-4.0.3       &lt;- tiff lib -- no need to patch it
+
+./cross_compile/magick-config.h</pre>
 
 If you don't have this directory structure you can either create it or try change around the script. For some reason, magick-config.h does not show up correctly for me when I build the project, so the script looks for a valid copy of this file to use when building the project. You'll need to grab a valid copy of this file for the version of ImageMagick that you are compiling. You can find the delegate libraries on the <a href="ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/">ImageMagick ftp</a>
 
 To run the script:
-<pre>
-	./imagemagick_compile.sh VERSION
-</pre>
+<pre>./imagemagick_compile.sh VERSION</pre>
 where VERSION is the version of ImageMagick you want to compile (i.e.: 6.8.0-8, svn, ...)
 
 This script will compile ImageMagick as a static library to be included in iPhone projects
