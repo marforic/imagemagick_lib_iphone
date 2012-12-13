@@ -5,15 +5,15 @@
 # date: 21.03.2011
 
 # Script to make static libraries (jpeg + png + tiff) and ImageMagick
-# the libraries will be conbined into i386 + armv6 + armv7 static
+# the libraries will be conbined into i386 + ARMV7S + armv7 static
 # libraries to be used inside an XCODE project for iOS development
 
 # The directory structure has to be:
 # ./cross_compile/ImageMagick-VERSION/ <- ImageMagick top directory
 #       |        /IMDelegataes/	       <- Some delegates: jpeg + png + tiff
 #       |           |-jpeg-8c/         <- jpeg-8c -- no need to patch it
-#       |           |-libpng-1.4.5     <- png lib -- no need to patch it
-#       |           |-tiff-3.9.4       <- tiff lib -- no need to patch it
+#       |           |-libpng-1.5.13    <- png lib -- no need to patch it
+#       |           |-tiff-4.0.3       <- tiff lib -- no need to patch it
 #       |- ...	 <- we don't care what's here! :)
 
 # If you don't have this directory structure you can either create it
@@ -26,9 +26,11 @@
 
 FINAL_DIR=`pwd`/IMPORT_ME/
 
+IM_CONFIG_PATH=`pwd`/magick-config.h
+
 if [[ $# != 1 ]]; then
 	echo "imagemagick_compile.sh takes 1 argument: the version of ImageMagick that you want to compile!"
-	echo "USAGE: imagemagick_compile.sh 6.6.8-5"
+	echo "USAGE: imagemagick_compile.sh 6.8.0-8"
 	exit
 fi
 
@@ -56,7 +58,7 @@ ARCH_IPHONE7S="armv7s"
 GCC_VERSION="4.2.1"
 MIN_IPHONE_VERSION="4.3"
 IPHONE_SDK_VERSION="6.0"
-MACOSX_SDK_VERSION="10.5"
+MACOSX_SDK_VERSION="10.6"
 IPHONE="armv7 + armv7s"
 
 # Set this to where you want the libraries to be placed (if dir is not present it will be created):
@@ -87,7 +89,7 @@ mkdir -p $TIFF_LIB_DIR
 # General folders where you have the iPhone compiler + tools
 export DEVROOT="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer"
 export SDKROOT="${DEVROOT}/SDKs/iPhoneOS${IPHONE_SDK_VERSION}.sdk"
-export MACOSXROOT=""
+export MACOSXROOT="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${IPHONE_SDK_VERSION}.sdk"
 
 # Compiler flags and config arguments - IPHONE
 COMMON_IPHONE_LDFLAGS="-L$SDKROOT/usr/lib/"
@@ -100,7 +102,7 @@ COMMON_SIM_LDFLAGS="-L$MACOSXROOT/usr/lib"
 COMMON_SIM_CFLAGS="-I$MACOSXROOT/usr/include -I$MACOSXROOT/usr/lib/gcc/i686-apple-darwin10/$GCC_VERSION/include/"
 
 IM_LDFLAGS="-L$LIB_DIR/jpeg_${ARCH_IPHONE}_dylib/ -L$LIB_DIR/png_${ARCH_IPHONE}_dylib/ -L$LIB_DIR/tiff_${ARCH_IPHONE}_dylib/ -L$LIB_DIR"
-IM_LDFLAGS6="-L$LIB_DIR/jpeg_${ARCH_IPHONE7S}_dylib/ -L$LIB_DIR/png_${ARCH_IPHONE7S}_dylib/ -L$LIB_DIR/tiff_${ARCH_IPHONE7S}_dylib/ -L$LIB_DIR"
+IM_LDFLAGS7S="-L$LIB_DIR/jpeg_${ARCH_IPHONE7S}_dylib/ -L$LIB_DIR/png_${ARCH_IPHONE7S}_dylib/ -L$LIB_DIR/tiff_${ARCH_IPHONE7S}_dylib/ -L$LIB_DIR"
 IM_LDFLAGS_SIM="-L$LIB_DIR/jpeg_${ARCH_SIM}_dylib/ -L$LIB_DIR/png_${ARCH_SIM}_dylib/ -L$LIB_DIR/tiff_${ARCH_SIM}_dylib/ -L$LIB_DIR"
 IM_IFLAGS="$COMMON_SIM_CFLAGS -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff"
 
@@ -142,8 +144,8 @@ export LDFLAGS="$COMMON_IPHONE_LDFLAGS"
 export CFLAGS="$COMMON_IPHONE_CFLAGS"
 
 echo "[|- CONFIG ${ARCH_IPHONE}]"
-./configure prefix=$PNG_LIB_DIR CC=$MACOSXROOT/usr/bin/clang --enable-shared --enable-static \
-CC=$MACOSXROOT/usr/bin/clang LD=$MACOSXROOT/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
+./configure prefix=$PNG_LIB_DIR CC=/usr/bin/clang --enable-shared --enable-static \
+CC=/usr/bin/clang LD=/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC ${ARCH_IPHONE}]"
 make -j2 >> $OUTPUT_FILE 2>&1
@@ -157,12 +159,12 @@ cp $PNG_LIB_DIR/lib/$LIBPATH_png_dylib $LIB_DIR/png_${ARCH_IPHONE}_dylib/libpng.
 echo "[|- CLEAN ${ARCH_IPHONE}]"
 make distclean >> $OUTPUT_FILE 2>&1
 
-## ARMV7 ##
+## ARMV7S ##
 export CFLAGS="$COMMON_IPHONE7S_CFLAGS"
 
 echo "[|- CONFIG ${ARCH_IPHONE7S}]"
-./configure prefix=$PNG_LIB_DIR CC=$MACOSXROOT/usr/bin/clang --enable-shared --enable-static \
-CC=$MACOSXROOT/usr/bin/clang LD=$MACOSXROOT/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
+./configure prefix=$PNG_LIB_DIR CC=/usr/bin/clang --enable-shared --enable-static \
+CC=/usr/bin/clang LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC ${ARCH_IPHONE7S}]"
 make -j2 >> $OUTPUT_FILE 2>&1
@@ -186,7 +188,7 @@ export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
 echo "[|- CONFIG $ARCH_SIM]"
-./configure prefix=$PNG_LIB_DIR CC=$MACOSXROOT/usr/bin/clang --enable-shared --enable-static \
+./configure prefix=$PNG_LIB_DIR CC=/usr/bin/clang --enable-shared --enable-static \
 --host=i686-apple-darwin10 >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC $ARCH_SIM]"
@@ -241,7 +243,7 @@ export CFLAGS="$COMMON_IPHONE_CFLAGS"
 
 echo "[|- CONFIG $ARCH_IPHONE]"
 ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static \
-CC=$MACOSXROOT/usr/bin/clang LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
+CC=/usr/bin/clang LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC $ARCH_IPHONE]"
 make -j2 >> $OUTPUT_FILE 2>&1
@@ -254,12 +256,12 @@ cp $JPEG_LIB_DIR/lib/libjpeg.dylib $LIB_DIR/jpeg_${ARCH_IPHONE}_dylib/libjpeg.dy
 echo "[|- CLEAN $ARCH_IPHONE]"
 make distclean >> $OUTPUT_FILE 2>&1
 
-## ARMV6 ##
+## ARMV7S ##
 export CFLAGS="$COMMON_IPHONE7S_CFLAGS"
 
 echo "[|- CONFIG $ARCH_IPHONE7S]"
 ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static \
-CC=$MACOSXROOT/usr/bin/clang LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
+CC=/usr/bin/clang LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC $ARCH_IPHONE7S]"
 make -j2 >> $OUTPUT_FILE 2>&1
@@ -283,7 +285,7 @@ export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
 echo "[|- CONFIG $ARCH_SIM]"
-./configure prefix=$JPEG_LIB_DIR CC=$MACOSXROOT/usr/bin/clang --enable-shared \
+./configure prefix=$JPEG_LIB_DIR CC=/usr/bin/clang --enable-shared \
 --enable-static --host=i686-apple-darwin10 >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC $ARCH_SIM]"
@@ -337,7 +339,7 @@ export LDFLAGS="$COMMON_IPHONE_LDFLAGS"
 export CFLAGS="$COMMON_IPHONE_CFLAGS"
 
 echo "[|- CONFIG $ARCH_IPHONE]"
-./configure prefix=$TIFF_LIB_DIR CC=$MACOSXROOT/usr/bin/clang \
+./configure prefix=$TIFF_LIB_DIR CC=/usr/bin/clang \
 LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin --disable-cxx >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC $ARCH_IPHONE]"
@@ -351,11 +353,11 @@ cp $TIFF_LIB_DIR/lib/libtiff.5.dylib $LIB_DIR/tiff_${ARCH_IPHONE}_dylib/libtiff.
 echo "[|- CLEAN $ARCH_IPHONE]"
 make distclean >> $OUTPUT_FILE 2>&1
 
-## ARMV6 ##
+## ARMV7S ##
 export CFLAGS="$COMMON_IPHONE7S_CFLAGS"
 
 echo "[|- CONFIG $ARCH_IPHONE7S]"
-./configure prefix=$TIFF_LIB_DIR CC=$MACOSXROOT/usr/bin/clang \
+./configure prefix=$TIFF_LIB_DIR CC=/usr/bin/clang \
 LD=$DEVROOT/usr/bin/ld --host=arm-apple-darwin --disable-cxx >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC $ARCH_IPHONE7S]"
@@ -380,7 +382,7 @@ export CPP=$U_CPP
 export CPPFLAGS=$U_CPPFLAGS
 
 echo "[|- CONFIG $ARCH_SIM]"
-./configure prefix=$TIFF_LIB_DIR CC=$MACOSXROOT/usr/bin/clang --host=i686-apple-darwin10 \
+./configure prefix=$TIFF_LIB_DIR CC=/usr/bin/clang --host=i686-apple-darwin10 \
 --disable-cxx >> $OUTPUT_FILE 2>&1
 
 echo "[|- CC $ARCH_SIM]"
@@ -417,6 +419,7 @@ function im() {
 
 echo ""
 echo "[+ IM: $1]"
+
 cd $IM_DIR
 
 # static library that will be generated
@@ -441,9 +444,13 @@ export CXXFLAGS="-Wall -W -D_THREAD_SAFE -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICK
 
 # configure to have the static libraries
 echo "[|- CONFIG $ARCH_IPHONE]"
-./configure prefix=$IM_LIB_DIR CC=$MACOSXROOT/usr/bin/clang LD=$DEVROOT/usr/bin/ld \
---host=arm-apple-darwin --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus \
+./configure prefix=$IM_LIB_DIR CC=/usr/bin/clang LD=$DEVROOT/usr/bin/ld \
+--host=arm-apple-darwin --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --disable-opencl \
 --without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype >> $OUTPUT_FILE 2>&1
+
+#For some reason, magick-config.h does not get generated. Find one for your version of ImageMagick and put it in
+#The cross_compile directory
+cp $IM_CONFIG_PATH magick/
 
 # compile ImageMagick
 echo "[|- CC $ARCH_IPHONE]"
@@ -458,15 +465,17 @@ cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.$ARCH_IPHONE
 echo "[| CLEAN $ARCH_IPHONE]"
 make distclean >> $OUTPUT_FILE 2>&1
 
-## ARMV6 ##
+## ARMV7S ##
 export CFLAGS="$COMMON_IPHONE7S_CFLAGS $IM_IFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN"
-export LDFLAGS="$IM_LDFLAGS6 $COMMON_IPHONE_LDFLAGS"
+export LDFLAGS="$IM_LDFLAGS7S $COMMON_IPHONE_LDFLAGS"
 
 # configure to have the static libraries
 echo "[|- CONFIG $ARCH_IPHONE7S]"
-./configure prefix=$IM_LIB_DIR CC=$MACOSXROOT/usr/bin/clang LD=$DEVROOT/usr/bin/ld \
---host=arm-apple-darwin --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus \
+./configure prefix=$IM_LIB_DIR CC=/usr/bin/clang LD=$DEVROOT/usr/bin/ld \
+--host=arm-apple-darwin --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --disable-opencl ``\
 --without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype >> $OUTPUT_FILE 2>&1
+
+cp $IM_CONFIG_PATH magick/
 
 # compile ImageMagick
 echo "[|- CC $ARCH_IPHONE7S]"
@@ -493,17 +502,19 @@ elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
 # Use default environment
 export CC=$U_CC
-export LDFLAGS="-isysroot $MACOSXROOT -mmacosx-version-min=10.6 $IM_LDFLAGS_SIM"
-export CFLAGS="-arch $ARCH_SIM -isysroot $MACOSXROOT -mmacosx-version-min=10.6 $IM_IFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN"
+export LDFLAGS="-isysroot $MACOSXROOT -mmacosx-version-min=$MACOSX_SDK_VERSION $IM_LDFLAGS_SIM"
+export CFLAGS="-arch $ARCH_SIM -isysroot $MACOSXROOT -mmacosx-version-min=$MACOSX_SDK_VERSION $IM_IFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN"
 export LD=$U_LD
 export CPP=$U_CPP
 export CPPFLAGS="$U_CPPFLAGS $U_LDFLAGS $IM_IFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN"
 
 # configure with standard parameters
 echo "[|- CONFIG $ARCH_SIM]"
-./configure prefix=$IM_LIB_DIR CC=$MACOSXROOT/usr/bin/clang --host=i686-apple-darwin10 \
+./configure prefix=$IM_LIB_DIR CC=/usr/bin/clang --host=i686-apple-darwin10 --disable-opencl \
 --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
 --disable-shared --disable-openmp --without-bzlib --without-freetype --without-threads >> $OUTPUT_FILE 2>&1
+
+cp $IM_CONFIG_PATH magick/
 
 # compile ImageMagick
 echo "[|- CC $ARCH_SIM]"
@@ -577,5 +588,5 @@ tiff "$IPHONE"
 tiff "$ARCH_SIM"
 im "$IPHONE"
 im "$ARCH_SIM"
-#structure_for_xcode
+structure_for_xcode
 # zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
