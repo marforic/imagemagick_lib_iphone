@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -25,72 +25,39 @@ extern "C" {
 #include <magick/colorspace.h>
 #include <magick/constitute.h>
 
-#define ClampRedPixelComponent(pixel) ClampToQuantum((pixel)->red)
-#define ClampGreenPixelComponent(pixel) ClampToQuantum((pixel)->green)
-#define ClampBluePixelComponent(pixel) ClampToQuantum((pixel)->blue)
-#define ClampIndexPixelComponent(indexes) ClampToQuantum(*(indexes))
-#define ClampOpacityPixelComponent(pixel) ClampToQuantum((pixel)->opacity)
-#define GetAlphaPixelComponent(pixel) (QuantumRange-(pixel)->opacity)
-#define GetBlackPixelComponent(index) (*(index))
-#define GetBluePixelComponent(pixel) ((pixel)->blue)
-#define GetCbPixelComponent(pixel) ((pixel)->green)
-#define GetCrPixelComponent(pixel) ((pixel)->blue)
-#define GetCyanPixelComponent(pixel) ((pixel)->red)
-#define GetGrayPixelComponent(pixel) ((pixel)->red)
-#define GetGreenPixelComponent(pixel) ((pixel)->green)
-#define GetIndexPixelComponent(indexes) (*(indexes))
-#define GetMagentaPixelComponent(pixel) ((pixel)->green)
-#define GetNextPixel(pixel)  ((pixel)+1)
-#define GetOpacityPixelComponent(pixel) ((pixel)->opacity)
-#define GetRedPixelComponent(pixel) ((pixel)->red)
-#define GetYPixelComponent(pixel) ((pixel)->red)
-#define GetYellowPixelComponent(pixel) ((pixel)->blue)
-#define SetAlphaPixelComponent(pixel,value) \
-  ((pixel)->opacity=(Quantum) (QuantumRange-(value)))
-#define SetBlackPixelComponent(index,value) (*(index)=(Quantum) (value))
-#define SetBluePixelComponent(pixel,value) ((pixel)->blue=(Quantum) (value))
-#define SetCbPixelComponent(pixel,value) ((pixel)->green=(Quantum) (value))
-#define SetCrPixelComponent(pixel,value) ((pixel)->blue=(Quantum) (value))
-#define SetCyanPixelComponent(pixel,value) ((pixel)->red=(Quantum) (value))
-#define SetGrayPixelComponent(pixel,value) \
-  ((pixel)->red=(pixel)->green=(pixel)->blue=(Quantum) (value))
-#define SetGreenPixelComponent(pixel,value) ((pixel)->green=(Quantum) (value))
-#define SetIndexPixelComponent(indexes,value) (*(indexes)=(IndexPacket) (value))
-#define SetMagentaPixelComponent(pixel,value) ((pixel)->green=(Quantum) (value))
-#define SetOpacityPixelComponent(pixel,value) \
-  ((pixel)->opacity=(Quantum) (value))
-#define SetRedPixelComponent(pixel,value) ((pixel)->red=(Quantum) (value))
-#define SetYellowPixelComponent(pixel,value) ((pixel)->blue=(Quantum) (value))
-#define SetYPixelComponent(pixel,value) ((pixel)->red=(Quantum) (value))
-
 typedef enum
 {
   UndefinedInterpolatePixel,
-  AverageInterpolatePixel,
-  BicubicInterpolatePixel,
-  BilinearInterpolatePixel,
-  FilterInterpolatePixel,
-  IntegerInterpolatePixel,
-  MeshInterpolatePixel,
-  NearestNeighborInterpolatePixel,
-  SplineInterpolatePixel
+  AverageInterpolatePixel,           /* Average 4 nearest neighbours */
+  BicubicInterpolatePixel,           /* Catmull-Rom interpolation */
+  BilinearInterpolatePixel,          /* Triangular filter interpolation */
+  FilterInterpolatePixel,            /* Use resize filter - (very slow) */
+  IntegerInterpolatePixel,           /* Integer (floor) interpolation */
+  MeshInterpolatePixel,              /* Triangular mesh interpolation */
+  NearestNeighborInterpolatePixel,   /* Nearest neighbour only */
+  SplineInterpolatePixel,            /* Cubic Spline (blurred) interpolation */
+  Average9InterpolatePixel,          /* Average 9 nearest neighbours */
+  Average16InterpolatePixel,         /* Average 16 nearest neighbours */
+  BlendInterpolatePixel,             /* blend of nearest 1, 2 or 4 pixels */
+  BackgroundInterpolatePixel,        /* just return background color */
+  CatromInterpolatePixel             /* Catmull-Rom interpolation */
 } InterpolatePixelMethod;
 
 typedef enum
 {
-  RedPixelComponent = 0,
-  CyanPixelComponent = 0,
-  GrayPixelComponent = 0,
-  YPixelComponent = 0,
-  GreenPixelComponent = 1,
-  MagentaPixelComponent = 1,
-  CbPixelComponent = 1,
-  BluePixelComponent = 2,
-  YellowPixelComponent = 2,
-  CrPixelComponent = 2,
-  AlphaPixelComponent = 3,
-  BlackPixelComponent = 4,
-  IndexPixelComponent = 4,
+  PixelRed = 0,
+  PixelCyan = 0,
+  PixelGray = 0,
+  PixelY = 0,
+  PixelGreen = 1,
+  PixelMagenta = 1,
+  PixelCb = 1,
+  PixelBlue = 2,
+  PixelYellow = 2,
+  PixelCr = 2,
+  PixelAlpha = 3,
+  PixelBlack = 4,
+  PixelIndex = 4,
   MaskPixelComponent = 5
 } PixelComponent;
 
@@ -160,6 +127,16 @@ typedef struct _PixelPacket
 #endif
 } PixelPacket;
 
+typedef struct _QuantumPixelPacket
+{
+  Quantum
+    red,
+    green,
+    blue,
+    opacity,
+    index;
+} QuantumPixelPacket;
+
 typedef struct _CacheView
   CacheView_;
 
@@ -171,6 +148,9 @@ extern MagickExport MagickBooleanType
   InterpolateMagickPixelPacket(const Image *,const CacheView_ *,
     const InterpolatePixelMethod,const double,const double,MagickPixelPacket *,
     ExceptionInfo *);
+
+extern MagickExport MagickPixelPacket
+  *CloneMagickPixelPacket(const MagickPixelPacket *);
 
 extern MagickExport void
   GetMagickPixelPacket(const Image *,MagickPixelPacket *);

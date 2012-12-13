@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -57,6 +57,10 @@ extern MagickExport char
 extern MagickExport const char
   *GetStringInfoPath(const StringInfo *);
 
+extern MagickExport double
+  InterpretSiPrefixValue(const char *restrict,char **restrict),
+  *StringToArrayOfDoubles(const char *,ssize_t *, ExceptionInfo *);
+
 extern MagickExport int
   CompareStringInfo(const StringInfo *,const StringInfo *),
   LocaleCompare(const char *,const char *),
@@ -64,25 +68,24 @@ extern MagickExport int
 
 extern MagickExport MagickBooleanType
   ConcatenateString(char **,const char *),
+  IsStringTrue(const char *),
+  IsStringNotFalse(const char *),
   SubstituteString(char **,const char *,const char *);
 
 extern MagickExport size_t
   ConcatenateMagickString(char *,const char *,const size_t)
-    magick_attribute((nonnull)),
+    magick_attribute((__nonnull__)),
   CopyMagickString(char *,const char *,const size_t)
-    magick_attribute((nonnull)),
+    magick_attribute((__nonnull__)),
   GetStringInfoLength(const StringInfo *);
 
 extern MagickExport ssize_t
   FormatMagickSize(const MagickSizeType,const MagickBooleanType,char *),
-  FormatMagickString(char *,const size_t,const char *,...)
-    magick_attribute((format (printf,3,4))),
-  FormatMagickStringList(char *,const size_t,const char *,va_list)
-    magick_attribute((format (printf,3,0))),
   FormatMagickTime(const time_t,const size_t,char *);
 
 extern MagickExport StringInfo
   *AcquireStringInfo(const size_t),
+  *BlobToStringInfo(const void *,const size_t),
   *CloneStringInfo(const StringInfo *),
   *ConfigureFileToStringInfo(const char *),
   *DestroyStringInfo(StringInfo *),
@@ -95,7 +98,7 @@ extern MagickExport unsigned char
 
 extern MagickExport void
   ConcatenateStringInfo(StringInfo *,const StringInfo *)
-    magick_attribute((nonnull)),
+    magick_attribute((__nonnull__)),
   LocaleLower(char *),
   LocaleUpper(char *),
   PrintStringInfo(FILE *file,const char *,const StringInfo *),

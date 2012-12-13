@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -40,9 +40,6 @@ extern MagickExport char
   **GetPathComponents(const char *,size_t *),
   **ListFiles(const char *,const char *,size_t *);
 
-extern MagickExport FILE
-  *OpenMagickStream(const char *,const char *);
-
 extern MagickExport int
   SystemCommand(const MagickBooleanType,const MagickBooleanType,const char *,
     ExceptionInfo *);
@@ -53,7 +50,6 @@ extern MagickExport MagickBooleanType
   ExpandFilenames(int *,char ***),
   GetPathAttributes(const char *,void *),
   GetExecutionPath(char *,const size_t),
-  IsMagickTrue(const char *),
   IsPathAccessible(const char *);
 
 extern MagickExport size_t

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -66,7 +66,8 @@ extern MagickExport Image
 
 extern MagickExport MagickBooleanType
   PlasmaImage(Image *,const SegmentInfo *,size_t,size_t),
-  SolarizeImage(Image *,const double);
+  SolarizeImage(Image *,const double),
+  SolarizeImageChannel(Image *,const ChannelType,const double,ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

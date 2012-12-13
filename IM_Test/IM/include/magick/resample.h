@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ extern "C" {
 
 /*
   WARNING:  The order of this table must also match the order of a table
-  located in AcquireResizeFilter() or "resize.c" otherwise the users filter
+  located in AcquireResizeFilter() in "resize.c" otherwise the users filter
   will not match the actual filter that is setup.
 */
 typedef enum
@@ -58,6 +58,10 @@ typedef enum
   Lanczos2Filter,
   Lanczos2SharpFilter,
   RobidouxFilter,
+  RobidouxSharpFilter,
+  CosineFilter,
+  SplineFilter,
+  LanczosRadiusFilter,
   SentinelFilter  /* a count of all the filters, not a real filter */
 } FilterTypes;
 
