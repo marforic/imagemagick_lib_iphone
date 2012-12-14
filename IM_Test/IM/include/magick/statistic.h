@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -73,7 +73,8 @@ typedef enum
   MeanEvaluateOperator,
   AbsEvaluateOperator,
   ExponentialEvaluateOperator,
-  MedianEvaluateOperator
+  MedianEvaluateOperator,
+  SumEvaluateOperator
 } MagickEvaluateOperator;
 
 typedef enum
@@ -85,11 +86,31 @@ typedef enum
   ArctanFunction
 } MagickFunction;
 
+typedef enum
+{
+  UndefinedStatistic,
+  GradientStatistic,
+  MaximumStatistic,
+  MeanStatistic,
+  MedianStatistic,
+  MinimumStatistic,
+  ModeStatistic,
+  NonpeakStatistic,
+  StandardDeviationStatistic
+} StatisticType;
+
 extern MagickExport ChannelStatistics
   *GetImageChannelStatistics(const Image *,ExceptionInfo *);
 
 extern MagickExport Image
-  *EvaluateImages(const Image *,const MagickEvaluateOperator,ExceptionInfo *);
+  *EvaluateImages(const Image *,const MagickEvaluateOperator,ExceptionInfo *),
+  *PolynomialImage(const Image *,const size_t,const double *,ExceptionInfo *),
+  *PolynomialImageChannel(const Image *,const ChannelType,const size_t,
+    const double *,ExceptionInfo *),
+  *StatisticImage(const Image *,const StatisticType,const size_t,const size_t,
+    ExceptionInfo *),
+  *StatisticImageChannel(const Image *,const ChannelType,const StatisticType,
+    const size_t,const size_t,ExceptionInfo *);
 
 extern MagickExport MagickBooleanType
   EvaluateImage(Image *,const MagickEvaluateOperator,const double,

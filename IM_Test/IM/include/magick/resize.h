@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ extern "C" {
 
 extern MagickExport Image
   *AdaptiveResizeImage(const Image *,const size_t,const size_t,ExceptionInfo *),
+  *InterpolativeResizeImage(const Image *,const size_t,const size_t,
+    const InterpolatePixelMethod,ExceptionInfo *),
   *LiquidRescaleImage(const Image *,const size_t,const size_t,const double,
     const double,ExceptionInfo *),
   *MagnifyImage(const Image *,ExceptionInfo *),

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -53,6 +53,7 @@ typedef enum
   UserEvent = 0x09000,
   WandEvent = 0x10000,
   X11Event = 0x20000,
+  AccelerateEvent = 0x40000,
   AllEvents = 0x7fffffff
 } LogEventType;
 
@@ -78,9 +79,9 @@ extern MagickExport MagickBooleanType
   LogComponentGenesis(void),
   LogMagickEvent(const LogEventType,const char *,const char *,const size_t,
     const char *,...) 
-    magick_attribute((format (printf,5,6))),
+    magick_attribute((__format__ (__printf__,5,6))),
   LogMagickEventList(const LogEventType,const char *,const char *,const size_t,
-    const char *,va_list) magick_attribute((format (printf,5,0)));
+    const char *,va_list) magick_attribute((__format__ (__printf__,5,0)));
 
 extern MagickExport void
   CloseMagickLog(void),

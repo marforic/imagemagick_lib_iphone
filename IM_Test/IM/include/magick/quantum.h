@@ -22,6 +22,7 @@
 extern "C" {
 #endif
 
+#include "magick/image.h"
 #include "magick/semaphore.h"
 
 #define RoundToQuantum(quantum)  ClampToQuantum(quantum)
@@ -88,11 +89,11 @@ static inline Quantum ClampToQuantum(const MagickRealType value)
 #if defined(MAGICKCORE_HDRI_SUPPORT)
   return((Quantum) value);
 #else
-  if (value <= 0.0)
+  if (value <= 0.0f)
     return((Quantum) 0);
   if (value >= (MagickRealType) QuantumRange)
-    return((Quantum) QuantumRange);
-  return((Quantum) (value+0.5));
+    return(QuantumRange);
+  return((Quantum) (value+0.5f));
 #endif
 }
 
@@ -151,10 +152,17 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
 }
 #endif
 
+extern MagickExport EndianType
+  GetQuantumEndian(const QuantumInfo *);
+
 extern MagickExport MagickBooleanType
   SetQuantumDepth(const Image *,QuantumInfo *,const size_t),
+  SetQuantumEndian(const Image *,QuantumInfo *,const EndianType),
   SetQuantumFormat(const Image *,QuantumInfo *,const QuantumFormatType),
   SetQuantumPad(const Image *,QuantumInfo *,const size_t);
+
+extern MagickExport QuantumFormatType
+  GetQuantumFormat(const QuantumInfo *);
 
 extern MagickExport QuantumInfo
   *AcquireQuantumInfo(const ImageInfo *,Image *),

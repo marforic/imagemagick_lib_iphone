@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ extern "C" {
 #include <magick/color.h>
 
 #define OpaqueOpacity  ((Quantum) 0UL)
-#define TransparentOpacity  ((Quantum) QuantumRange)
+#define TransparentOpacity  (QuantumRange)
 
 typedef enum
 {
@@ -39,7 +39,9 @@ typedef enum
   ResetAlphaChannel,  /* deprecated */
   SetAlphaChannel,
   ShapeAlphaChannel,
-  TransparentAlphaChannel
+  TransparentAlphaChannel,
+  FlattenAlphaChannel,
+  RemoveAlphaChannel
 } AlphaChannelType;
 
 typedef enum
@@ -134,6 +136,7 @@ typedef struct _ChromaticityInfo
 #include "magick/effect.h"
 #include "magick/geometry.h"
 #include "magick/layer.h"
+#include "magick/locale_.h"
 #include "magick/monitor.h"
 #include "magick/pixel.h"
 #include "magick/profile.h"
@@ -270,9 +273,9 @@ struct _Image
     *blob;
 
   char
-    filename[MaxTextExtent],   /* images input filename */
-    magick_filename[MaxTextExtent],
-    magick[MaxTextExtent];
+    filename[MaxTextExtent],         /* images input filename */
+    magick_filename[MaxTextExtent],  /* ditto with coders, and read_mods */
+    magick[MaxTextExtent];           /* Coder used to decode image */
 
   size_t
     magick_columns,
@@ -302,9 +305,9 @@ struct _Image
     signature;
 
   struct _Image
-    *previous,         /* Image sequence list links */
-    *list,
-    *next;
+    *previous,         /* Image list links */
+    *list,             /* Undo/Redo image processing list (for display) */
+    *next;             /* Image list links */
 
   InterpolatePixelMethod
     interpolate;       /* Interpolation of color for between pixel lookups */
@@ -495,14 +498,12 @@ extern MagickExport Image
   *AppendImages(const Image *,const MagickBooleanType,ExceptionInfo *),
   *CloneImage(const Image *,const size_t,const size_t,const MagickBooleanType,
     ExceptionInfo *),
-  *CombineImages(const Image *,const ChannelType,ExceptionInfo *),
   *DestroyImage(Image *),
   *GetImageClipMask(const Image *,ExceptionInfo *),
   *GetImageMask(const Image *,ExceptionInfo *),
   *NewMagickImage(const ImageInfo *,const size_t,const size_t,
     const MagickPixelPacket *),
   *ReferenceImage(Image *),
-  *SeparateImages(const Image *,const ChannelType,ExceptionInfo *),
   *SmushImages(const Image *,const MagickBooleanType,const ssize_t,
     ExceptionInfo *);
 
@@ -514,7 +515,6 @@ extern MagickExport ImageInfo
 extern MagickExport MagickBooleanType
   ClipImage(Image *),
   ClipImagePath(Image *,const char *,const MagickBooleanType),
-  GetImageAlphaChannel(const Image *),
   IsTaintImage(const Image *),
   IsMagickConflict(const char *),
   IsHighDynamicRangeImage(const Image *,ExceptionInfo *),
@@ -522,8 +522,6 @@ extern MagickExport MagickBooleanType
   ListMagickInfo(FILE *,ExceptionInfo *),
   ModifyImage(Image **,ExceptionInfo *),
   ResetImagePage(Image *,const char *),
-  SeparateImageChannel(Image *,const ChannelType),
-  SetImageAlphaChannel(Image *,const AlphaChannelType),
   SetImageBackgroundColor(Image *),
   SetImageClipMask(Image *,const Image *),
   SetImageColor(Image *,const MagickPixelPacket *),
@@ -533,7 +531,6 @@ extern MagickExport MagickBooleanType
   SetImageOpacity(Image *,const Quantum),
   SetImageChannels(Image *,const size_t),
   SetImageStorageClass(Image *,const ClassType),
-  SetImageType(Image *,const ImageType),
   StripImage(Image *),
   SyncImage(Image *),
   SyncImageSettings(const ImageInfo *,Image *),

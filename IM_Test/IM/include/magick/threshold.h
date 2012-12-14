@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -47,6 +47,8 @@ extern MagickExport MagickBooleanType
   OrderedPosterizeImage(Image *,const char *,ExceptionInfo *),
   OrderedPosterizeImageChannel(Image *,const ChannelType,const char *,
     ExceptionInfo *),
+  PerceptibleImage(Image *,const double),
+  PerceptibleImageChannel(Image *,const ChannelType,const double),
   RandomThresholdImage(Image *,const char *,ExceptionInfo *),
   RandomThresholdImageChannel(Image *,const ChannelType,const char *,
     ExceptionInfo *),

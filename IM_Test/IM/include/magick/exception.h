@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -154,10 +154,10 @@ extern MagickExport MagickBooleanType
     const char *),
   ThrowMagickException(ExceptionInfo *,const char *,const char *,const size_t,
     const ExceptionType,const char *,const char *,...)
-    magick_attribute((format (printf,7,8))),
+    magick_attribute((__format__ (__printf__,7,8))),
   ThrowMagickExceptionList(ExceptionInfo *,const char *,const char *,
     const size_t,const ExceptionType,const char *,const char *,va_list)
-    magick_attribute((format (printf,7,0)));
+    magick_attribute((__format__ (__printf__,7,0)));
 
 extern MagickExport void
   CatchException(ExceptionInfo *),

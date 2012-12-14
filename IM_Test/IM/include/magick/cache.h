@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2011 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -23,6 +23,18 @@ extern "C" {
 #endif
 
 #include "magick/blob.h"
+
+typedef enum
+{
+  UndefinedCache,
+  MemoryCache,
+  MapCache,
+  DiskCache,
+  PingCache
+} CacheType;
+
+extern MagickExport CacheType
+  GetImagePixelCacheType(const Image *);
 
 extern MagickExport const IndexPacket
   *GetVirtualIndexQueue(const Image *);
