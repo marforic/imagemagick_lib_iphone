@@ -571,13 +571,13 @@ function zip_for_ftp() {
 	echo "[+ DONE: ZIP]"
 }
 
-# png "$IPHONE"
+png "$IPHONE"
 png "$ARCH_SIM" 
-# jpeg "$IPHONE"
+jpeg "$IPHONE"
 jpeg "$ARCH_SIM"
-# tiff "$IPHONE"
+tiff "$IPHONE"
 tiff "$ARCH_SIM"
-# im "$IPHONE"
+im "$IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
-zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
+# zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
