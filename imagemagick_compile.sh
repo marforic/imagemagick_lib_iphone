@@ -26,11 +26,9 @@
 
 FINAL_DIR=`pwd`/IMPORT_ME/
 
-IM_CONFIG_PATH=`pwd`/magick-config.h
-
 if [[ $# != 1 ]]; then
 	echo "imagemagick_compile.sh takes 1 argument: the version of ImageMagick that you want to compile!"
-	echo "USAGE: imagemagick_compile.sh 6.8.0-8"
+	echo "USAGE: imagemagick_compile.sh 6.8.1-0"
 	exit
 fi
 
@@ -38,11 +36,11 @@ IM_VERSION="$1"
 IM_DIR="$(pwd)/ImageMagick-$IM_VERSION"
 IM_DELEGATES_DIR="${IM_DIR}/IMDelegates/"
 
-if [ -d $IM_DELEGATES_DIR ]; then
+if [ -e $IM_DELEGATES_DIR ]; then
 	:;
 else
-	echo "[INFO] IMDelegates folder not found, copying over"
-	cp -r "$(pwd)/IMDelegates" "$IM_DIR/IMDelegates"
+	echo "[INFO] IMDelegates not found, copying over"
+	ln -s "$(pwd)/IMDelegates" "$IM_DIR/IMDelegates"
 fi
 
 JPEG_DIR="$IM_DIR/IMDelegates/jpeg-8c"
@@ -50,6 +48,7 @@ PNG_DIR="$IM_DIR/IMDelegates/libpng-1.5.13"
 TIFF_DIR="$IM_DIR/IMDelegates/tiff-4.0.3"
 
 OUTPUT_FILE="$(pwd)/imagemagick_log_$(date +%s)"
+echo "[INFO] Output to: ${OUTPUT_FILE}"
 
 # Architectures and versions
 ARCH_SIM="i386"
@@ -423,9 +422,9 @@ echo "[+ IM: $1]"
 cd $IM_DIR
 
 # static library that will be generated
-LIBPATH_static=$IM_LIB_DIR/lib/libMagickCore.a
+LIBPATH_static=$IM_LIB_DIR/lib/libMagickCore-Q8.a
 LIBNAME_static=`basename $LIBPATH_static`
-LIBPATH_static2=$IM_LIB_DIR/lib/libMagickWand.a
+LIBPATH_static2=$IM_LIB_DIR/lib/libMagickWand-Q8.a
 LIBNAME_static2=`basename $LIBPATH_static2`
 
 if [ "$1" == "$IPHONE" ]; then ##  ARM	 ##
@@ -448,10 +447,6 @@ echo "[|- CONFIG $ARCH_IPHONE]"
 --host=arm-apple-darwin --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --disable-opencl \
 --without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype >> $OUTPUT_FILE 2>&1
 
-#For some reason, magick-config.h does not get generated. Find one for your version of ImageMagick and put it in
-#The cross_compile directory
-cp $IM_CONFIG_PATH magick/
-
 # compile ImageMagick
 echo "[|- CC $ARCH_IPHONE]"
 make -j2 >> $OUTPUT_FILE 2>&1
@@ -463,7 +458,7 @@ cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.$ARCH_IPHONE
 
 # clean the ImageMagick build
 echo "[| CLEAN $ARCH_IPHONE]"
-make distclean >> $OUTPUT_FILE 2>&1
+make clean >> $OUTPUT_FILE 2>&1
 
 ## ARMV7S ##
 export CFLAGS="$COMMON_IPHONE7S_CFLAGS $IM_IFLAGS -DHAVE_J1=0 -DTARGET_OS_IPHONE -DMAGICKCORE_WORDS_BIGENDIAN"
@@ -474,8 +469,6 @@ echo "[|- CONFIG $ARCH_IPHONE7S]"
 ./configure prefix=$IM_LIB_DIR CC=/usr/bin/clang LD=$DEVROOT/usr/bin/ld \
 --host=arm-apple-darwin --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --disable-opencl ``\
 --without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype >> $OUTPUT_FILE 2>&1
-
-cp $IM_CONFIG_PATH magick/
 
 # compile ImageMagick
 echo "[|- CC $ARCH_IPHONE7S]"
@@ -496,7 +489,7 @@ cp $IM_LIB_DIR/share/ImageMagick-*/*.xml $LIB_DIR/include/im_config/
 
 # clean the ImageMagick build
 echo "[|- CLEAN $ARCH_IPHONE7S]"
-make distclean >> $OUTPUT_FILE 2>&1
+make lean >> $OUTPUT_FILE 2>&1
 
 elif [ "$1" == "$ARCH_SIM" ]; then ##  INTEL  ##
 
@@ -514,8 +507,6 @@ echo "[|- CONFIG $ARCH_SIM]"
 --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
 --disable-shared --disable-openmp --without-bzlib --without-freetype --without-threads >> $OUTPUT_FILE 2>&1
 
-cp $IM_CONFIG_PATH magick/
-
 # compile ImageMagick
 echo "[|- CC $ARCH_SIM]"
 make -j2 >> $OUTPUT_FILE 2>&1
@@ -527,7 +518,7 @@ cp $LIBPATH_static2 $LIB_DIR/$LIBNAME_static2.$ARCH_SIM
 
 # clean the ImageMagick build
 echo "[|- CLEAN $ARCH_SIM]"
-make distclean >> $OUTPUT_FILE 2>&1
+make clean >> $OUTPUT_FILE 2>&1
 
 # combine the two generated libraries to be used both in the simulator and in the device
 echo "[|- COMBINE (libMagickCore) $ARCH_IPHONE $ARCH_IPHONE7S $ARCH_SIM]"
@@ -580,13 +571,13 @@ function zip_for_ftp() {
 	echo "[+ DONE: ZIP]"
 }
 
-png "$IPHONE"
+# png "$IPHONE"
 png "$ARCH_SIM" 
-jpeg "$IPHONE"
+# jpeg "$IPHONE"
 jpeg "$ARCH_SIM"
-tiff "$IPHONE"
+# tiff "$IPHONE"
 tiff "$ARCH_SIM"
-im "$IPHONE"
+# im "$IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
-# zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
+zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
