@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -26,16 +26,16 @@ extern "C" {
   Define declarations.
 */
 #define MagickPackageName "ImageMagick"
-#define MagickCopyright  "Copyright (C) 1999-2012 ImageMagick Studio LLC"
+#define MagickCopyright  "Copyright (C) 1999-2013 ImageMagick Studio LLC"
 #define MagickSVNRevision  "10070"
-#define MagickLibVersion  0x680
-#define MagickLibVersionText  "6.8.0"
+#define MagickLibVersion  0x681
+#define MagickLibVersionText  "6.8.1"
 #define MagickLibVersionNumber  7,0,0
-#define MagickLibAddendum  "-8"
+#define MagickLibAddendum  "-0"
 #define MagickLibInterface  7
 #define MagickLibMinInterface  7
-#define MagickReleaseDate  "2012-12-13"
-#define MagickChangeDate   "20121207"
+#define MagickReleaseDate  "2012-12-20"
+#define MagickChangeDate   "20121216"
 #define MagickAuthoritativeURL  "http://www.imagemagick.org"
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
 #define MagickOpenMPFeature  "OpenMP "
@@ -58,7 +58,7 @@ extern "C" {
 #define MagickZeroConfigurationFeature  " "
 #endif
 #define MagickFeatures MagickOpenMPFeature MagickOpenCLFeature MagickHDRIFeature MagickZeroConfigurationFeature
-#define MagickHomeURL  "file:///Users/mgod/Desktop/cross_compile/tmp_target/imagemagick/share/doc/ImageMagick-6.8.0/index.html"
+#define MagickHomeURL  "file:///Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/doc/ImageMagick-6.8.1/index.html"
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)
 #define MagickQuantumDepth  "Q8"
 #define MagickQuantumRange  "255"

@@ -15,6 +15,8 @@
 		2899E5220DE3E06400AC0155 /* IM_TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* IM_TestViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* IM_TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* IM_TestViewController.m */; };
+		615963291683CFB600FAE5C5 /* libMagickCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 615963271683CFB600FAE5C5 /* libMagickCore.a */; };
+		6159632A1683CFB600FAE5C5 /* libMagickWand.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 615963281683CFB600FAE5C5 /* libMagickWand.a */; };
 		6188D5C410066BB300BA109F /* iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 6188D5C310066BB300BA109F /* iphone.png */; };
 		61EC622D101EF99F00AE41D8 /* iphone.tif in Resources */ = {isa = PBXBuildFile; fileRef = 61EC622C101EF99F00AE41D8 /* iphone.tif */; };
 		7525A234167A613600487B91 /* coder.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7525A19B167A613600487B91 /* coder.xml */; };
@@ -34,8 +36,6 @@
 		7525A242167A613600487B91 /* type-windows.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7525A1A9167A613600487B91 /* type-windows.xml */; };
 		7525A243167A613600487B91 /* type.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7525A1AA167A613600487B91 /* type.xml */; };
 		7525A244167A613600487B91 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7525A22F167A613600487B91 /* libjpeg.a */; };
-		7525A245167A613600487B91 /* libMagickCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7525A230167A613600487B91 /* libMagickCore.a */; };
-		7525A246167A613600487B91 /* libMagickWand.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7525A231167A613600487B91 /* libMagickWand.a */; };
 		7525A247167A613600487B91 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7525A232167A613600487B91 /* libpng.a */; };
 		7525A248167A613600487B91 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7525A233167A613600487B91 /* libtiff.a */; };
 		7525A24B167A615400487B91 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7525A249167A614C00487B91 /* libxml2.dylib */; };
@@ -54,6 +54,8 @@
 		28D7ACF70DDB3853001CB0EB /* IM_TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IM_TestViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IM_Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IM_Test_Prefix.pch; sourceTree = "<group>"; };
+		615963271683CFB600FAE5C5 /* libMagickCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagickCore.a; sourceTree = "<group>"; };
+		615963281683CFB600FAE5C5 /* libMagickWand.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagickWand.a; sourceTree = "<group>"; };
 		6188D5C310066BB300BA109F /* iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone.png; sourceTree = "<group>"; };
 		61EC622C101EF99F00AE41D8 /* iphone.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = iphone.tif; sourceTree = "<group>"; };
 		61EDE88F100CBC30001C64A9 /* benchmarks.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = benchmarks.txt; sourceTree = "<group>"; };
@@ -201,8 +203,6 @@
 		7525A22D167A613600487B91 /* stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream.h; sourceTree = "<group>"; };
 		7525A22E167A613600487B91 /* wand-view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "wand-view.h"; sourceTree = "<group>"; };
 		7525A22F167A613600487B91 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjpeg.a; sourceTree = "<group>"; };
-		7525A230167A613600487B91 /* libMagickCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagickCore.a; sourceTree = "<group>"; };
-		7525A231167A613600487B91 /* libMagickWand.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMagickWand.a; sourceTree = "<group>"; };
 		7525A232167A613600487B91 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
 		7525A233167A613600487B91 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
 		7525A249167A614C00487B91 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -219,10 +219,10 @@
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				7525A24B167A615400487B91 /* libxml2.dylib in Frameworks */,
 				7525A244167A613600487B91 /* libjpeg.a in Frameworks */,
-				7525A245167A613600487B91 /* libMagickCore.a in Frameworks */,
-				7525A246167A613600487B91 /* libMagickWand.a in Frameworks */,
 				7525A247167A613600487B91 /* libpng.a in Frameworks */,
 				7525A248167A613600487B91 /* libtiff.a in Frameworks */,
+				615963291683CFB600FAE5C5 /* libMagickCore.a in Frameworks */,
+				6159632A1683CFB600FAE5C5 /* libMagickWand.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,9 +298,9 @@
 			isa = PBXGroup;
 			children = (
 				7525A199167A613600487B91 /* include */,
+				615963271683CFB600FAE5C5 /* libMagickCore.a */,
+				615963281683CFB600FAE5C5 /* libMagickWand.a */,
 				7525A22F167A613600487B91 /* libjpeg.a */,
-				7525A230167A613600487B91 /* libMagickCore.a */,
-				7525A231167A613600487B91 /* libMagickWand.a */,
 				7525A232167A613600487B91 /* libpng.a */,
 				7525A233167A613600487B91 /* libtiff.a */,
 			);

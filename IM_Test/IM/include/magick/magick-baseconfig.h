@@ -37,7 +37,7 @@
 
 /* Directory where architecture-dependent configuration files live. */
 #ifndef MAGICKCORE_CONFIGURE_PATH
-#define MAGICKCORE_CONFIGURE_PATH "/Users/mgod/Desktop/cross_compile/tmp_target/imagemagick/etc/ImageMagick/"
+#define MAGICKCORE_CONFIGURE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/etc/ImageMagick/"
 #endif
 
 /* Subdirectory of lib where architecture-dependent configuration files live.
@@ -51,7 +51,7 @@
 
 /* Directory where ImageMagick documents live. */
 #ifndef MAGICKCORE_DOCUMENTATION_PATH
-#define MAGICKCORE_DOCUMENTATION_PATH "/Users/mgod/Desktop/cross_compile/tmp_target/imagemagick/share/doc/ImageMagick-6.8.0/"
+#define MAGICKCORE_DOCUMENTATION_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/doc/ImageMagick-6.8.1/"
 #endif
 
 /* Define if you have Display Postscript */
@@ -62,7 +62,7 @@
 
 /* Directory where executables are installed. */
 #ifndef MAGICKCORE_EXECUTABLE_PATH
-#define MAGICKCORE_EXECUTABLE_PATH "/Users/mgod/Desktop/cross_compile/tmp_target/imagemagick/bin/"
+#define MAGICKCORE_EXECUTABLE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/bin/"
 #endif
 
 /* Define if you have FFTW library */
@@ -1050,7 +1050,7 @@
 
 /* Directory where ImageMagick headers live. */
 #ifndef MAGICKCORE_INCLUDE_PATH
-#define MAGICKCORE_INCLUDE_PATH "/Users/mgod/Desktop/cross_compile/tmp_target/imagemagick/include/ImageMagick/"
+#define MAGICKCORE_INCLUDE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/include/ImageMagick/"
 #endif
 
 /* ImageMagick is formally installed under prefix */
@@ -1074,13 +1074,13 @@
 
 /* Directory where architecture-dependent files live. */
 #ifndef MAGICKCORE_LIBRARY_PATH
-#define MAGICKCORE_LIBRARY_PATH "/Users/mgod/Desktop/cross_compile/tmp_target/imagemagick/lib/ImageMagick-6.8.0/"
+#define MAGICKCORE_LIBRARY_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/lib/ImageMagick-6.8.1/"
 #endif
 
 /* Subdirectory of lib where ImageMagick architecture dependent files are
    installed */
 #ifndef MAGICKCORE_LIBRARY_RELATIVE_PATH
-#define MAGICKCORE_LIBRARY_RELATIVE_PATH "ImageMagick-6.8.0"
+#define MAGICKCORE_LIBRARY_RELATIVE_PATH "ImageMagick-6.8.1"
 #endif
 
 /* Define if you have LQR library */
@@ -1153,7 +1153,7 @@
 
 /* Define to the full name and version of this package. */
 #ifndef MAGICKCORE_PACKAGE_STRING
-#define MAGICKCORE_PACKAGE_STRING "ImageMagick 6.8.0-8"
+#define MAGICKCORE_PACKAGE_STRING "ImageMagick 6.8.1-0"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -1168,7 +1168,7 @@
 
 /* Define to the version of this package. */
 #ifndef MAGICKCORE_PACKAGE_VERSION
-#define MAGICKCORE_PACKAGE_VERSION "6.8.0-8"
+#define MAGICKCORE_PACKAGE_VERSION "6.8.1-0"
 #endif
 
 /* Define if you have PANGOCAIRO library */
@@ -1227,13 +1227,13 @@
 
 /* Directory where architecture-independent configuration files live. */
 #ifndef MAGICKCORE_SHARE_PATH
-#define MAGICKCORE_SHARE_PATH "/Users/mgod/Desktop/cross_compile/tmp_target/imagemagick/share/ImageMagick-6.8.0/"
+#define MAGICKCORE_SHARE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/ImageMagick-6.8.1/"
 #endif
 
 /* Subdirectory of lib where architecture-independent configuration files
    live. */
 #ifndef MAGICKCORE_SHARE_RELATIVE_PATH
-#define MAGICKCORE_SHARE_RELATIVE_PATH "ImageMagick-6.8.0"
+#define MAGICKCORE_SHARE_RELATIVE_PATH "ImageMagick-6.8.1"
 #endif
 
 /* The size of `double', as computed by sizeof. */
@@ -1374,7 +1374,7 @@
 
 /* Version number of package */
 #ifndef MAGICKCORE_VERSION
-#define MAGICKCORE_VERSION "6.8.0-8"
+#define MAGICKCORE_VERSION "6.8.1-0"
 #endif
 
 /* Define if you have WEBP library */

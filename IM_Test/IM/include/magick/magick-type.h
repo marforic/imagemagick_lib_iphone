@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2012 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ extern "C" {
 #define MAGICKCORE_QUANTUM_DEPTH  16
 #endif
 
-#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__)
+#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__) && !defined(__MINGW64__)
 #  define MagickLLConstant(c)  (MagickOffsetType) (c ## i64)
 #  define MagickULLConstant(c)  (MagickSizeType) (c ## ui64)
 #else

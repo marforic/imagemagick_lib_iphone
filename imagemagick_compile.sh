@@ -524,12 +524,12 @@ make clean >> $OUTPUT_FILE 2>&1
 echo "[|- COMBINE (libMagickCore) $ARCH_IPHONE $ARCH_IPHONE7S $ARCH_SIM]"
 $DEVROOT/usr/bin/lipo -arch $ARCH_IPHONE $LIB_DIR/$LIBNAME_static.$ARCH_IPHONE \
 	-arch $ARCH_IPHONE7S $LIB_DIR/$LIBNAME_static.$ARCH_IPHONE7S \
-	-arch $ARCH_SIM $LIB_DIR/$LIBNAME_static.$ARCH_SIM -create -output $LIB_DIR/$LIBNAME_static
+	-arch $ARCH_SIM $LIB_DIR/$LIBNAME_static.$ARCH_SIM -create -output $LIB_DIR/libMagickCore.a
 
 echo "[|- COMBINE (libMagickWand) $ARCH_IPHONE $ARCH_IPHONE7S $ARCH_SIM]"	
 $DEVROOT/usr/bin/lipo -arch $ARCH_IPHONE $LIB_DIR/$LIBNAME_static2.$ARCH_IPHONE \
 	-arch $ARCH_IPHONE7S $LIB_DIR/$LIBNAME_static2.$ARCH_IPHONE7S \
-	-arch $ARCH_SIM $LIB_DIR/$LIBNAME_static2.$ARCH_SIM -create -output $LIB_DIR/$LIBNAME_static2
+	-arch $ARCH_SIM $LIB_DIR/$LIBNAME_static2.$ARCH_SIM -create -output $LIB_DIR/libMagickWand.a
 
 fi
 
@@ -571,13 +571,13 @@ function zip_for_ftp() {
 	echo "[+ DONE: ZIP]"
 }
 
-png "$IPHONE"
-png "$ARCH_SIM" 
-jpeg "$IPHONE"
-jpeg "$ARCH_SIM"
-tiff "$IPHONE"
-tiff "$ARCH_SIM"
-im "$IPHONE"
+# png "$IPHONE"
+# png "$ARCH_SIM" 
+# jpeg "$IPHONE"
+# jpeg "$ARCH_SIM"
+# tiff "$IPHONE"
+# tiff "$ARCH_SIM"
+# im "$IPHONE"
 im "$ARCH_SIM"
 structure_for_xcode
-# zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)
+zip_for_ftp # used only by me (Claudio Marforio) to upload to the IM ftp :)

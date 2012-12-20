@@ -31,6 +31,7 @@ extern "C" {
 #  define __CYGWIN__  __CYGWIN32__
 #endif
 
+/*! stringify */
 #define MAGICKCORE_STRING_QUOTE(str) #str
 #define MAGICKCORE_STRING_XQUOTE(str) MAGICKCORE_STRING_QUOTE(str)
 
@@ -46,10 +47,10 @@ extern "C" {
 # if defined (_WIN32) || defined (_WIN64) || defined (__MSDOS__) || defined (__DJGPP__) || defined (__OS2__)
    /* Use Windows separators on all _WIN32 defining
       environments, except Cygwin. */
-#  define MAGICKCORE_DIR_SEPARATOR_CHAR         '\\'
-#  define MAGICKCORE_DIR_SEPARATOR              "\\"
-#  define MAGICKCORE_PATH_SEPARATOR_CHAR        ';'
-#  define MAGICKCORE_PATH_SEPARATOR             ";"
+#  define MAGICKCORE_DIR_SEPARATOR_CHAR		'\\'
+#  define MAGICKCORE_DIR_SEPARATOR		"\\"
+#  define MAGICKCORE_PATH_SEPARATOR_CHAR	';'
+#  define MAGICKCORE_PATH_SEPARATOR		";"
 # endif
 #endif
  
@@ -57,10 +58,10 @@ extern "C" {
 #ifndef MAGICKCORE_DIR_SEPARATOR_CHAR
    /* Assume that not having this is an indicator that all
       are missing. */
-#  define MAGICKCORE_DIR_SEPARATOR_CHAR         '/'
-#  define MAGICKCORE_DIR_SEPARATOR              "/"
-#  define MAGICKCORE_PATH_SEPARATOR_CHAR        ':'
-#  define MAGICKCORE_PATH_SEPARATOR             ":"
+#  define MAGICKCORE_DIR_SEPARATOR_CHAR		'/'
+#  define MAGICKCORE_DIR_SEPARATOR		"/"
+#  define MAGICKCORE_PATH_SEPARATOR_CHAR	':'
+#  define MAGICKCORE_PATH_SEPARATOR		":"
 #endif /* !DIR_SEPARATOR_CHAR */
 
 # if defined(MAGICKCORE_POSIX_SUPPORT)
