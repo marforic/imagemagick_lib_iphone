@@ -656,8 +656,8 @@
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/\"/**";
 				OTHER_CFLAGS = "-Dmacintosh=1";
 				OTHER_LDFLAGS = (
-					"-lMagickCore",
-					"-lMagickWand",
+					"-lMagickCore-Q8",
+					"-lMagickWand-Q8",
 					"-lz",
 					"-lbz2",
 					"-ljpeg",
