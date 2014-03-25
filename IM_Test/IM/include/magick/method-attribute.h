@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ extern "C" {
 #   pragma warning( disable: 4273 )  /* Disable the dll linkage warnings */
 #  endif
 #  if !defined(_MAGICKLIB_)
-#   if defined(__GNUC__)
+#   if defined(__clang__) || defined(__GNUC__)
 #    define MagickExport __attribute__ ((dllimport))
 #   else
 #    define MagickExport __declspec(dllimport)
@@ -49,7 +49,7 @@ extern "C" {
 #    pragma message( "MagickCore lib DLL import interface" )
 #   endif
 #  else
-#   if defined(__GNUC__)
+#   if defined(__clang__) || defined(__GNUC__)
 #    define MagickExport __attribute__ ((dllexport))
 #   else
 #    define MagickExport __declspec(dllexport)
@@ -66,7 +66,7 @@ extern "C" {
 # endif
 
 # if defined(_DLL) && !defined(_LIB)
-#   if defined(__GNUC__)
+#   if defined(__clang__) || defined(__GNUC__)
 #    define ModuleExport __attribute__ ((dllexport))
 #   else
 #    define ModuleExport __declspec(dllexport)
@@ -81,7 +81,6 @@ extern "C" {
 #  endif
 
 # endif
-# define MagickGlobal __declspec(thread)
 # if defined(_VISUALC_)
 #  pragma warning(disable : 4018)
 #  pragma warning(disable : 4068)
@@ -92,7 +91,7 @@ extern "C" {
 #  pragma warning(disable : 4996)
 # endif
 #else
-# if __GNUC__ >= 4
+# if defined(__clang__) || (__GNUC__ >= 4)
 #  define MagickExport __attribute__ ((visibility ("default")))
 #  define MagickPrivate  __attribute__ ((visibility ("hidden")))
 # else
@@ -100,29 +99,31 @@ extern "C" {
 #   define MagickPrivate
 # endif
 # define ModuleExport  MagickExport
-# define MagickGlobal
 #endif
 
 #define MagickSignature  0xabacadabUL
 #if !defined(MaxTextExtent)
-# define MaxTextExtent  4096
+# define MaxTextExtent  4096  /* always >= 4096 */
 #endif
 
 #if defined(MAGICKCORE_HAVE___ATTRIBUTE__)
-#  define magick_aligned(x)  __attribute__((aligned(x)))
+#  define magick_aligned(x,y)  x __attribute__((aligned(y)))
 #  define magick_attribute  __attribute__
 #  define magick_unused(x)  magick_unused_ ## x __attribute__((unused))
+#  define magick_unreferenced(x)  /* nothing */
 #elif defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__CYGWIN__)
-#  define magick_aligned(x)  __declspec(align(x))
+#  define magick_aligned(x,y)  __declspec(align(y)) x
 #  define magick_attribute(x)  /* nothing */
 #  define magick_unused(x) x
+#  define magick_unreferenced(x) (x)
 #else
-#  define magick_aligned(x)  /* nothing */
+#  define magick_aligned(x,y)  /* nothing */
 #  define magick_attribute(x)  /* nothing */
 #  define magick_unused(x) x
+#  define magick_unreferenced(x)  /* nothing */
 #endif
 
-#if (((__GNUC__) > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))
+#if (defined(__clang__) || (((__GNUC__) > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))) && !defined(__apple_build_version__)
 #  define magick_alloc_size(x)  __attribute__((__alloc_size__(x)))
 #  define magick_alloc_sizes(x,y)  __attribute__((__alloc_size__(x,y)))
 #  define magick_cold_spot  __attribute__((__cold__))

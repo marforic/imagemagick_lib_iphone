@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -22,10 +22,17 @@
 extern "C" {
 #endif
 
+typedef struct _MemoryInfo
+  MemoryInfo;
+
 typedef void
   *(*AcquireMemoryHandler)(size_t) magick_alloc_size(1),
   (*DestroyMemoryHandler)(void *),
   *(*ResizeMemoryHandler)(void *,size_t) magick_alloc_size(2);
+
+extern MagickExport MemoryInfo
+  *AcquireVirtualMemory(const size_t,const size_t) magick_alloc_sizes(1,2),
+  *RelinquishVirtualMemory(MemoryInfo *);
 
 extern MagickExport void
   *AcquireAlignedMemory(const size_t,const size_t)
@@ -39,6 +46,7 @@ extern MagickExport void
   DestroyMagickMemory(void),
   GetMagickMemoryMethods(AcquireMemoryHandler *,ResizeMemoryHandler *,
     DestroyMemoryHandler *),
+  *GetVirtualMemoryBlob(const MemoryInfo *),
   *RelinquishAlignedMemory(void *),
   *RelinquishMagickMemory(void *),
   *ResetMagickMemory(void *,int,const size_t),

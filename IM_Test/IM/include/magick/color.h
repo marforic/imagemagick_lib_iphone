@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,12 +18,12 @@
 #ifndef _MAGICKCORE_COLOR_H
 #define _MAGICKCORE_COLOR_H
 
+#include "magick/pixel.h"
+#include "magick/exception.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
-
-#include <magick/pixel.h>
-#include <magick/exception.h>
 
 typedef enum
 {
@@ -77,13 +77,10 @@ extern MagickExport const ColorInfo
 extern MagickExport MagickBooleanType
   ColorComponentGenesis(void),
   IsColorSimilar(const Image *,const PixelPacket *,const PixelPacket *),
-  IsGrayImage(const Image *,ExceptionInfo *),
   IsImageSimilar(const Image *,const Image *,ssize_t *x,ssize_t *y,
     ExceptionInfo *),
   IsMagickColorSimilar(const MagickPixelPacket *,const MagickPixelPacket *),
-  IsMonochromeImage(const Image *,ExceptionInfo *),
   IsOpacitySimilar(const Image *,const PixelPacket *,const PixelPacket *),
-  IsOpaqueImage(const Image *,ExceptionInfo *),
   ListColorInfo(FILE *,ExceptionInfo *),
   QueryColorCompliance(const char *,const ComplianceType,PixelPacket *,
     ExceptionInfo *),

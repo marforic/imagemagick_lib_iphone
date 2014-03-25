@@ -38,8 +38,8 @@
         <message name="CacheResourcesExhausted">
           Ressources du cache épuisées
         </message>
-        <message name="InconsistentPersistentCacheDepth">
-          profondeur du cache persistant inconsistante
+        <message name="IncompatibleAPI">
+          incompatible API
         </message>
         <message name="NoPixelsDefinedInCache">
           pas de pixels définis dans le cache
@@ -68,10 +68,16 @@
         <message name="UnableToReadPixelCache">
           impossible de lire le cache pixels
         </message>
+        <message name="UnableToWritePixelCache">
+          impossible d'écrire le cache pixels
+        </message>
       </error>
       <fatalerror>
         <message name="UnableToAcquireCacheView">
           échec allocation cache view
+        </message>
+        <message name="UnableToExtendPixelCache">
+          impossible extend le cache pixels
         </message>
       </fatalerror>
     </cache>
@@ -456,6 +462,9 @@
     <file>
       <open>
         <error>
+          <message name="AnErrorHasOccurredReadingFromFile">
+            an error has occurred reading from file
+          </message>
           <message name="UnableToCreateTemporaryFile">
             impossible de créer un fichier temporaire
           </message>
@@ -762,6 +771,9 @@
         </message>
         <message name="UnrecognizedImageType">
           type d'image non reconnu
+        </message>
+        <message name="UnrecognizedIntensityMethod">
+          unrecognized intensity method
         </message>
         <message name="UnrecognizedIntentType">
           type de gestion des couleurs de l'image non reconnu

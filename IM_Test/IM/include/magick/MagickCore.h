@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -44,10 +44,19 @@ extern "C" {
 # endif
 #endif
 
+#define MAGICKCORE_CHECK_VERSION(major,minor,micro) \
+  ((MAGICKCORE_MAJOR_VERSION > (major)) || \
+    ((MAGICKCORE_MAJOR_VERSION == (major)) && \
+     (MAGICKCORE_MINOR_VERSION > (minor))) || \
+    ((MAGICKCORE_MAJOR_VERSION == (major)) && \
+     (MAGICKCORE_MINOR_VERSION == (minor)) && \
+     (MAGICKCORE_MICRO_VERSION >= (micro))))
+
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <time.h>
 
 #if defined(WIN32) || defined(WIN64)
 #  define MAGICKCORE_WINDOWS_SUPPORT
@@ -86,6 +95,7 @@ extern "C" {
 #include "magick/deprecate.h"
 #include "magick/display.h"
 #include "magick/distort.h"
+#include "magick/distribute-cache.h"
 #include "magick/draw.h"
 #include "magick/effect.h"
 #include "magick/enhance.h"
@@ -113,6 +123,7 @@ extern "C" {
 #include "magick/monitor.h"
 #include "magick/montage.h"
 #include "magick/morphology.h"
+#include "magick/opencl.h"
 #include "magick/option.h"
 #include "magick/paint.h"
 #include "magick/pixel.h"

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ extern "C" {
 #  undef MAGICKCORE_BUILD_MODULES
 #endif
 
-#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__CYGWIN__)
+#if defined(MAGICKWAND_WINDOWS_SUPPORT) && !defined(__CYGWIN__)
 # define WandPrivate
 # if defined(_MT) && defined(_DLL) && !defined(_MAGICKDLL_) && !defined(_LIB)
 #  define _MAGICKDLL_
@@ -40,7 +40,7 @@ extern "C" {
 #   pragma warning( disable: 4273 )  /* Disable the dll linkage warnings */
 #  endif
 #  if !defined(_MAGICKLIB_)
-#   if defined(__GNUC__)
+#   if defined(__clang__) || defined(__GNUC__)
 #    define WandExport __attribute__ ((dllimport))
 #   else
 #    define WandExport __declspec(dllimport)
@@ -49,7 +49,7 @@ extern "C" {
 #    pragma message( "MagickWand lib DLL import interface" )
 #   endif
 #  else
-#   if defined(__GNUC__)
+#   if defined(__clang__) || defined(__GNUC__)
 #    define WandExport __attribute__ ((dllexport))
 #   else
 #    define WandExport __declspec(dllexport)
@@ -75,7 +75,6 @@ extern "C" {
 #  endif
 
 # endif
-# define WandGlobal __declspec(thread)
 # if defined(_VISUALC_)
 #  pragma warning(disable : 4018)
 #  pragma warning(disable : 4068)
@@ -86,14 +85,13 @@ extern "C" {
 #  pragma warning(disable : 4996)
 # endif
 #else
-# if __GNUC__ >= 4
+# if defined(__clang__) || (__GNUC__ >= 4)
 #  define WandExport __attribute__ ((visibility ("default")))
 #  define WandPrivate  __attribute__ ((visibility ("hidden")))
 # else
 #   define WandExport
 #   define WandPrivate
 # endif
-# define WandGlobal
 #endif
 
 #define WandSignature  0xabacadabUL
@@ -105,13 +103,26 @@ extern "C" {
 #  define wand_aligned(x)  __attribute__((aligned(x)))
 #  define wand_attribute  __attribute__
 #  define wand_unused(x)  wand_unused_ ## x __attribute__((unused))
+#  define wand_unreferenced(x)
+#elif defined(MAGICKWAND_WINDOWS_SUPPORT) && !defined(__CYGWIN__)
+#  define wand_aligned(x)  __declspec(align(x))
+#  define wand_attribute(x)  /* nothing */
+#  define wand_unused(x) x
+#  define wand_unreferenced(x) (x)
 #else
 #  define wand_aligned(x)  /* nothing */
 #  define wand_attribute(x)  /* nothing */
 #  define wand_unused(x) x
+#  define wand_unreferenced(x)  /* nothing */
 #endif
 
-#if (((__GNUC__) > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))
+#if defined(__apple_build_version__)
+#  define magick_alloc_size(x)  __attribute__((__alloc_size__(x)))
+#  define magick_alloc_sizes(x,y)  __attribute__((__alloc_size__(x,y)))
+#  define magick_cold_spot
+#  define magick_hot_spot
+#else
+#if defined(__clang__) || (((__GNUC__) > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))
 #  define wand_alloc_size(x)  __attribute__((__alloc_size__(x)))
 #  define wand_alloc_sizes(x,y)  __attribute__((__alloc_size__(x,y)))
 #  define wand_cold_spot  __attribute__((__cold__))
@@ -121,6 +132,7 @@ extern "C" {
 #  define wand_alloc_sizes(x,y)  /* nothing */
 #  define wand_cold_spot
 #  define wand_hot_spot
+#endif
 #endif
 
 #if defined(__cplusplus) || defined(c_plusplus)

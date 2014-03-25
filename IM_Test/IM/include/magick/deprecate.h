@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,12 +18,6 @@
 #ifndef _MAGICKCORE_DEPRECATE_H
 #define _MAGICKCORE_DEPRECATE_H
 
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
-#if !defined(MAGICKCORE_EXCLUDE_DEPRECATED)
-
 #include <stdarg.h>
 #include "magick/blob.h"
 #include "magick/cache-view.h"
@@ -36,8 +30,14 @@ extern "C" {
 #include "magick/registry.h"
 #include "magick/semaphore.h"
 
+#if defined(__cplusplus) || defined(c_plusplus)
+extern "C" {
+#endif
+
+#if !defined(MAGICKCORE_EXCLUDE_DEPRECATED)
+
 #if !defined(magick_attribute)
-#  if !defined(__GNUC__)
+#  if !defined(__clang__) && !defined(__GNUC__)
 #    define magick_attribute(x) /*nothing*/
 #  else
 #    define magick_attribute __attribute__
@@ -46,13 +46,18 @@ extern "C" {
 
 #define Downscale(quantum)  ScaleQuantumToChar(quantum)
 #define LABColorspace LabColorspace
+#define CompressPixelGamma(pixel)  DecodePixelGamma(pixel)
+#define DecodesRGBGamma(pixel)  DecodePixelGamma(pixel)
+#define EncodesRGBGamma(pixel)  EncodePixelGamma(pixel)
+#define ExpandPixelGamma(pixel)  EncodePixelGamma(pixel)
 #define Intensity(color)  PixelIntensityToQuantum(color)
 #define LiberateUniqueFileResource(resource) \
   RelinquishUniqueFileResource(resource)
 #define LiberateMagickResource(resource)  RelinquishMagickResource(resource)
 #define LiberateSemaphore(semaphore)  RelinquishSemaphore(semaphore)
-#define QuantumDepth  MAGICKCORE_QUANTUM_DEPTH
+#define MagickHuge  3.4e+38F
 #define MaxRGB  QuantumRange  /* deprecated */
+#define QuantumDepth  MAGICKCORE_QUANTUM_DEPTH
 #define RunlengthEncodedCompression  RLECompression
 #define Upscale(value)  ScaleCharToQuantum(value)
 #define XDownscale(value)  ScaleShortToQuantum(value)
@@ -136,6 +141,10 @@ extern MagickExport Image
   *MinimumImages(const Image *,ExceptionInfo *),
   *MosaicImages(Image *,ExceptionInfo *) magick_attribute((deprecated)),
   *PopImageList(Image **) magick_attribute((deprecated)),
+  *RadialBlurImage(const Image *,const double,ExceptionInfo *)
+    magick_attribute((deprecated)),
+  *RadialBlurImageChannel(const Image *,const ChannelType,const double,
+    ExceptionInfo *) magick_attribute((deprecated)),
   *RecolorImage(const Image *,const size_t,const double *,ExceptionInfo *)
     magick_attribute((deprecated)),
   *ReduceNoiseImage(const Image *,const double,ExceptionInfo *),
@@ -173,6 +182,7 @@ extern MagickExport MagickBooleanType
   CloneImageAttributes(Image *,const Image *) magick_attribute((deprecated)),
   ColorFloodfillImage(Image *,const DrawInfo *,const PixelPacket,const ssize_t,
     const ssize_t,const PaintMethod) magick_attribute((deprecated)),
+  ConstituteComponentGenesis(void) magick_attribute((deprecated)),
   DeleteImageAttribute(Image *,const char *) magick_attribute((deprecated)),
   DeleteMagickRegistry(const ssize_t) magick_attribute((deprecated)),
   DescribeImage(Image *,FILE *,const MagickBooleanType)
@@ -189,9 +199,12 @@ extern MagickExport MagickBooleanType
     magick_attribute((deprecated)),
   FuzzyOpacityCompare(const Image *,const PixelPacket *,const PixelPacket *)
     magick_attribute((deprecated)),
+  InitializeModuleList(ExceptionInfo *) magick_attribute((deprecated)),
+  IsMagickInstantiated(void) magick_attribute((deprecated)),
   LevelImageColors(Image *,const ChannelType,const MagickPixelPacket *,
     const MagickPixelPacket *, const MagickBooleanType)
     magick_attribute((deprecated)),
+  LoadMimeLists(const char *,ExceptionInfo *) magick_attribute((deprecated)),
   MagickMonitor(const char *,const MagickOffsetType,const MagickSizeType,
     void *) magick_attribute((deprecated)),
   MapImage(Image *,const Image *,const MagickBooleanType)
@@ -307,8 +320,10 @@ extern MagickExport unsigned int
 
 extern MagickExport void
   *AcquireMemory(const size_t) magick_attribute((deprecated)),
+  AcquireSemaphoreInfo(SemaphoreInfo **) magick_attribute((deprecated)),
   AllocateNextImage(const ImageInfo *,Image *) magick_attribute((deprecated)),
   *CloneMemory(void *,const void *,const size_t) magick_attribute((deprecated)),
+  ConstituteComponentTerminus(void) magick_attribute((deprecated)),
   DestroyConstitute(void),
   DestroyImageAttributes(Image *) magick_attribute((deprecated)),
   DestroyImages(Image *) magick_attribute((deprecated)),
@@ -332,6 +347,7 @@ extern MagickExport void
   InitializeMagick(const char *) magick_attribute((deprecated)),
   MagickIncarnate(const char *) magick_attribute((deprecated)),
   ReacquireMemory(void **,const size_t) magick_attribute((deprecated)),
+  RelinquishSemaphoreInfo(SemaphoreInfo *) magick_attribute((deprecated)),
   ResetImageAttributeIterator(const Image *) magick_attribute((deprecated)),
   SetCacheThreshold(const size_t) magick_attribute((deprecated)),
   SetImage(Image *,const Quantum) magick_attribute((deprecated)),
@@ -352,6 +368,12 @@ static inline double MagickEpsilonReciprocal(const double x)
   if ((sign*x) >= MagickEpsilon)
     return(1.0/x);
   return(sign/MagickEpsilon);
+}
+
+static inline Quantum PixelIntensityToQuantum(const Image *restrict image,
+  const PixelPacket *restrict pixel)
+{
+  return(ClampToQuantum(GetPixelIntensity(image,pixel)));
 }
 
 #endif

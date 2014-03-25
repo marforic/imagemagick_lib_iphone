@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -44,15 +44,25 @@ extern "C" {
 # endif
 #endif
 
+#define MAGICKWAND_CHECK_VERSION(major,minor,micro) \
+  ((MAGICKWAND_MAJOR_VERSION > (major)) || \
+    ((MAGICKWAND_MAJOR_VERSION == (major)) && \
+     (MAGICKWAND_MINOR_VERSION > (minor))) || \
+    ((MAGICKWAND_MAJOR_VERSION == (major)) && \
+     (MAGICKWAND_MINOR_VERSION == (minor)) && \
+     (MAGICKWAND_MICRO_VERSION >= (micro))))
+
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <math.h>
 #include <sys/types.h>
+#include <time.h>
 
 #if defined(WIN32) || defined(WIN64)
-#  define MAGICKCORE_WINDOWS_SUPPORT
+#  define MAGICKWAND_WINDOWS_SUPPORT
 #else
-#  define MAGICKCORE_POSIX_SUPPORT
+#  define MAGICKWAND_POSIX_SUPPORT
 #endif 
 
 typedef struct _MagickWand
@@ -87,6 +97,7 @@ extern WandExport ExceptionType
 
 extern WandExport MagickBooleanType
   IsMagickWand(const MagickWand *),
+  IsMagickWandInstantiated(void),
   MagickClearException(MagickWand *),
   MagickSetIteratorIndex(MagickWand *,const ssize_t);
 

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,13 +18,16 @@
 #ifndef _MAGICKCORE_PIXEL_H
 #define _MAGICKCORE_PIXEL_H
 
+#include "magick/colorspace.h"
+#include "magick/constitute.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
 
-#include <magick/colorspace.h>
-#include <magick/constitute.h>
-
+/*
+  Pixel enum declarations.
+*/
 typedef enum
 {
   UndefinedInterpolatePixel,
@@ -61,6 +64,23 @@ typedef enum
   MaskPixelComponent = 5
 } PixelComponent;
 
+typedef enum
+{
+  UndefinedPixelIntensityMethod = 0,
+  AveragePixelIntensityMethod,
+  BrightnessPixelIntensityMethod,
+  LightnessPixelIntensityMethod,
+  Rec601LumaPixelIntensityMethod,
+  Rec601LuminancePixelIntensityMethod,
+  Rec709LumaPixelIntensityMethod,
+  Rec709LuminancePixelIntensityMethod,
+  RMSPixelIntensityMethod,
+  MSPixelIntensityMethod
+} PixelIntensityMethod;
+
+/*
+  Pixel typedef declarations.
+*/
 typedef struct _DoublePixelPacket
 {
   double
@@ -140,6 +160,9 @@ typedef struct _QuantumPixelPacket
 typedef struct _CacheView
   CacheView_;
 
+/*
+  Pixel method declarations.
+*/
 extern MagickExport MagickBooleanType
   ExportImagePixels(const Image *,const ssize_t,const ssize_t,const size_t,
     const size_t,const char *,const StorageType,void *,ExceptionInfo *),
@@ -151,6 +174,12 @@ extern MagickExport MagickBooleanType
 
 extern MagickExport MagickPixelPacket
   *CloneMagickPixelPacket(const MagickPixelPacket *);
+
+extern MagickExport MagickRealType
+  DecodePixelGamma(const MagickRealType) magick_hot_spot,
+  EncodePixelGamma(const MagickRealType) magick_hot_spot,
+  GetPixelIntensity(const Image *image,const PixelPacket *restrict)
+    magick_hot_spot;
 
 extern MagickExport void
   GetMagickPixelPacket(const Image *,MagickPixelPacket *);

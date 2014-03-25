@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@
 extern "C" {
 #endif
 
+#include "magick/draw.h"
+
 typedef struct _ChannelStatistics
 {
   size_t
@@ -40,6 +42,28 @@ typedef struct _ChannelStatistics
     kurtosis,
     skewness;
 } ChannelStatistics;
+
+typedef struct _ChannelMoments
+{
+  double
+    I[32];
+
+  PointInfo
+    centroid,
+    ellipse_axis;
+
+  double
+    ellipse_angle,
+    ellipse_eccentricity,
+    ellipse_intensity;
+} ChannelMoments;
+
+typedef struct _ChannelPerceptualHash
+{
+  double
+    P[32],
+    Q[32];
+} ChannelPerceptualHash;
 
 typedef enum
 {
@@ -102,6 +126,12 @@ typedef enum
 extern MagickExport ChannelStatistics
   *GetImageChannelStatistics(const Image *,ExceptionInfo *);
 
+extern MagickExport ChannelMoments
+  *GetImageChannelMoments(const Image *,ExceptionInfo *);
+
+extern MagickExport ChannelPerceptualHash
+  *GetImageChannelPerceptualHash(const Image *,ExceptionInfo *);
+
 extern MagickExport Image
   *EvaluateImages(const Image *,const MagickEvaluateOperator,ExceptionInfo *),
   *PolynomialImage(const Image *,const size_t,const double *,ExceptionInfo *),
@@ -130,9 +160,9 @@ extern MagickExport MagickBooleanType
   GetImageChannelRange(const Image *,const ChannelType,double *,double *,
     ExceptionInfo *),
   GetImageExtrema(const Image *,size_t *,size_t *,ExceptionInfo *),
-  GetImageRange(const Image *,double *,double *,ExceptionInfo *),
   GetImageMean(const Image *,double *,double *,ExceptionInfo *),
-  GetImageKurtosis(const Image *,double *,double *,ExceptionInfo *);
+  GetImageKurtosis(const Image *,double *,double *,ExceptionInfo *),
+  GetImageRange(const Image *,double *,double *,ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include <stdarg.h>
+#include "magick/semaphore.h"
 
 typedef struct _DelegateInfo
 {
@@ -44,6 +47,9 @@ typedef struct _DelegateInfo
 
   size_t
     signature;
+
+  SemaphoreInfo
+    *semaphore;
 } DelegateInfo;
 
 extern MagickExport char

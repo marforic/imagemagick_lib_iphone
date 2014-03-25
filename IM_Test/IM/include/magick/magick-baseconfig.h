@@ -37,13 +37,13 @@
 
 /* Directory where architecture-dependent configuration files live. */
 #ifndef MAGICKCORE_CONFIGURE_PATH
-#define MAGICKCORE_CONFIGURE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/etc/ImageMagick/"
+#define MAGICKCORE_CONFIGURE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/etc/ImageMagick-6/"
 #endif
 
 /* Subdirectory of lib where architecture-dependent configuration files live.
    */
 #ifndef MAGICKCORE_CONFIGURE_RELATIVE_PATH
-#define MAGICKCORE_CONFIGURE_RELATIVE_PATH "ImageMagick"
+#define MAGICKCORE_CONFIGURE_RELATIVE_PATH "ImageMagick-6"
 #endif
 
 /* Define if you have DJVU library */
@@ -51,7 +51,7 @@
 
 /* Directory where ImageMagick documents live. */
 #ifndef MAGICKCORE_DOCUMENTATION_PATH
-#define MAGICKCORE_DOCUMENTATION_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/doc/ImageMagick-6.8.1/"
+#define MAGICKCORE_DOCUMENTATION_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/share/doc/ImageMagick-6/"
 #endif
 
 /* Define if you have Display Postscript */
@@ -62,7 +62,7 @@
 
 /* Directory where executables are installed. */
 #ifndef MAGICKCORE_EXECUTABLE_PATH
-#define MAGICKCORE_EXECUTABLE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/bin/"
+#define MAGICKCORE_EXECUTABLE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/bin/"
 #endif
 
 /* Define if you have FFTW library */
@@ -79,7 +79,7 @@
 /* Define if you have FlashPIX library */
 /* #undef FPX_DELEGATE */
 
-/* Define if you have FreeType (TrueType font) library */
+/* Define if you have FREETYPE library */
 /* #undef FREETYPE_DELEGATE */
 
 /* Define if you have Ghostscript library or framework */
@@ -96,6 +96,11 @@
 /* Define to 1 if you have the <arm/limits.h> header file. */
 #ifndef MAGICKCORE_HAVE_ARM_LIMITS_H
 #define MAGICKCORE_HAVE_ARM_LIMITS_H 1
+#endif
+
+/* Define to 1 if you have the <arpa/inet.h> header file. */
+#ifndef MAGICKCORE_HAVE_ARPA_INET_H
+#define MAGICKCORE_HAVE_ARPA_INET_H 1
 #endif
 
 /* Define to 1 if you have the `asinh' function. */
@@ -261,9 +266,6 @@
 #define MAGICKCORE_HAVE_FSEEKO 1
 #endif
 
-/* Define to 1 if you have the <ft2build.h> header file. */
-/* #undef HAVE_FT2BUILD_H */
-
 /* Define to 1 if you have the `ftime' function. */
 #ifndef MAGICKCORE_HAVE_FTIME
 #define MAGICKCORE_HAVE_FTIME 1
@@ -321,6 +323,9 @@
 #ifndef MAGICKCORE_HAVE_GMTIME_R
 #define MAGICKCORE_HAVE_GMTIME_R 1
 #endif
+
+/* Compile with hugepage support */
+/* #undef HAVE_HUGEPAGES */
 
 /* Define to 1 if the system has the type `intmax_t'. */
 #ifndef MAGICKCORE_HAVE_INTMAX_T
@@ -388,7 +393,8 @@
 #define MAGICKCORE_HAVE_LOCALTIME_R 1
 #endif
 
-/* Define to 1 if the system has the type `long double'. */
+/* Define to 1 if the type `long double' works and has more range or precision
+   than `double'. */
 #ifndef MAGICKCORE_HAVE_LONG_DOUBLE
 #define MAGICKCORE_HAVE_LONG_DOUBLE 1
 #endif
@@ -397,7 +403,7 @@
    than `double'. */
 /* #undef HAVE_LONG_DOUBLE_WIDER */
 
-/* Define to 1 if the system has the type `long long int'. */
+/* Define to 1 if the system has the type 'long long int'. */
 #ifndef MAGICKCORE_HAVE_LONG_LONG_INT
 #define MAGICKCORE_HAVE_LONG_LONG_INT 1
 #endif
@@ -445,9 +451,6 @@
 /* Define to 1 if you have a working `mmap' system call. */
 /* #undef HAVE_MMAP */
 
-/* Define to 1 if you have a working `mmap' system call. */
-/* #undef HAVE_MMAP_FILEIO */
-
 /* Define to 1 if you have the `munmap' function. */
 #ifndef MAGICKCORE_HAVE_MUNMAP
 #define MAGICKCORE_HAVE_MUNMAP 1
@@ -466,6 +469,11 @@
 
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 /* #undef HAVE_NDIR_H */
+
+/* Define to 1 if you have the <netinet/in.h> header file. */
+#ifndef MAGICKCORE_HAVE_NETINET_IN_H
+#define MAGICKCORE_HAVE_NETINET_IN_H 1
+#endif
 
 /* Define to 1 if you have the `newlocale' function. */
 #ifndef MAGICKCORE_HAVE_NEWLOCALE
@@ -606,6 +614,11 @@
 /* Define to 1 if you have the `sigemptyset' function. */
 #ifndef MAGICKCORE_HAVE_SIGEMPTYSET
 #define MAGICKCORE_HAVE_SIGEMPTYSET 1
+#endif
+
+/* Define to 1 if you have the `socket' function. */
+#ifndef MAGICKCORE_HAVE_SOCKET
+#define MAGICKCORE_HAVE_SOCKET 1
 #endif
 
 /* Define to 1 if you have the `spawnvp' function. */
@@ -921,7 +934,7 @@
 #define MAGICKCORE_HAVE_UNISTD_H 1
 #endif
 
-/* Define to 1 if the system has the type `unsigned long long int'. */
+/* Define to 1 if the system has the type 'unsigned long long int'. */
 #ifndef MAGICKCORE_HAVE_UNSIGNED_LONG_LONG_INT
 #define MAGICKCORE_HAVE_UNSIGNED_LONG_LONG_INT 1
 #endif
@@ -1042,15 +1055,22 @@
 #define MAGICKCORE_HAVE___ATTRIBUTE__ 1
 #endif
 
-/* accurately represent the wide range of intensity levels in real scenes */
-/* #undef HDRI_SUPPORT */
+/* Whether hdri is enabled or not */
+#ifndef MAGICKCORE_HDRI_ENABLE_OBSOLETE_IN_H
+#define MAGICKCORE_HDRI_ENABLE_OBSOLETE_IN_H 0
+#endif
 
 /* Define if you have umem memory allocation library */
 /* #undef HasUMEM */
 
+/* Directory where ImageMagick architecture headers live. */
+#ifndef MAGICKCORE_INCLUDEARCH_PATH
+#define MAGICKCORE_INCLUDEARCH_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/include/ImageMagick-6/"
+#endif
+
 /* Directory where ImageMagick headers live. */
 #ifndef MAGICKCORE_INCLUDE_PATH
-#define MAGICKCORE_INCLUDE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/include/ImageMagick/"
+#define MAGICKCORE_INCLUDE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/include/ImageMagick-6/"
 #endif
 
 /* ImageMagick is formally installed under prefix */
@@ -1061,9 +1081,6 @@
 /* Define if you have JBIG library */
 /* #undef JBIG_DELEGATE */
 
-/* Define if you have JPEG version 2 "Jasper" library */
-/* #undef JP2_DELEGATE */
-
 /* Define if you have JPEG library */
 #ifndef MAGICKCORE_JPEG_DELEGATE
 #define MAGICKCORE_JPEG_DELEGATE 1
@@ -1072,15 +1089,24 @@
 /* Define if you have LCMS (v1.11 or later) library */
 /* #undef LCMS_DELEGATE */
 
+/* Define if you have OPENJP2 library */
+/* #undef LIBOPENJP2_DELEGATE */
+
 /* Directory where architecture-dependent files live. */
 #ifndef MAGICKCORE_LIBRARY_PATH
-#define MAGICKCORE_LIBRARY_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/lib/ImageMagick-6.8.1/"
+#define MAGICKCORE_LIBRARY_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/lib/ImageMagick-6.8.8/"
 #endif
 
 /* Subdirectory of lib where ImageMagick architecture dependent files are
    installed */
 #ifndef MAGICKCORE_LIBRARY_RELATIVE_PATH
-#define MAGICKCORE_LIBRARY_RELATIVE_PATH "ImageMagick-6.8.1"
+#define MAGICKCORE_LIBRARY_RELATIVE_PATH "ImageMagick-6.8.8"
+#endif
+
+/* Binaries in libraries path base name (will be during install linked to bin)
+   */
+#ifndef MAGICKCORE_LIB_BIN_BASEDIRNAME
+#define MAGICKCORE_LIB_BIN_BASEDIRNAME "bin"
 #endif
 
 /* Define if you have LQR library */
@@ -1124,14 +1150,14 @@
 /* Module directory dirname */
 /* #undef MODULES_DIRNAME */
 
+/* Define if you have MUPDF library */
+/* #undef MUPDF_DELEGATE */
+
 /* Magick API method prefix */
 /* #undef NAMESPACE_PREFIX */
 
 /* Define to 1 if assertions should be disabled. */
 /* #undef NDEBUG */
-
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
 
 /* Define if you have OPENEXR library */
 /* #undef OPENEXR_DELEGATE */
@@ -1153,7 +1179,7 @@
 
 /* Define to the full name and version of this package. */
 #ifndef MAGICKCORE_PACKAGE_STRING
-#define MAGICKCORE_PACKAGE_STRING "ImageMagick 6.8.1-0"
+#define MAGICKCORE_PACKAGE_STRING "ImageMagick 6.8.8-10"
 #endif
 
 /* Define to the one symbol short name of this package. */
@@ -1168,7 +1194,7 @@
 
 /* Define to the version of this package. */
 #ifndef MAGICKCORE_PACKAGE_VERSION
-#define MAGICKCORE_PACKAGE_VERSION "6.8.1-0"
+#define MAGICKCORE_PACKAGE_VERSION "6.8.8-10"
 #endif
 
 /* Define if you have PANGOCAIRO library */
@@ -1190,8 +1216,8 @@
 /* #undef PixelCacheThreshold */
 
 /* Number of bits in a pixel Quantum (8/16/32/64) */
-#ifndef MAGICKCORE_QUANTUM_DEPTH
-#define MAGICKCORE_QUANTUM_DEPTH 8
+#ifndef MAGICKCORE_QUANTUM_DEPTH_OBSOLETE_IN_H
+#define MAGICKCORE_QUANTUM_DEPTH_OBSOLETE_IN_H 8
 #endif
 
 /* Define as the return type of signal handlers (`int' or `void'). */
@@ -1227,13 +1253,13 @@
 
 /* Directory where architecture-independent configuration files live. */
 #ifndef MAGICKCORE_SHARE_PATH
-#define MAGICKCORE_SHARE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/ImageMagick-6.8.1/"
+#define MAGICKCORE_SHARE_PATH "/Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/share/ImageMagick-6/"
 #endif
 
 /* Subdirectory of lib where architecture-independent configuration files
    live. */
 #ifndef MAGICKCORE_SHARE_RELATIVE_PATH
-#define MAGICKCORE_SHARE_RELATIVE_PATH "ImageMagick-6.8.1"
+#define MAGICKCORE_SHARE_RELATIVE_PATH "ImageMagick-6"
 #endif
 
 /* The size of `double', as computed by sizeof. */
@@ -1257,9 +1283,7 @@
 #endif
 
 /* The size of `long double', as computed by sizeof. */
-#ifndef MAGICKCORE_SIZEOF_LONG_DOUBLE
-#define MAGICKCORE_SIZEOF_LONG_DOUBLE 8
-#endif
+/* #undef SIZEOF_LONG_DOUBLE */
 
 /* The size of `off_t', as computed by sizeof. */
 #ifndef MAGICKCORE_SIZEOF_OFF_T
@@ -1374,7 +1398,7 @@
 
 /* Version number of package */
 #ifndef MAGICKCORE_VERSION
-#define MAGICKCORE_VERSION "6.8.1-0"
+#define MAGICKCORE_VERSION "6.8.8-10"
 #endif
 
 /* Define if you have WEBP library */
@@ -1413,9 +1437,7 @@
 /* #undef X11_DELEGATE */
 
 /* Define if you have XML library */
-#ifndef MAGICKCORE_XML_DELEGATE
-#define MAGICKCORE_XML_DELEGATE 1
-#endif
+/* #undef XML_DELEGATE */
 
 /* Define to 1 if the X Window System is missing or not being used. */
 #ifndef MAGICKCORE_X_DISPLAY_MISSING
@@ -1482,6 +1504,9 @@
 
 /* Define to appropriate substitue if compiler does not have __func__ */
 /* #undef __func__ */
+
+/* Define to empty if `const' does not conform to ANSI C. */
+/* #undef const */
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 /* #undef gid_t */

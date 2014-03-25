@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2014 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -26,39 +26,34 @@ extern "C" {
   Define declarations.
 */
 #define MagickPackageName "ImageMagick"
-#define MagickCopyright  "Copyright (C) 1999-2013 ImageMagick Studio LLC"
-#define MagickSVNRevision  "10070"
-#define MagickLibVersion  0x681
-#define MagickLibVersionText  "6.8.1"
-#define MagickLibVersionNumber  7,0,0
-#define MagickLibAddendum  "-0"
-#define MagickLibInterface  7
-#define MagickLibMinInterface  7
-#define MagickReleaseDate  "2012-12-20"
-#define MagickChangeDate   "20121216"
+#define MagickCopyright  "Copyright (C) 1999-2014 ImageMagick Studio LLC"
+#define MagickSVNRevision  "15218"
+#define MagickLibVersion  0x688
+#define MagickLibVersionText  "6.8.8"
+#define MagickLibVersionNumber  2,0,0
+#define MagickLibAddendum  "-10"
+#define MagickLibInterface  2
+#define MagickLibMinInterface  2
+#if defined(_WINDOWS)
+#  if defined(_WIN64)
+#    define MagickPlatform "x64"
+#  else
+#    define MagickPlatform "x86"
+#  endif
+#else
+#define MagickPlatform  "arm"
+#endif
+#define MagickppLibVersionText  "6.8.8"
+#define MagickppLibVersionNumber  3:0:0
+#define MagickppLibAddendum  "-10"
+#define MagickppLibInterface  3
+#define MagickppLibMinInterface  3
+#define MagickReleaseDate  "2014-03-25"
+#define MagickChangeDate   "20140323"
+#define MagickFeatures "DPC"
+#define MagickDelegates "mpeg jng jpeg png ps tiff zlib"
+#define MagickHomeURL  "file:///Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/share/doc/ImageMagick-6/index.html"
 #define MagickAuthoritativeURL  "http://www.imagemagick.org"
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-#define MagickOpenMPFeature  "OpenMP "
-#else
-#define MagickOpenMPFeature  " "
-#endif
-#if defined(MAGICKCORE_OPENCL_SUPPORT)
-#define MagickOpenCLFeature  "OpenCL "
-#else
-#define MagickOpenCLFeature  " "
-#endif
-#if defined(MAGICKCORE_HDRI_SUPPORT)
-#define MagickHDRIFeature  "HDRI "
-#else
-#define MagickHDRIFeature  " "
-#endif
-#if defined(MAGICKCORE_ZERO_CONFIGURATION_SUPPORT)
-#define MagickZeroConfigurationFeature  "Zero-Configuration "
-#else
-#define MagickZeroConfigurationFeature  " "
-#endif
-#define MagickFeatures MagickOpenMPFeature MagickOpenCLFeature MagickHDRIFeature MagickZeroConfigurationFeature
-#define MagickHomeURL  "file:///Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/build/tmp_target/imagemagick/share/doc/ImageMagick-6.8.1/index.html"
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)
 #define MagickQuantumDepth  "Q8"
 #define MagickQuantumRange  "255"
@@ -77,19 +72,24 @@ extern "C" {
 #endif
 #define MagickVersion  \
   MagickPackageName " " MagickLibVersionText MagickLibAddendum " " \
-  MagickReleaseDate " " MagickQuantumDepth " " MagickAuthoritativeURL
+  MagickQuantumDepth " " MagickPlatform " " MagickReleaseDate " " \
+  MagickAuthoritativeURL
 
 extern MagickExport char
   *GetMagickHomeURL(void);
 
 extern MagickExport const char
   *GetMagickCopyright(void),
+  *GetMagickDelegates(void),
   *GetMagickFeatures(void),
   *GetMagickPackageName(void),
   *GetMagickQuantumDepth(size_t *),
   *GetMagickQuantumRange(size_t *),
   *GetMagickReleaseDate(void),
   *GetMagickVersion(size_t *);
+
+extern MagickExport void
+  ListMagickVersion(FILE *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }
