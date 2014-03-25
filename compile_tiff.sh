@@ -21,7 +21,7 @@ tiff () {
 	LIBPATH_tiff=libtiff.a
 	LIBNAME_tiff=`basename $LIBPATH_tiff`
 	
-	if [ "$1" == "armv7" ] || [ "$1" == "armv7s" ]; then
+	if [ "$1" == "armv7" ] || [ "$1" == "armv7s" ] || [ "$1" == "arm64" ]; then
 		save
 		armflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"

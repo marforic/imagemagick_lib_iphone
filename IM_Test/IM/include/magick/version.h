@@ -27,11 +27,11 @@ extern "C" {
 */
 #define MagickPackageName "ImageMagick"
 #define MagickCopyright  "Copyright (C) 1999-2014 ImageMagick Studio LLC"
-#define MagickSVNRevision  "15218"
+#define MagickSVNRevision  "15193"
 #define MagickLibVersion  0x688
 #define MagickLibVersionText  "6.8.8"
 #define MagickLibVersionNumber  2,0,0
-#define MagickLibAddendum  "-10"
+#define MagickLibAddendum  "-9"
 #define MagickLibInterface  2
 #define MagickLibMinInterface  2
 #if defined(_WINDOWS)
@@ -45,13 +45,13 @@ extern "C" {
 #endif
 #define MagickppLibVersionText  "6.8.8"
 #define MagickppLibVersionNumber  3:0:0
-#define MagickppLibAddendum  "-10"
+#define MagickppLibAddendum  "-9"
 #define MagickppLibInterface  3
 #define MagickppLibMinInterface  3
 #define MagickReleaseDate  "2014-03-25"
-#define MagickChangeDate   "20140323"
+#define MagickChangeDate   "20140320"
 #define MagickFeatures "DPC"
-#define MagickDelegates "mpeg jng jpeg png ps tiff zlib"
+#define MagickDelegates "mpeg ps zlib"
 #define MagickHomeURL  "file:///Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/share/doc/ImageMagick-6/index.html"
 #define MagickAuthoritativeURL  "http://www.imagemagick.org"
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)

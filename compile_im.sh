@@ -30,7 +30,7 @@ im () {
 	LIBPATH_wand=$IM_LIB_DIR/lib/libMagickWand-6.Q8.a
 	LIBNAME_wand=`basename $LIBPATH_wand`
 	
-	if [ "$1" == "armv7" ] || [ "$1" == "armv7s" ]; then
+	if [ "$1" == "armv7" ] || [ "$1" == "armv7s" ] || [ "$1" == "arm64" ]; then
 		save
 		armflags $1
 		export CC="$(xcode-select -print-path)/usr/bin/gcc" # override clang

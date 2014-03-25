@@ -21,7 +21,7 @@ png () {
 	LIBPATH_png=libpng16.a
 	LIBPATH_png_dylib=libpng16.dylib
 	
-	if [ "$1" == "armv7" ] || [ "$1" == "armv7s" ]; then
+	if [ "$1" == "armv7" ] || [ "$1" == "armv7s" ] || [ "$1" == "arm64" ]; then
 		save
 		armflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"
