@@ -1,4 +1,4 @@
-<h1>Compiled downloads</h1>
+<h2>Compiled downloads</h2>
 
 You can grab the latest compiled ImageMagick directly from their <a
 href="ftp://ftp.imagemagick.org/pub/ImageMagick/iOS/">ftp</a> or any mirror.
@@ -10,7 +10,7 @@ There are always 2 packages for the compiled ImageMagick:
 The first one includes headers and compiled libraries that have been used to
 compile ImageMagick. Most users would need this one.
 
-<h1>Compiling ImageMagick and IMDelegates</h1>
+<h2>Compiling ImageMagick and IMDelegates</h2>
 
 The directory structure has to be:
 
@@ -28,25 +28,20 @@ href="ftp://ftp.imagemagick.org/pub/ImageMagick/delegates/">ImageMagick ftp</a>
 or on the respective websites.
 
 The main script to run is:
-<pre>./all.sh VERSION|clean</pre> 
-where VERSION is the version of ImageMagick you want to compile (e.g.,
-6.8.8-9), if 'clean' is passed, the script will clean all the log files and the
-directories it created.
+<pre>./all.sh VERSION|clean</pre> where VERSION is the version of ImageMagick
+you want to compile (e.g., 6.8.8-9), if 'clean' is passed, the script will
+clean all the log files and the directories it created.
 
 Upon successful compilation a folder called "IMPORT_ME" will be created from
 where you start the script: you can import it into your XCode project.
 
 The rest of the scripts are invoked by all.sh and offer the following:
-<pre>./env.sh</pre>
-sets up environment variables used by the other scripts. This is most probably
-the script you want to modify to suit your needs (e.g., set up which
-architectures will be compiles, verbosity level, ...)
-<pre>./flags.sh</pre>
-saves, sets up and restores compiler-related values
-<pre>./utils.sh</pre>
-offers some functions used in the other scripts
-<pre>./compile_*.sh</pre>
-are the scripts used to compile the respective component
+<pre>./env.sh</pre> sets up environment variables used by the other scripts.
+This is most probably the script you want to modify to suit your needs (e.g.,
+set up which architectures will be compiles, verbosity level, ...)
+<pre>./flags.sh</pre> saves, sets up and restores compiler-related values
+<pre>./utils.sh</pre> offers some functions used in the other scripts
+<pre>./compile_*.sh</pre> are the scripts used to compile the respective component
 
 <h2>XCode project settings</h2>
 
