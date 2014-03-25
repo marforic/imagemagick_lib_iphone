@@ -28,6 +28,13 @@ if [[ $1 == "clean" ]]; then
 	exit 0
 fi
 
+# --- ZIP IS SPECIAL --- #
+# Used by Claudio Marforio to generate zips for the imagemagick FTP
+if [[ $1 == "zip" ]]; then
+	zip_for_ftp
+	exit 0
+fi
+
 # --- WHAT GETS EXECUTED --- #
 prepare
 

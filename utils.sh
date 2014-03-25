@@ -80,3 +80,21 @@ structure_for_xcode() {
 	try cp ${LIB_DIR}/*.a ${FINAL_DIR}/
 	echo "[+ DONE!]"
 }
+
+# Creates .zips to be uploaded on the ImageMagick FTP site.
+# Not useful to many, used by Claudio Marforio.
+zip_for_ftp() {
+	echo "[+ ZIP]"
+	if [ -e $FINAL_DIR ]; then
+		tmp_dir="$(pwd)/TMP_IM"
+		try cp -R $FINAL_DIR/ $tmp_dir
+		try ditto -c -k -rsrc "$tmp_dir" "iOSMagick-FIXME-libs.zip" && echo "[|- CREATED W/ libs]"
+		try rm $tmp_dir/libjpeg.a $tmp_dir/libpng.a $tmp_dir/libtiff.a
+		try rm -rf $tmp_dir/include/jpeg/ $tmp_dir/include/png/ $tmp_dir/include/tiff/
+		try ditto -c -k -rsrc "$tmp_dir" "iOSMagick-FIXME.zip" && echo "[|- CREATED W/O libs]"
+		try rm -rf $tmp_dir
+	else
+		echo "[ERR $FINAL_DIR not present..."
+	fi
+	echo "[+ DONE: ZIP]"
+}
