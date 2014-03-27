@@ -15,11 +15,11 @@ compile ImageMagick. Most users would need this one.
 The directory structure has to be:
 
 <pre>
-./build/ImageMagick-VERSION/        <- ImageMagick top directory
-./build/IMDelegataes/               <- Some delegates: jpeg + png + tiff
-./build/IMDelegataes/jpeg-9a/       <- jpeg lib
-./build/IMDelegataes/libpng-1.6.10  <- png lib
-./build/IMDelegataes/tiff-4.0.3     <- tiff lib
+./build/ImageMagick-VERSION/       <- ImageMagick top directory
+./build/IMDelegates/               <- Some delegates: jpeg + png + tiff
+./build/IMDelegates/jpeg-9a/       <- jpeg lib
+./build/IMDelegates/libpng-1.6.10  <- png lib
+./build/IMDelegates/tiff-4.0.3     <- tiff lib
 </pre>
 
 If you don't have this directory structure you can either create it or try
