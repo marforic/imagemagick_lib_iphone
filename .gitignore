@@ -1,9 +1,10 @@
 .svn
-*.pdf
 .DS_Store
-*.zip
 .com.apple.*
+*.log
 build/*
+target/*
+IMPORT_ME/*
 *.xcodeproj/*.pbxuser
 *.xcodeproj/*.mode1v3
 *.xcodeproj/*.perspectivev3
