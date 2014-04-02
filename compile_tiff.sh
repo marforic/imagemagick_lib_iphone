@@ -8,7 +8,7 @@ tiff_compile() {
 	cp $TIFF_LIB_DIR/lib/$LIBPATH_tiff $LIB_DIR/$LIBNAME_tiff.$BUILDINGFOR
 	cp $TIFF_LIB_DIR/lib/libtiff.5.dylib $LIB_DIR/tiff_${BUILDINGFOR}_dylib/libtiff.dylib
 	if [[ "$BUILDINGFOR" == "x86_64" ]]; then  # last, copy the include files
-		cp $TIFF_LIB_DIR/include/*.h $LIB_DIR/include/tiff/
+		cp -r $TIFF_LIB_DIR/include/ $LIB_DIR/include/tiff/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"
 	try make distclean

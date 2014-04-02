@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Verbose output or clean output
-export VERBOSE=0
+export VERBOSE=1
 export OUTPUT_FILE="$(pwd)/$(date +%Y%m%d-%H%M)_im.log"
 
 # List of architectures to build

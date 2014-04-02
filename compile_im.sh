@@ -9,12 +9,12 @@ im_compile() {
 	cp $LIBPATH_wand $LIB_DIR/$LIBNAME_wand.$BUILDINGFOR
 	if [[ "$BUILDINGFOR" == "armv7s" ]]; then  # copy include and config files
 		# copy the wand/ + core/ headers
-		cp $IM_LIB_DIR/include/ImageMagick-*/magick/* $LIB_DIR/include/magick/
-		cp $IM_LIB_DIR/include/ImageMagick-*/wand/* $LIB_DIR/include/wand/
+		cp -r $IM_LIB_DIR/include/ImageMagick-*/magick/ $LIB_DIR/include/magick/
+		cp -r $IM_LIB_DIR/include/ImageMagick-*/wand/ $LIB_DIR/include/wand/
 
 		# copy configuration files needed for certain functions
-		cp $IM_LIB_DIR/etc/ImageMagick-*/*.xml $LIB_DIR/include/im_config/
-		cp $IM_LIB_DIR/share/ImageMagick-*/*.xml $LIB_DIR/include/im_config/
+		cp -r $IM_LIB_DIR/etc/ImageMagick-*/ $LIB_DIR/include/im_config/
+		cp -r $IM_LIB_DIR/share/ImageMagick-*/ $LIB_DIR/include/im_config/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"
 	try make distclean

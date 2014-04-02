@@ -8,7 +8,7 @@ png_compile() {
 	try cp $PNG_LIB_DIR/lib/$LIBPATH_png $LIB_DIR/libpng.a.$BUILDINGFOR
 	try cp $PNG_LIB_DIR/lib/$LIBPATH_png_dylib $LIB_DIR/png_${BUILDINGFOR}_dylib/libpng.dylib
 	if [[ "$BUILDINGFOR" == "x86_64" ]]; then  # last, copy the include files
-		try cp $PNG_LIB_DIR/include/libpng*/* $LIB_DIR/include/png/
+		try cp -r $PNG_LIB_DIR/include/libpng*/ $LIB_DIR/include/png/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"
 	try make distclean
