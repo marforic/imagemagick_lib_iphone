@@ -36,7 +36,7 @@
 #define TIFF_SSIZE_T signed long
 
 /* Pointer difference type */
-#define TIFF_PTRDIFF_T signed long
+#define TIFF_PTRDIFF_T ptrdiff_t
 
 /* Define to 1 if the system has the type `int16'. */
 /* #undef HAVE_INT16 */

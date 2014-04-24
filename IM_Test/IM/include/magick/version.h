@@ -48,10 +48,10 @@ extern "C" {
 #define MagickppLibAddendum  "-9"
 #define MagickppLibInterface  3
 #define MagickppLibMinInterface  3
-#define MagickReleaseDate  "2014-04-02"
+#define MagickReleaseDate  "2014-04-24"
 #define MagickChangeDate   "20140320"
 #define MagickFeatures "DPC"
-#define MagickDelegates "mpeg jng jpeg png ps tiff zlib"
+#define MagickDelegates "mpeg ps zlib"
 #define MagickHomeURL  "file:///Users/cloud/Documents/BUILD/rhino/IM/imagemagick_lib_iphone/target/imagemagick/share/doc/ImageMagick-6/index.html"
 #define MagickAuthoritativeURL  "http://www.imagemagick.org"
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)
