@@ -25,6 +25,23 @@ armflags () {
 	export BUILDINGFOR="$1"
 }
 
+i386flags () {
+	export INTEL_CC=$(xcrun -find -sdk iphonesimulator clang)
+	export INTEL_LD=$(xcrun -find -sdk iphonesimulator ld)
+	
+	export INTEL_CFLAGS="-arch i386"
+	export INTEL_CFLAGS="$INTEL_CFLAGS -I$SIMSDKROOT/usr/include"
+	
+	# apply INTEL_CC values
+	export CC="$INTEL_CC"
+	export CCP="$INTEL_CC -E"
+	export CFLAGS="$INTEL_CFLAGS"
+	export LD="$INTEL_LD"
+	
+	# export what we are building for
+	export BUILDINGFOR="i386"
+}
+
 intelflags () {
 	export INTEL_CC=$(xcrun -find -sdk iphonesimulator clang)
 	export INTEL_LD=$(xcrun -find -sdk iphonesimulator ld)
