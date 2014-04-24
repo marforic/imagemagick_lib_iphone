@@ -7,7 +7,7 @@ jpeg_compile() {
 	echo "[|- CP STATIC/DYLIB $BUILDINGFOR]"
 	try cp $JPEG_LIB_DIR/lib/$LIBPATH_jpeg $LIB_DIR/$LIBNAME_jpeg.$BUILDINGFOR
 	try cp $JPEG_LIB_DIR/lib/libjpeg.dylib $LIB_DIR/jpeg_${BUILDINGFOR}_dylib/libjpeg.dylib
-	if [[ "$BUILDINGFOR" == "x86_64" ]]; then  # last, copy the include files
+	if [ "$BUILDINGFOR" == "x86_64" ] || [ "$BUILDINGFOR" == "i386" ]; then  # last, copy the include files
 		try cp -r $JPEG_LIB_DIR/include/ $LIB_DIR/include/jpeg/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"
@@ -28,11 +28,11 @@ jpeg () {
 		try ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=arm-apple-darwin
 		jpeg_compile
 		restore
-	elif [ "$1" == "x86_64" ]; then
+	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
 		save
-		intelflags
+		intelflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=x86_64-apple-darwin
+		try ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=${BUILDINGFOR}-apple-darwin
 		jpeg_compile
 		restore
 	else

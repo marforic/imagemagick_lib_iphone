@@ -5,7 +5,7 @@ export VERBOSE=1
 export OUTPUT_FILE="$(pwd)/$(date +%Y%m%d-%H%M)_im.log"
 
 # List of architectures to build
-export ARCHS="arm64 armv7 armv7s x86_64"
+export ARCHS="arm64 armv7 armv7s i386 x86_64"
 
 # Get number of cores to speed up make (make -j$CORESNUM)
 export CORESNUM=`sysctl hw.ncpu | awk '{print $2}'`

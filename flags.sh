@@ -29,7 +29,7 @@ intelflags () {
 	export INTEL_CC=$(xcrun -find -sdk iphonesimulator clang)
 	export INTEL_LD=$(xcrun -find -sdk iphonesimulator ld)
 	
-	export INTEL_CFLAGS="-arch x86_64"
+	export INTEL_CFLAGS="-arch $1"
 	export INTEL_CFLAGS="$INTEL_CFLAGS -I$SIMSDKROOT/usr/include"
 	
 	# apply INTEL_CC values
@@ -39,7 +39,7 @@ intelflags () {
 	export LD="$INTEL_LD"
 	
 	# export what we are building for
-	export BUILDINGFOR="x86_64"
+	export BUILDINGFOR="$1"
 }
 
 save() {

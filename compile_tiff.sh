@@ -7,7 +7,7 @@ tiff_compile() {
 	echo "[|- CP STATIC/DYLIB $BUILDINGFOR]"
 	cp $TIFF_LIB_DIR/lib/$LIBPATH_tiff $LIB_DIR/$LIBNAME_tiff.$BUILDINGFOR
 	cp $TIFF_LIB_DIR/lib/libtiff.5.dylib $LIB_DIR/tiff_${BUILDINGFOR}_dylib/libtiff.dylib
-	if [[ "$BUILDINGFOR" == "x86_64" ]]; then  # last, copy the include files
+	if [ "$BUILDINGFOR" == "x86_64" ] || [ "$BUILDINGFOR" == "i386" ]; then  # last, copy the include files
 		cp -r $TIFF_LIB_DIR/include/ $LIB_DIR/include/tiff/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"
@@ -28,11 +28,11 @@ tiff () {
 		try ./configure prefix=$TIFF_LIB_DIR --enable-shared --enable-static --disable-cxx --host=arm-apple-darwin
 		tiff_compile
 		restore
-	elif [ "$1" == "x86_64" ]; then
+	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
 		save
-		intelflags
+		intelflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$TIFF_LIB_DIR --enable-shared --enable-static --disable-cxx --host=x86_64-apple-darwin
+		try ./configure prefix=$TIFF_LIB_DIR --enable-shared --enable-static --disable-cxx --host=${BUILDINGFOR}-apple-darwin
 		tiff_compile
 		restore
 	else

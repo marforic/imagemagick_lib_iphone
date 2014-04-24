@@ -7,7 +7,7 @@ png_compile() {
 	echo "[|- CP STATIC/DYLIB $BUILDINGFOR]"
 	try cp $PNG_LIB_DIR/lib/$LIBPATH_png $LIB_DIR/libpng.a.$BUILDINGFOR
 	try cp $PNG_LIB_DIR/lib/$LIBPATH_png_dylib $LIB_DIR/png_${BUILDINGFOR}_dylib/libpng.dylib
-	if [[ "$BUILDINGFOR" == "x86_64" ]]; then  # last, copy the include files
+	if [ "$BUILDINGFOR" == "x86_64" ] || [ "$BUILDINGFOR" == "i386" ]; then  # last, copy the include files
 		try cp -r $PNG_LIB_DIR/include/libpng*/ $LIB_DIR/include/png/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"
@@ -29,12 +29,12 @@ png () {
 		try ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=arm-apple-darwin
 		png_compile
 		restore
-	elif [ "$1" == "x86_64" ]; then
+	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
 		save
-		intelflags
+		intelflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"
 		export CC="$(xcode-select -print-path)/usr/bin/gcc" # override clang
-		try ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=x86_64-apple-darwin
+		try ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=${BUILDINGFOR}-apple-darwin
 		png_compile
 		restore
 	else
