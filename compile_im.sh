@@ -41,24 +41,13 @@ im () {
 				--without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype
 		im_compile
 		restore
-	elif [ "$1" == "i386" ]; then
+	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
 		save
-		i386flags
+		intelflags $1
 		export CPPFLAGS="$CPPFLAGS -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -I$SIMSDKROOT/usr/include"
 		export LDFLAGS="$LDFLAGS -L$LIB_DIR/jpeg_${BUILDINGFOR}_dylib/ -L$LIB_DIR/png_${BUILDINGFOR}_dylib/ -L$LIB_DIR/tiff_${BUILDINGFOR}_dylib/ -L$LIB_DIR"
 		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$IM_LIB_DIR --host=i386-apple-darwin --disable-opencl \
-			--disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
-			--disable-shared --disable-openmp --without-bzlib --without-freetype --without-threads --disable-dependency-tracking
-		im_compile
-		restore
-	elif [ "$1" == "x86_64" ]; then
-		save
-		intelflags
-		export CPPFLAGS="$CPPFLAGS -I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff -I$SIMSDKROOT/usr/include"
-		export LDFLAGS="$LDFLAGS -L$LIB_DIR/jpeg_${BUILDINGFOR}_dylib/ -L$LIB_DIR/png_${BUILDINGFOR}_dylib/ -L$LIB_DIR/tiff_${BUILDINGFOR}_dylib/ -L$LIB_DIR"
-		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$IM_LIB_DIR --host=x86_64-apple-darwin --disable-opencl \
+		try ./configure prefix=$IM_LIB_DIR --host=${BUILDINGFOR}-apple-darwin --disable-opencl \
 			--disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
 			--disable-shared --disable-openmp --without-bzlib --without-freetype --without-threads --disable-dependency-tracking
 		im_compile

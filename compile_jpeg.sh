@@ -28,18 +28,11 @@ jpeg () {
 		try ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=arm-apple-darwin
 		jpeg_compile
 		restore
-	elif [ "$1" == "i386" ]; then
+	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
 		save
-		i386flags
+		intelflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=i386-apple-darwin
-		jpeg_compile
-		restore
-	elif [ "$1" == "x86_64" ]; then
-		save
-		intelflags
-		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=x86_64-apple-darwin
+		try ./configure prefix=$JPEG_LIB_DIR --enable-shared --enable-static --host=${BUILDINGFOR}-apple-darwin
 		jpeg_compile
 		restore
 	else

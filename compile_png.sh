@@ -29,20 +29,12 @@ png () {
 		try ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=arm-apple-darwin
 		png_compile
 		restore
-	elif [ "$1" == "i386" ]; then
+	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
 		save
-		i386flags
+		intelflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"
 		export CC="$(xcode-select -print-path)/usr/bin/gcc" # override clang
-		try ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=i386-apple-darwin
-		png_compile
-		restore
-	elif [ "$1" == "x86_64" ]; then
-		save
-		intelflags
-		echo "[|- CONFIG $BUILDINGFOR]"
-		export CC="$(xcode-select -print-path)/usr/bin/gcc" # override clang
-		try ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=x86_64-apple-darwin
+		try ./configure prefix=$PNG_LIB_DIR --enable-shared --enable-static --host=${BUILDINGFOR}-apple-darwin
 		png_compile
 		restore
 	else

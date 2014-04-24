@@ -28,18 +28,11 @@ tiff () {
 		try ./configure prefix=$TIFF_LIB_DIR --enable-shared --enable-static --disable-cxx --host=arm-apple-darwin
 		tiff_compile
 		restore
-	elif [ "$1" == "i386" ]; then
+	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
 		save
-		i386flags
+		intelflags $1
 		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$TIFF_LIB_DIR --enable-shared --enable-static --disable-cxx --host=i386-apple-darwin
-		tiff_compile
-		restore
-	elif [ "$1" == "x86_64" ]; then
-		save
-		intelflags
-		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$TIFF_LIB_DIR --enable-shared --enable-static --disable-cxx --host=x86_64-apple-darwin
+		try ./configure prefix=$TIFF_LIB_DIR --enable-shared --enable-static --disable-cxx --host=${BUILDINGFOR}-apple-darwin
 		tiff_compile
 		restore
 	else
