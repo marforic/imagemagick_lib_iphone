@@ -7,7 +7,10 @@ jpeg_compile() {
 	echo "[|- CP STATIC/DYLIB $BUILDINGFOR]"
 	try cp $JPEG_LIB_DIR/lib/$LIBPATH_jpeg $LIB_DIR/$LIBNAME_jpeg.$BUILDINGFOR
 	try cp $JPEG_LIB_DIR/lib/libjpeg.dylib $LIB_DIR/jpeg_${BUILDINGFOR}_dylib/libjpeg.dylib
-	if [ "$BUILDINGFOR" == "x86_64" ] || [ "$BUILDINGFOR" == "i386" ]; then  # last, copy the include files
+	first=`echo $ARCHS | awk '{print $1;}'`
+	if [ "$BUILDINGFOR" == "$first" ]; then
+		echo "[|- CP include files (arch ref: $first)]"
+		# copy the include files
 		try cp -r $JPEG_LIB_DIR/include/ $LIB_DIR/include/jpeg/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"

@@ -7,7 +7,10 @@ png_compile() {
 	echo "[|- CP STATIC/DYLIB $BUILDINGFOR]"
 	try cp $PNG_LIB_DIR/lib/$LIBPATH_png $LIB_DIR/libpng.a.$BUILDINGFOR
 	try cp $PNG_LIB_DIR/lib/$LIBPATH_png_dylib $LIB_DIR/png_${BUILDINGFOR}_dylib/libpng.dylib
-	if [ "$BUILDINGFOR" == "x86_64" ] || [ "$BUILDINGFOR" == "i386" ]; then  # last, copy the include files
+	first=`echo $ARCHS | awk '{print $1;}'`
+	if [ "$BUILDINGFOR" == "$first" ]; then
+		echo "[|- CP include files (arch ref: $first)]"
+		# copy the include files
 		try cp -r $PNG_LIB_DIR/include/libpng*/ $LIB_DIR/include/png/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"

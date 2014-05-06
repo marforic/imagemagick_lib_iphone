@@ -7,7 +7,10 @@ tiff_compile() {
 	echo "[|- CP STATIC/DYLIB $BUILDINGFOR]"
 	cp $TIFF_LIB_DIR/lib/$LIBPATH_tiff $LIB_DIR/$LIBNAME_tiff.$BUILDINGFOR
 	cp $TIFF_LIB_DIR/lib/libtiff.5.dylib $LIB_DIR/tiff_${BUILDINGFOR}_dylib/libtiff.dylib
-	if [ "$BUILDINGFOR" == "x86_64" ] || [ "$BUILDINGFOR" == "i386" ]; then  # last, copy the include files
+	first=`echo $ARCHS | awk '{print $1;}'`
+	if [ "$BUILDINGFOR" == "$first" ]; then
+		echo "[|- CP include files (arch ref: $first)]"
+		# copy the include files
 		cp -r $TIFF_LIB_DIR/include/ $LIB_DIR/include/tiff/
 	fi
 	echo "[|- CLEAN $BUILDINGFOR]"
