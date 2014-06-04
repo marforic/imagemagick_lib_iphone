@@ -35,6 +35,7 @@ im () {
 		armflags $1
 		export CC="$(xcode-select -print-path)/usr/bin/gcc" # override clang
 		export CPPFLAGS="-I$LIB_DIR/include/jpeg -I$LIB_DIR/include/png -I$LIB_DIR/include/tiff"
+		export CFLAGS="$CFLAGS -DTARGET_OS_IPHONE"
 		export LDFLAGS="$LDFLAGS -L$LIB_DIR/jpeg_${BUILDINGFOR}_dylib/ -L$LIB_DIR/png_${BUILDINGFOR}_dylib/ -L$LIB_DIR/tiff_${BUILDINGFOR}_dylib/ -L$LIB_DIR"
 		echo "[|- CONFIG $BUILDINGFOR]"
 		try ./configure prefix=$IM_LIB_DIR --host=arm-apple-darwin --disable-opencl --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus \
