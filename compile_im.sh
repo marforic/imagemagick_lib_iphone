@@ -7,10 +7,13 @@ im_compile() {
 	echo "[|- CP STATIC/DYLIB $BUILDINGFOR]"
 	cp $LIBPATH_core $LIB_DIR/$LIBNAME_core.$BUILDINGFOR
 	cp $LIBPATH_wand $LIB_DIR/$LIBNAME_wand.$BUILDINGFOR
+	cp $LIBPATH_magickpp $LIB_DIR/$LIBNAME_magickpp.$BUILDINGFOR
 	if [[ "$BUILDINGFOR" == "armv7s" ]]; then  # copy include and config files
 		# copy the wand/ + core/ headers
 		cp -r $IM_LIB_DIR/include/ImageMagick-*/magick/ $LIB_DIR/include/magick/
 		cp -r $IM_LIB_DIR/include/ImageMagick-*/wand/ $LIB_DIR/include/wand/
+		cp -r $IM_LIB_DIR/include/ImageMagick-*/magick++/ $LIB_DIR/include/magick++/
+		cp -r $IM_LIB_DIR/include/ImageMagick-*/Magick++.h $LIB_DIR/include/Magick++.h
 
 		# copy configuration files needed for certain functions
 		cp -r $IM_LIB_DIR/etc/ImageMagick-*/ $LIB_DIR/include/im_config/
@@ -29,6 +32,8 @@ im () {
 	LIBNAME_core=`basename $LIBPATH_core`
 	LIBPATH_wand=$IM_LIB_DIR/lib/libMagickWand-6.Q8.a
 	LIBNAME_wand=`basename $LIBPATH_wand`
+	LIBPATH_magickpp=$IM_LIB_DIR/lib/libMagick++-6.Q8.a
+	LIBNAME_magickpp=`basename $LIBPATH_magickpp`
 	
 	if [ "$1" == "armv7" ] || [ "$1" == "armv7s" ] || [ "$1" == "arm64" ]; then
 		save
@@ -38,7 +43,7 @@ im () {
 		export CFLAGS="$CFLAGS -DTARGET_OS_IPHONE"
 		export LDFLAGS="$LDFLAGS -L$LIB_DIR/jpeg_${BUILDINGFOR}_dylib/ -L$LIB_DIR/png_${BUILDINGFOR}_dylib/ -L$LIB_DIR/tiff_${BUILDINGFOR}_dylib/ -L$LIB_DIR"
 		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$IM_LIB_DIR --host=arm-apple-darwin --disable-opencl --disable-largefile --with-quantum-depth=8 --without-magick-plus-plus \
+		try ./configure prefix=$IM_LIB_DIR --host=arm-apple-darwin --disable-opencl --disable-largefile --with-quantum-depth=8 --with-magick-plus-plus \
 				--without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype
 		im_compile
 		restore
@@ -49,7 +54,7 @@ im () {
 		export LDFLAGS="$LDFLAGS -L$LIB_DIR/jpeg_${BUILDINGFOR}_dylib/ -L$LIB_DIR/png_${BUILDINGFOR}_dylib/ -L$LIB_DIR/tiff_${BUILDINGFOR}_dylib/ -L$LIB_DIR"
 		echo "[|- CONFIG $BUILDINGFOR]"
 		try ./configure prefix=$IM_LIB_DIR --host=${BUILDINGFOR}-apple-darwin --disable-opencl \
-			--disable-largefile --with-quantum-depth=8 --without-magick-plus-plus --without-perl --without-x \
+			--disable-largefile --with-quantum-depth=8 --with-magick-plus-plus --without-perl --without-x \
 			--disable-shared --disable-openmp --without-bzlib --without-freetype --without-threads --disable-dependency-tracking
 		im_compile
 		restore
@@ -69,6 +74,7 @@ im () {
 		try lipo $accumul -create -output $LIB_DIR/libMagickCore.a
 		echo "[+ DONE]"
 	fi
+
 	# join libMacigkWand
 	joinlibs=$(check_for_archs $LIB_DIR/$LIBNAME_wand)
 	if [ $joinlibs == "OK" ]; then
@@ -79,6 +85,19 @@ im () {
 		done
 		# combine the static libraries
 		try lipo $accumul -create -output $LIB_DIR/libMagickWand.a
+		echo "[+ DONE]"
+	fi
+
+	# join libMagick++
+	joinlibs=$(check_for_archs $LIB_DIR/$LIBNAME_magickpp)
+	if [ $joinlibs == "OK" ]; then
+		echo "[|- COMBINE $ARCHS]"
+		accumul=""
+		for i in $ARCHS; do
+			accumul="$accumul -arch $i $LIB_DIR/$LIBNAME_magickpp.$i"
+		done
+		# combine the static libraries
+		try lipo $accumul -create -output $LIB_DIR/libMagick++.a
 		echo "[+ DONE]"
 	fi
 }
