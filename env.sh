@@ -38,8 +38,8 @@ export BUILDROOT="$IMROOT/build"
 export IM_DIR="$BUILDROOT/ImageMagick-$IM_VERSION"
 export IM_DELEGATES_DIR="$IM_DIR/IMDelegates/"
 export JPEG_DIR="$IM_DIR/IMDelegates/jpeg-9a"
-export PNG_DIR="$IM_DIR/IMDelegates/libpng-1.6.10"
-export TIFF_DIR="$IM_DIR/IMDelegates/tiff-4.0.3"
+export PNG_DIR="$IM_DIR/IMDelegates/libpng-1.6.21"
+export TIFF_DIR="$IM_DIR/IMDelegates/tiff-4.0.4"
 
 # Target directories
 export TARGET_LIB_DIR=$(pwd)/target
