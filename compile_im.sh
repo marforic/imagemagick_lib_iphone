@@ -45,8 +45,7 @@ im () {
 		echo "[|- CONFIG $BUILDINGFOR]"
 		try ./configure prefix=$IM_LIB_DIR --host=arm-apple-darwin \
 			--disable-opencl --disable-largefile --with-quantum-depth=8 --with-magick-plus-plus \
-			--without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype  \
-			--enable-cross-compile
+			--without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype 
 		im_compile
 		restore
 	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
