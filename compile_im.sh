@@ -43,8 +43,10 @@ im () {
 		export CFLAGS="$CFLAGS -DTARGET_OS_IPHONE"
 		export LDFLAGS="$LDFLAGS -L$LIB_DIR/jpeg_${BUILDINGFOR}_dylib/ -L$LIB_DIR/png_${BUILDINGFOR}_dylib/ -L$LIB_DIR/tiff_${BUILDINGFOR}_dylib/ -L$LIB_DIR"
 		echo "[|- CONFIG $BUILDINGFOR]"
-		try ./configure prefix=$IM_LIB_DIR --host=arm-apple-darwin --disable-opencl --disable-largefile --with-quantum-depth=8 --with-magick-plus-plus \
-				--without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype
+		try ./configure prefix=$IM_LIB_DIR --host=arm-apple-darwin \
+			--disable-opencl --disable-largefile --with-quantum-depth=8 --with-magick-plus-plus \
+			--without-perl --without-x --disable-shared --disable-openmp --without-bzlib --without-freetype  \
+			--enable-cross-compile
 		im_compile
 		restore
 	elif [ "$1" == "i386" ] || [ "$1" == "x86_64" ]; then
