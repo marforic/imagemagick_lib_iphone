@@ -17,9 +17,9 @@ The directory structure has to be:
 <pre>
 ./build/ImageMagick-VERSION/       <- ImageMagick top directory
 ./build/IMDelegates/               <- Some delegates: jpeg + png + tiff
-./build/IMDelegates/jpeg-9a/       <- jpeg lib
-./build/IMDelegates/libpng-1.6.10  <- png lib
-./build/IMDelegates/tiff-4.0.3     <- tiff lib
+./build/IMDelegates/jpeg-9b/       <- jpeg lib
+./build/IMDelegates/libpng-1.6.28  <- png lib
+./build/IMDelegates/tiff-4.0.4     <- tiff lib
 </pre>
 
 If you don't have this directory structure you can either create it or try
@@ -29,7 +29,7 @@ or on the respective websites.
 
 The main script to run is:
 <pre>./all.sh VERSION|clean</pre> where VERSION is the version of ImageMagick
-you want to compile (e.g., 6.8.8-9), if 'clean' is passed, the script will
+you want to compile (e.g., 6.8.9-10), if 'clean' is passed, the script will
 clean all the log files and the directories it created.
 
 Upon successful compilation a folder called "IMPORT_ME" will be created from

@@ -20,6 +20,7 @@ if [ ! -d $DEVROOT ]; then
 fi
 
 # iOS SDK Environmnent
+export SDKMINVER=8.0
 export SDKVER=`xcodebuild -showsdks | fgrep "iphoneos" | tail -n 1 | awk '{print $2}'`
 export DEVROOT=`xcode-select -print-path`/Platforms/iPhoneOS.platform/Developer
 export IOSSDKROOT=$DEVROOT/SDKs/iPhoneOS$SDKVER.sdk
@@ -37,9 +38,9 @@ export IMROOT="$(pwd)"
 export BUILDROOT="$IMROOT/build"
 export IM_DIR="$BUILDROOT/ImageMagick-$IM_VERSION"
 export IM_DELEGATES_DIR="$IM_DIR/IMDelegates/"
-export JPEG_DIR="$IM_DIR/IMDelegates/jpeg-9a"
-export PNG_DIR="$IM_DIR/IMDelegates/libpng-1.6.21"
-export TIFF_DIR="$IM_DIR/IMDelegates/tiff-4.0.4"
+export JPEG_DIR="$IM_DIR/IMDelegates/jpeg-9b"
+export PNG_DIR="$IM_DIR/IMDelegates/libpng-1.6.28"
+export TIFF_DIR="$IM_DIR/IMDelegates/tiff-4.0.7"
 
 # Target directories
 export TARGET_LIB_DIR=$(pwd)/target

@@ -9,15 +9,15 @@ armflags () {
 	export ARM_CFLAGS="-arch $1"
 	export ARM_CFLAGS="$ARM_CFLAGS -I$IOSSDKROOT/usr/include"
 	export ARM_CFLAGS="$ARM_CFLAGS -isysroot $IOSSDKROOT"
-	export ARM_CFLAGS="$ARM_CFLAGS -miphoneos-version-min=$SDKVER"
+	export ARM_CFLAGS="$ARM_CFLAGS -miphoneos-version-min=$SDKMINVER"
 	export ARM_CXXFLAGS="-arch $1"
 	export ARM_CXXFLAGS="$ARM_CFLAGS -I$IOSSDKROOT/usr/include"
 	export ARM_CXXFLAGS="$ARM_CFLAGS -isysroot $IOSSDKROOT"
-	export ARM_CXXFLAGS="$ARM_CFLAGS -miphoneos-version-min=$SDKVER"
+	export ARM_CXXFLAGS="$ARM_CFLAGS -miphoneos-version-min=$SDKMINVER"
 	export ARM_LDFLAGS="-arch $1 -isysroot $IOSSDKROOT"
-	export ARM_LDFLAGS="$ARM_LDFLAGS -miphoneos-version-min=$SDKVER"
+	export ARM_LDFLAGS="$ARM_LDFLAGS -miphoneos-version-min=$SDKMINVER"
 	
-	export ARM_CFLAGS="$ARM_CFLAGS -O3"
+	export ARM_CFLAGS="$ARM_CFLAGS -O3 -fembed-bitcode"
 	# uncomment this line if you want debugging stuff
 	# export ARM_CFLAGS="$ARM_CFLAGS -O0 -g"
 
